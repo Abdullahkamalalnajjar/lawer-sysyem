@@ -100,9 +100,8 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
       />
 
       {/* Drawer */}
-      <div style={{
+      <div className="case-drawer" style={{
         position: 'fixed', top: 0, left: 0, bottom: 0,
-        width: '430px',
         background: '#fff',
         boxShadow: '-8px 0 48px rgba(192,57,43,0.18)',
         zIndex: 201,
@@ -577,7 +576,7 @@ function CasesContent() {
       </div>
 
       {/* Stats */}
-      <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(4,1fr)', marginBottom: '24px' }}>
+      <div className="stats-grid cases-stats-grid" style={{ marginBottom: '24px' }}>
         <div className="stat-card"><div className="stat-icon gold">⚖️</div><div className="stat-info"><h3>{cases.length}</h3><p>إجمالي القضايا</p></div></div>
         <div className="stat-card"><div className="stat-icon blue">📋</div><div className="stat-info"><h3>{cases.filter(c => c.caseType === 'مدني').length}</h3><p>القضايا المدنية</p></div></div>
         <div className="stat-card"><div className="stat-icon red">⚡</div><div className="stat-info"><h3>{cases.filter(c => c.caseType === 'جنائي').length}</h3><p>القضايا الجنائية</p></div></div>

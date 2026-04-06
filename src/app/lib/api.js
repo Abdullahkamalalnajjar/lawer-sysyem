@@ -3,7 +3,7 @@
 // All endpoints mapped from swagger-lawer.json
 // ============================================================
 
-const BASE_URL = 'http://lawer-api.runasp.net'
+export const BASE_URL = 'http://lawer-api.runasp.net'
 
 // ── Token helpers ────────────────────────────────────────────
 function getTokens() {
@@ -343,6 +343,29 @@ export async function uploadCaseAttachment(caseId, file) {
 
   const data = await res.json()
   return data?.value ?? data
+}
+
+// ════════════════════════════════════════════════════════════
+// BAILIFF NOTICES  /api/bailiff-notices
+// ════════════════════════════════════════════════════════════
+
+export async function getBailiffNotices() {
+  const data = await get('/api/bailiff-notices')
+  return toList(data)
+}
+
+export async function createBailiffNotice(body) {
+  const data = await post('/api/bailiff-notices', body)
+  return data?.value
+}
+
+export async function updateBailiffNotice(id, body) {
+  const data = await put(`/api/bailiff-notices/${id}`, { id, ...body })
+  return data?.value
+}
+
+export function deleteBailiffNotice(id) {
+  return del(`/api/bailiff-notices/${id}`)
 }
 
 // ════════════════════════════════════════════════════════════

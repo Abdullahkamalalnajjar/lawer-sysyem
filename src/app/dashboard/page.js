@@ -84,7 +84,7 @@ function DashboardContent() {
       </div>
 
       {/* Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+      <div className="dashboard-card-grid">
         {/* Recent Cases */}
         <div className="card">
           <div className="card-header">

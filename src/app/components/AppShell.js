@@ -12,7 +12,7 @@ export function useApp() {
 }
 
 // ==================== SIDEBAR ====================
-function Sidebar({ currentPath }) {
+function Sidebar({ currentPath, isOpen, onClose }) {
   const router = useRouter()
   const { user, logout } = useApp()
 
@@ -22,17 +22,21 @@ function Sidebar({ currentPath }) {
     { href: '/cases',     icon: '⚖️', label: 'القضايا' },
     { href: '/sessions',  icon: '📋', label: 'الجلسات' },
     { href: '/sessions/agenda', icon: '📅', label: 'الأجندة' },
+    { href: '/bailiffs',  icon: '📜', label: 'المحضرين' },
     { href: '/finance',   icon: '💰', label: 'المالية' },
   ]
 
   return (
-    <aside className="sidebar">
-      <div className="sidebar-logo">
-        <div className="sidebar-logo-icon">⚖️</div>
-        <div className="sidebar-logo-text">
-          <h1>نظام المحاماة</h1>
-          <p>إدارة قانونية متكاملة</p>
+    <aside className={`sidebar ${isOpen ? 'sidebar-open' : ''}`}>
+      <div className="sidebar-logo" style={{ justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '13px' }}>
+          <div className="sidebar-logo-icon">⚖️</div>
+          <div className="sidebar-logo-text">
+            <h1>نظام المحاماة</h1>
+            <p>إدارة قانونية متكاملة</p>
+          </div>
         </div>
+        <button className="sidebar-close-btn" onClick={onClose} aria-label="إغلاق القائمة">✕</button>
       </div>
 
       <nav className="sidebar-nav">
@@ -42,7 +46,7 @@ function Sidebar({ currentPath }) {
             key={item.href}
             href={item.href}
             className={`sidebar-link ${currentPath === item.href ? 'active' : ''}`}
-            onClick={e => { e.preventDefault(); router.push(item.href) }}
+            onClick={e => { e.preventDefault(); router.push(item.href); onClose(); }}
           >
             <span className="sidebar-link-icon">{item.icon}</span>
             {item.label}
@@ -58,8 +62,8 @@ function Sidebar({ currentPath }) {
             <div className="sidebar-user-role">{user?.roles?.[0] || 'محامٍ قانوني'}</div>
           </div>
         </div>
-        <button className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center' }} onClick={logout}>
-          🚪 تسجيل الخروج
+        <button className="logout-btn" onClick={logout}>
+          تسجيل الخروج 🚪
         </button>
       </div>
     </aside>
@@ -67,26 +71,10 @@ function Sidebar({ currentPath }) {
 }
 
 // ==================== HEADER ====================
-function Header({ title }) {
-  const { user } = useApp()
-  const today = new Date().toLocaleDateString('ar-EG', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-  })
+function Header({ onMenuToggle }) {
   return (
-    <header className="header">
-      <div>
-        <h2 className="header-title">{title}</h2>
-        <div className="header-subtitle">{today}</div>
-      </div>
-      <div className="header-actions">
-        <div className="header-user">
-          <div className="header-user-info">
-            <div className="header-user-name">{user?.email || 'المستخدم'}</div>
-            <div className="header-user-role">{user?.roles?.[0] || 'محامٍ قانوني'}</div>
-          </div>
-          <div className="header-avatar">{user?.email?.[0]?.toUpperCase() || 'م'}</div>
-        </div>
-      </div>
+    <header className="header" style={{ justifyContent: 'flex-end', padding: '0 20px' }}>
+      <button className="mobile-menu-btn" onClick={onMenuToggle}>☰</button>
     </header>
   )
 }
@@ -165,6 +153,8 @@ export function AuthGuard({ children, title }) {
   const router = useRouter()
   const pathname = usePathname()
 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
   useEffect(() => {
     if (initialized && !user) {
       router.push('/login')
@@ -183,9 +173,12 @@ export function AuthGuard({ children, title }) {
 
   return (
     <div className="app-layout">
-      <Sidebar currentPath={pathname} />
+      {isMobileMenuOpen && (
+        <div className="mobile-overlay" onClick={() => setIsMobileMenuOpen(false)} />
+      )}
+      <Sidebar currentPath={pathname} isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
       <div className="main-content">
-        <Header title={title} />
+        <Header onMenuToggle={() => setIsMobileMenuOpen(true)} />
         <main className="page-content">
           {children}
         </main>
