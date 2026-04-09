@@ -16,18 +16,17 @@ var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.sign
 ;
 ;
 ;
-const BASE_URL = 'http://lawer-api.runasp.net';
 function CasesPage() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$components$2f$AppShell$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AuthGuard"], {
         title: "إدارة القضايا",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(CasesContent, {}, void 0, false, {
             fileName: "[project]/src/app/cases/page.js",
-            lineNumber: 12,
+            lineNumber: 10,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/cases/page.js",
-        lineNumber: 11,
+        lineNumber: 9,
         columnNumber: 5
     }, this);
 }
@@ -183,7 +182,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                 }
             }, void 0, false, {
                 fileName: "[project]/src/app/cases/page.js",
-                lineNumber: 91,
+                lineNumber: 89,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -229,7 +228,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                 children: "⚖️"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 123,
+                                                lineNumber: 121,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -245,7 +244,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                         children: "تفاصيل القضية"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/cases/page.js",
-                                                        lineNumber: 125,
+                                                        lineNumber: 123,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -259,19 +258,19 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                         children: caseItem.caseNumber
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/cases/page.js",
-                                                        lineNumber: 126,
+                                                        lineNumber: 124,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 124,
+                                                lineNumber: 122,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 122,
+                                        lineNumber: 120,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -287,7 +286,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                 children: caseItem.caseType
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 132,
+                                                lineNumber: 130,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -295,7 +294,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                 children: caseItem.caseClassification
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 133,
+                                                lineNumber: 131,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -306,19 +305,19 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 134,
+                                                lineNumber: 132,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 131,
+                                        lineNumber: 129,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 121,
+                                lineNumber: 119,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -327,13 +326,13 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                 children: "✕"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 137,
+                                lineNumber: 135,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/cases/page.js",
-                        lineNumber: 114,
+                        lineNumber: 112,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -370,12 +369,12 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                 children: t.label
                             }, t.id, false, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 146,
+                                lineNumber: 144,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/app/cases/page.js",
-                        lineNumber: 141,
+                        lineNumber: 139,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -405,7 +404,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                     children: row.label
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/cases/page.js",
-                                                    lineNumber: 178,
+                                                    lineNumber: 176,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -417,13 +416,13 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                     children: row.value
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/cases/page.js",
-                                                    lineNumber: 179,
+                                                    lineNumber: 177,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, i, true, {
                                             fileName: "[project]/src/app/cases/page.js",
-                                            lineNumber: 172,
+                                            lineNumber: 170,
                                             columnNumber: 17
                                         }, this)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -440,7 +439,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                 children: "✏️  تعديل بيانات القضية"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 191,
+                                                lineNumber: 189,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -449,19 +448,19 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                 children: "📎  إضافة مرافقة"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 197,
+                                                lineNumber: 195,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 190,
+                                        lineNumber: 188,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 170,
+                                lineNumber: 168,
                                 columnNumber: 13
                             }, this),
                             tab === 'attachments' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -475,7 +474,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                         children: "ارفع المستندات والمرافقات المتعلقة بهذه القضية"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 210,
+                                        lineNumber: 208,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -508,7 +507,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                 children: fileIcon
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 233,
+                                                lineNumber: 231,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -520,7 +519,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                 children: file ? file.name : 'اسحب الملف هنا أو اضغط للاختيار'
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 234,
+                                                lineNumber: 232,
                                                 columnNumber: 17
                                             }, this),
                                             file ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -535,7 +534,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 238,
+                                                lineNumber: 236,
                                                 columnNumber: 19
                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 style: {
@@ -545,7 +544,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                 children: "PDF, Word, صور — حجم أقصى 10 MB"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 242,
+                                                lineNumber: 240,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -558,13 +557,13 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                 onChange: (e)=>setFile(e.target.files[0] || null)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 246,
+                                                lineNumber: 244,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 215,
+                                        lineNumber: 213,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -586,7 +585,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                 children: uploading ? '⏳ جارٍ الرفع...' : '📤 رفع المستند'
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 257,
+                                                lineNumber: 255,
                                                 columnNumber: 17
                                             }, this),
                                             file && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -598,13 +597,13 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                 children: "✕ إلغاء"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 270,
+                                                lineNumber: 268,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 256,
+                                        lineNumber: 254,
                                         columnNumber: 15
                                     }, this),
                                     allAttachments.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -628,7 +627,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 282,
+                                                lineNumber: 280,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -639,7 +638,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                 },
                                                 children: allAttachments.map((att, i)=>{
                                                     const isImage = att.fileType?.startsWith('image/');
-                                                    const imgUrl = att._localUrl || (att.filePath ? `${BASE_URL}/${att.filePath}` : null);
+                                                    const imgUrl = att._localUrl || (att.filePath ? `${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$lib$2f$api$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["BASE_URL"]}/${att.filePath}` : null);
                                                     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         style: {
                                                             border: '1px solid rgba(192,57,43,0.12)',
@@ -664,12 +663,12 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                                     }
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/cases/page.js",
-                                                                    lineNumber: 299,
+                                                                    lineNumber: 297,
                                                                     columnNumber: 31
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/cases/page.js",
-                                                                lineNumber: 298,
+                                                                lineNumber: 296,
                                                                 columnNumber: 29
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -687,7 +686,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                                         children: isImage ? '🖼️' : att.fileType?.includes('pdf') ? '📑' : '📄'
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/cases/page.js",
-                                                                        lineNumber: 317,
+                                                                        lineNumber: 315,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -708,7 +707,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                                                 children: att.fileName
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/cases/page.js",
-                                                                                lineNumber: 321,
+                                                                                lineNumber: 319,
                                                                                 columnNumber: 31
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -720,13 +719,13 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                                                 children: att.fileType
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/cases/page.js",
-                                                                                lineNumber: 324,
+                                                                                lineNumber: 322,
                                                                                 columnNumber: 31
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/app/cases/page.js",
-                                                                        lineNumber: 320,
+                                                                        lineNumber: 318,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     imgUrl && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -741,31 +740,31 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                                         children: "🔗"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/cases/page.js",
-                                                                        lineNumber: 329,
+                                                                        lineNumber: 327,
                                                                         columnNumber: 31
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/cases/page.js",
-                                                                lineNumber: 313,
+                                                                lineNumber: 311,
                                                                 columnNumber: 27
                                                             }, this)
                                                         ]
                                                     }, att.id || i, true, {
                                                         fileName: "[project]/src/app/cases/page.js",
-                                                        lineNumber: 290,
+                                                        lineNumber: 288,
                                                         columnNumber: 25
                                                     }, this);
                                                 })
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 285,
+                                                lineNumber: 283,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 281,
+                                        lineNumber: 279,
                                         columnNumber: 17
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         style: {
@@ -783,26 +782,26 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                 children: "📁"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 347,
+                                                lineNumber: 345,
                                                 columnNumber: 19
                                             }, this),
                                             "لا توجد مرافقات بعد"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 346,
+                                        lineNumber: 344,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 209,
+                                lineNumber: 207,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/cases/page.js",
-                        lineNumber: 166,
+                        lineNumber: 164,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -824,18 +823,18 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                             children: "إغلاق"
                         }, void 0, false, {
                             fileName: "[project]/src/app/cases/page.js",
-                            lineNumber: 363,
+                            lineNumber: 361,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/cases/page.js",
-                        lineNumber: 356,
+                        lineNumber: 354,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/cases/page.js",
-                lineNumber: 103,
+                lineNumber: 101,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("style", {
@@ -847,7 +846,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
       `
             }, void 0, false, {
                 fileName: "[project]/src/app/cases/page.js",
-                lineNumber: 369,
+                lineNumber: 367,
                 columnNumber: 7
             }, this)
         ]
@@ -946,14 +945,14 @@ function CaseModal({ caseItem, clients, onClose, onSave, saving }) {
                             children: "*"
                         }, void 0, false, {
                             fileName: "[project]/src/app/cases/page.js",
-                            lineNumber: 439,
+                            lineNumber: 437,
                             columnNumber: 47
                         }, this),
                         label
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/cases/page.js",
-                    lineNumber: 439,
+                    lineNumber: 437,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -973,7 +972,7 @@ function CaseModal({ caseItem, clients, onClose, onSave, saving }) {
                             children: ph
                         }, void 0, false, {
                             fileName: "[project]/src/app/cases/page.js",
-                            lineNumber: 443,
+                            lineNumber: 441,
                             columnNumber: 18
                         }, this),
                         options.map((o)=>typeof o === 'string' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -981,20 +980,20 @@ function CaseModal({ caseItem, clients, onClose, onSave, saving }) {
                                 children: o
                             }, o, false, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 445,
+                                lineNumber: 443,
                                 columnNumber: 15
                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
                                 value: o.id,
                                 children: o.name
                             }, o.id, false, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 446,
+                                lineNumber: 444,
                                 columnNumber: 15
                             }, this))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/cases/page.js",
-                    lineNumber: 440,
+                    lineNumber: 438,
                     columnNumber: 9
                 }, this),
                 errors[key] && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1005,13 +1004,13 @@ function CaseModal({ caseItem, clients, onClose, onSave, saving }) {
                     children: errors[key]
                 }, void 0, false, {
                     fileName: "[project]/src/app/cases/page.js",
-                    lineNumber: 449,
+                    lineNumber: 447,
                     columnNumber: 25
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/cases/page.js",
-            lineNumber: 438,
+            lineNumber: 436,
             columnNumber: 7
         }, this);
     };
@@ -1028,14 +1027,14 @@ function CaseModal({ caseItem, clients, onClose, onSave, saving }) {
                             children: "*"
                         }, void 0, false, {
                             fileName: "[project]/src/app/cases/page.js",
-                            lineNumber: 458,
+                            lineNumber: 456,
                             columnNumber: 47
                         }, this),
                         label
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/cases/page.js",
-                    lineNumber: 458,
+                    lineNumber: 456,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1052,7 +1051,7 @@ function CaseModal({ caseItem, clients, onClose, onSave, saving }) {
                     ...domProps
                 }, void 0, false, {
                     fileName: "[project]/src/app/cases/page.js",
-                    lineNumber: 459,
+                    lineNumber: 457,
                     columnNumber: 9
                 }, this),
                 errors[key] && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1063,13 +1062,13 @@ function CaseModal({ caseItem, clients, onClose, onSave, saving }) {
                     children: errors[key]
                 }, void 0, false, {
                     fileName: "[project]/src/app/cases/page.js",
-                    lineNumber: 462,
+                    lineNumber: 460,
                     columnNumber: 25
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/cases/page.js",
-            lineNumber: 457,
+            lineNumber: 455,
             columnNumber: 7
         }, this);
     };
@@ -1093,14 +1092,14 @@ function CaseModal({ caseItem, clients, onClose, onSave, saving }) {
                                     children: "⚖️"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/cases/page.js",
-                                    lineNumber: 472,
+                                    lineNumber: 470,
                                     columnNumber: 13
                                 }, this),
                                 caseItem ? 'تعديل بيانات القضية' : 'إضافة قضية جديدة'
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/cases/page.js",
-                            lineNumber: 471,
+                            lineNumber: 469,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1109,13 +1108,13 @@ function CaseModal({ caseItem, clients, onClose, onSave, saving }) {
                             children: "✕"
                         }, void 0, false, {
                             fileName: "[project]/src/app/cases/page.js",
-                            lineNumber: 475,
+                            lineNumber: 473,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/cases/page.js",
-                    lineNumber: 470,
+                    lineNumber: 468,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -1143,12 +1142,12 @@ function CaseModal({ caseItem, clients, onClose, onSave, saving }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 479,
+                                lineNumber: 477,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/cases/page.js",
-                            lineNumber: 478,
+                            lineNumber: 476,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1162,7 +1161,7 @@ function CaseModal({ caseItem, clients, onClose, onSave, saving }) {
                                     children: saving ? '⏳ جارٍ الحفظ...' : caseItem ? '💾 حفظ التعديلات' : '➕ إضافة القضية'
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/cases/page.js",
-                                    lineNumber: 489,
+                                    lineNumber: 487,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1172,30 +1171,30 @@ function CaseModal({ caseItem, clients, onClose, onSave, saving }) {
                                     children: "إلغاء"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/cases/page.js",
-                                    lineNumber: 492,
+                                    lineNumber: 490,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/cases/page.js",
-                            lineNumber: 488,
+                            lineNumber: 486,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/cases/page.js",
-                    lineNumber: 477,
+                    lineNumber: 475,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/cases/page.js",
-            lineNumber: 469,
+            lineNumber: 467,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/cases/page.js",
-        lineNumber: 468,
+        lineNumber: 466,
         columnNumber: 5
     }, this);
 }
@@ -1291,7 +1290,7 @@ function CasesContent() {
                                         children: "الرئيسية"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 567,
+                                        lineNumber: 565,
                                         columnNumber: 13
                                     }, this),
                                     " ",
@@ -1299,7 +1298,7 @@ function CasesContent() {
                                         children: "›"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 567,
+                                        lineNumber: 565,
                                         columnNumber: 35
                                     }, this),
                                     " ",
@@ -1308,20 +1307,20 @@ function CasesContent() {
                                         children: "القضايا"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 567,
+                                        lineNumber: 565,
                                         columnNumber: 50
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 566,
+                                lineNumber: 564,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                                 children: "إدارة القضايا"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 569,
+                                lineNumber: 567,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1332,13 +1331,13 @@ function CasesContent() {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 570,
+                                lineNumber: 568,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/cases/page.js",
-                        lineNumber: 565,
+                        lineNumber: 563,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1351,13 +1350,13 @@ function CasesContent() {
                         children: "➕ إضافة قضية"
                     }, void 0, false, {
                         fileName: "[project]/src/app/cases/page.js",
-                        lineNumber: 572,
+                        lineNumber: 570,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/cases/page.js",
-                lineNumber: 564,
+                lineNumber: 562,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1374,7 +1373,7 @@ function CasesContent() {
                                 children: "⚖️"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 580,
+                                lineNumber: 578,
                                 columnNumber: 36
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1384,21 +1383,101 @@ function CasesContent() {
                                         children: cases.length
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 580,
+                                        lineNumber: 578,
                                         columnNumber: 103
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         children: "إجمالي القضايا"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 580,
+                                        lineNumber: 578,
                                         columnNumber: 126
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 580,
+                                lineNumber: 578,
                                 columnNumber: 76
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/cases/page.js",
+                        lineNumber: 578,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "stat-card",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "stat-icon blue",
+                                children: "📋"
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/cases/page.js",
+                                lineNumber: 579,
+                                columnNumber: 36
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "stat-info",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                        children: cases.filter((c)=>c.caseType === 'مدني').length
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/cases/page.js",
+                                        lineNumber: 579,
+                                        columnNumber: 103
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        children: "القضايا المدنية"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/cases/page.js",
+                                        lineNumber: 579,
+                                        columnNumber: 161
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/cases/page.js",
+                                lineNumber: 579,
+                                columnNumber: 76
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/cases/page.js",
+                        lineNumber: 579,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "stat-card",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "stat-icon red",
+                                children: "⚡"
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/cases/page.js",
+                                lineNumber: 580,
+                                columnNumber: 36
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "stat-info",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                        children: cases.filter((c)=>c.caseType === 'جنائي').length
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/cases/page.js",
+                                        lineNumber: 580,
+                                        columnNumber: 101
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        children: "القضايا الجنائية"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/cases/page.js",
+                                        lineNumber: 580,
+                                        columnNumber: 160
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/cases/page.js",
+                                lineNumber: 580,
+                                columnNumber: 74
                             }, this)
                         ]
                     }, void 0, true, {
@@ -1410,91 +1489,11 @@ function CasesContent() {
                         className: "stat-card",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "stat-icon blue",
-                                children: "📋"
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 581,
-                                columnNumber: 36
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "stat-info",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                        children: cases.filter((c)=>c.caseType === 'مدني').length
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 581,
-                                        columnNumber: 103
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        children: "القضايا المدنية"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 581,
-                                        columnNumber: 161
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 581,
-                                columnNumber: 76
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/app/cases/page.js",
-                        lineNumber: 581,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "stat-card",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "stat-icon red",
-                                children: "⚡"
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 582,
-                                columnNumber: 36
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "stat-info",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                        children: cases.filter((c)=>c.caseType === 'جنائي').length
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 582,
-                                        columnNumber: 101
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        children: "القضايا الجنائية"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 582,
-                                        columnNumber: 160
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 582,
-                                columnNumber: 74
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/app/cases/page.js",
-                        lineNumber: 582,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "stat-card",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "stat-icon green",
                                 children: "📅"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 583,
+                                lineNumber: 581,
                                 columnNumber: 36
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1504,32 +1503,32 @@ function CasesContent() {
                                         children: cases.reduce((s, c)=>s + (c.numberOfSessions || 0), 0)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 583,
+                                        lineNumber: 581,
                                         columnNumber: 104
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         children: "إجمالي الجلسات"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 583,
+                                        lineNumber: 581,
                                         columnNumber: 171
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 583,
+                                lineNumber: 581,
                                 columnNumber: 77
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/cases/page.js",
-                        lineNumber: 583,
+                        lineNumber: 581,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/cases/page.js",
-                lineNumber: 579,
+                lineNumber: 577,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1549,7 +1548,7 @@ function CasesContent() {
                                         children: "🔍"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 589,
+                                        lineNumber: 587,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1560,13 +1559,13 @@ function CasesContent() {
                                         onChange: (e)=>setSearch(e.target.value)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 590,
+                                        lineNumber: 588,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 588,
+                                lineNumber: 586,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -1583,7 +1582,7 @@ function CasesContent() {
                                         children: "كل الأنواع"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 596,
+                                        lineNumber: 594,
                                         columnNumber: 13
                                     }, this),
                                     CASE_TYPES.map((t)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1591,19 +1590,19 @@ function CasesContent() {
                                             children: t
                                         }, t, false, {
                                             fileName: "[project]/src/app/cases/page.js",
-                                            lineNumber: 597,
+                                            lineNumber: 595,
                                             columnNumber: 34
                                         }, this))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 594,
+                                lineNumber: 592,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/cases/page.js",
-                        lineNumber: 587,
+                        lineNumber: 585,
                         columnNumber: 9
                     }, this),
                     loading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1616,20 +1615,20 @@ function CasesContent() {
                                 children: "⏳"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 602,
+                                lineNumber: 600,
                                 columnNumber: 40
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                 children: "جارٍ تحميل البيانات..."
                             }, void 0, false, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 602,
+                                lineNumber: 600,
                                 columnNumber: 81
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/cases/page.js",
-                        lineNumber: 602,
+                        lineNumber: 600,
                         columnNumber: 11
                     }, this) : filtered.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "empty-state",
@@ -1639,27 +1638,27 @@ function CasesContent() {
                                 children: "⚖️"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 605,
+                                lineNumber: 603,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
                                 children: "لا توجد قضايا"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 606,
+                                lineNumber: 604,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                 children: search || filterType ? 'لا توجد نتائج مطابقة' : 'ابدأ بتسجيل أول قضية'
                             }, void 0, false, {
                                 fileName: "[project]/src/app/cases/page.js",
-                                lineNumber: 607,
+                                lineNumber: 605,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/cases/page.js",
-                        lineNumber: 604,
+                        lineNumber: 602,
                         columnNumber: 11
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "table-wrapper",
@@ -1672,74 +1671,74 @@ function CasesContent() {
                                                 children: "#"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 613,
+                                                lineNumber: 611,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                                 children: "رقم القضية"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 613,
+                                                lineNumber: 611,
                                                 columnNumber: 27
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                                 children: "نوع القضية"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 613,
+                                                lineNumber: 611,
                                                 columnNumber: 46
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                                 children: "الموكل"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 613,
+                                                lineNumber: 611,
                                                 columnNumber: 65
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                                 children: "الخصم"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 614,
+                                                lineNumber: 612,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                                 children: "التصنيف"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 614,
+                                                lineNumber: 612,
                                                 columnNumber: 31
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                                 children: "الدرجة"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 614,
+                                                lineNumber: 612,
                                                 columnNumber: 47
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                                 children: "الجلسات"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 614,
+                                                lineNumber: 612,
                                                 columnNumber: 62
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                                 children: "الإجراءات"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
-                                                lineNumber: 614,
+                                                lineNumber: 612,
                                                 columnNumber: 78
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/cases/page.js",
-                                        lineNumber: 612,
+                                        lineNumber: 610,
                                         columnNumber: 22
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/cases/page.js",
-                                    lineNumber: 612,
+                                    lineNumber: 610,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -1756,7 +1755,7 @@ function CasesContent() {
                                                     children: i + 1
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/cases/page.js",
-                                                    lineNumber: 627,
+                                                    lineNumber: 625,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1769,12 +1768,12 @@ function CasesContent() {
                                                         children: c.caseNumber
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/cases/page.js",
-                                                        lineNumber: 629,
+                                                        lineNumber: 627,
                                                         columnNumber: 23
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/cases/page.js",
-                                                    lineNumber: 628,
+                                                    lineNumber: 626,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1783,12 +1782,12 @@ function CasesContent() {
                                                         children: c.caseType
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/cases/page.js",
-                                                        lineNumber: 633,
+                                                        lineNumber: 631,
                                                         columnNumber: 25
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/cases/page.js",
-                                                    lineNumber: 633,
+                                                    lineNumber: 631,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1798,7 +1797,7 @@ function CasesContent() {
                                                     children: clientMap[c.clientId] || '—'
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/cases/page.js",
-                                                    lineNumber: 634,
+                                                    lineNumber: 632,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1806,7 +1805,7 @@ function CasesContent() {
                                                     children: c.opponentName
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/cases/page.js",
-                                                    lineNumber: 635,
+                                                    lineNumber: 633,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1815,12 +1814,12 @@ function CasesContent() {
                                                         children: c.caseClassification
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/cases/page.js",
-                                                        lineNumber: 636,
+                                                        lineNumber: 634,
                                                         columnNumber: 25
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/cases/page.js",
-                                                    lineNumber: 636,
+                                                    lineNumber: 634,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1828,7 +1827,7 @@ function CasesContent() {
                                                     children: c.caseDegree
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/cases/page.js",
-                                                    lineNumber: 637,
+                                                    lineNumber: 635,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1837,12 +1836,12 @@ function CasesContent() {
                                                         children: c.numberOfSessions || 0
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/cases/page.js",
-                                                        lineNumber: 638,
+                                                        lineNumber: 636,
                                                         columnNumber: 25
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/cases/page.js",
-                                                    lineNumber: 638,
+                                                    lineNumber: 636,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1861,7 +1860,7 @@ function CasesContent() {
                                                                 children: "✏️"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/cases/page.js",
-                                                                lineNumber: 641,
+                                                                lineNumber: 639,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1872,46 +1871,46 @@ function CasesContent() {
                                                                 children: "🗑️"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/cases/page.js",
-                                                                lineNumber: 644,
+                                                                lineNumber: 642,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/cases/page.js",
-                                                        lineNumber: 640,
+                                                        lineNumber: 638,
                                                         columnNumber: 23
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/cases/page.js",
-                                                    lineNumber: 639,
+                                                    lineNumber: 637,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, c.id, true, {
                                             fileName: "[project]/src/app/cases/page.js",
-                                            lineNumber: 618,
+                                            lineNumber: 616,
                                             columnNumber: 19
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/cases/page.js",
-                                    lineNumber: 616,
+                                    lineNumber: 614,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/cases/page.js",
-                            lineNumber: 611,
+                            lineNumber: 609,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/cases/page.js",
-                        lineNumber: 610,
+                        lineNumber: 608,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/cases/page.js",
-                lineNumber: 586,
+                lineNumber: 584,
                 columnNumber: 7
             }, this),
             showModal && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(CaseModal, {
@@ -1925,7 +1924,7 @@ function CasesContent() {
                 saving: saving
             }, void 0, false, {
                 fileName: "[project]/src/app/cases/page.js",
-                lineNumber: 659,
+                lineNumber: 657,
                 columnNumber: 9
             }, this),
             detailCase && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(CaseDrawer, {
@@ -1940,7 +1939,7 @@ function CasesContent() {
                 showToast: showToast
             }, void 0, false, {
                 fileName: "[project]/src/app/cases/page.js",
-                lineNumber: 670,
+                lineNumber: 668,
                 columnNumber: 9
             }, this)
         ]
