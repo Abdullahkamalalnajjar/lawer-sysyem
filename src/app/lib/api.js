@@ -3,7 +3,7 @@
 // All endpoints mapped from swagger-lawer.json
 // ============================================================
 
-export const BASE_URL = 'http://lawer-api.runasp.net'
+export const BASE_URL = 'https://lawer-api.runasp.net'
 
 // ── Token helpers ────────────────────────────────────────────
 function getTokens() {
