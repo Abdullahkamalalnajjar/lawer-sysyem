@@ -2,9 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useApp, AuthGuard } from '../components/AppShell'
-import { getCases, createCase, updateCase, deleteCase, getClients, uploadCaseAttachment } from '../lib/api'
-
-const BASE_URL = 'http://lawer-api.runasp.net'
+import { getCases, createCase, updateCase, deleteCase, getClients, uploadCaseAttachment, BASE_URL } from '../lib/api'
 
 export default function CasesPage() {
   return (

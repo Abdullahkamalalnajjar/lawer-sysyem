@@ -82,7 +82,7 @@ __turbopack_context__.s([
     "uploadCaseAttachment",
     ()=>uploadCaseAttachment
 ]);
-const BASE_URL = 'http://lawer-api.runasp.net';
+const BASE_URL = 'https://lawer-api.runasp.net';
 // ── Token helpers ────────────────────────────────────────────
 function getTokens() {
     if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
