@@ -252,15 +252,18 @@ export async function getSession(id) {
   return data?.value
 }
 
-/** POST /api/sessions — { roll, decision, sessionDate, caseId, requests, sessionType } */
+/** POST /api/sessions — { roll, decision, sessionDate, caseId, request, sessionType } */
 export async function createSession(body) {
-  const data = await post('/api/sessions', body)
+  // Keep date as plain YYYY-MM-DD — server does not accept time component
+  const safeBody = { ...body, sessionDate: body.sessionDate?.split('T')[0] }
+  const data = await post('/api/sessions', safeBody)
   return data?.value
 }
 
 /** PUT /api/sessions/{id} */
 export async function updateSession(id, body) {
-  const data = await put(`/api/sessions/${id}`, { id, ...body })
+  const safeBody = { ...body, sessionDate: body.sessionDate?.split('T')[0] }
+  const data = await put(`/api/sessions/${id}`, { id, ...safeBody })
   return data?.value
 }
 

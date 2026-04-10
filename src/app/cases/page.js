@@ -13,8 +13,8 @@ export default function CasesPage() {
 }
 
 const CASE_TYPES      = ['مدني', 'تجاري', 'جنائي', 'إداري', 'أحوال شخصية', 'عمالي', 'دستوري', 'أخرى']
-const CLASSIFICATIONS = ['بداية', 'استئناف', 'نقض', 'جنحة', 'جناية', 'دستوري']
-const DEGREES         = ['أول', 'ثاني', 'ثالث', 'نهائي']
+
+const DEGREES         = ['عادي', 'معرضة', 'استئناف', 'معرضة استئنافية', 'نقض']
 
 function typeBadge(type) {
   const map = { 'مدني': 'badge-blue', 'تجاري': 'badge-gold', 'جنائي': 'badge-red', 'إداري': 'badge-yellow', 'أحوال شخصية': 'badge-green' }
@@ -407,11 +407,11 @@ function CaseModal({ caseItem, clients, onClose, onSave, saving }) {
     caseType:           caseItem.caseType || 'مدني',
     clientId:           caseItem.clientId || '',
     opponentName:       caseItem.opponentName || '',
-    caseClassification: caseItem.caseClassification || 'بداية',
+    caseClassification: caseItem.caseClassification || '',
     caseDegree:         caseItem.caseDegree || 'أول',
   } : {
     caseNumber: '', caseType: 'مدني', clientId: '',
-    opponentName: '', caseClassification: 'بداية', caseDegree: 'أول',
+    opponentName: '', caseClassification: '', caseDegree: 'أول',
   })
   const [errors, setErrors] = useState({})
 
@@ -479,7 +479,7 @@ function CaseModal({ caseItem, clients, onClose, onSave, saving }) {
               {sel('caseType',    'نوع القضية',    CASE_TYPES)}
               {sel('clientId',    'الموكل',        clients, { req: true, placeholder: '-- اختر الموكل --' })}
               {inp('opponentName','اسم الخصم',    'اسم الطرف الخصم',   { req: true })}
-              {sel('caseClassification', 'تصنيف القضية', CLASSIFICATIONS)}
+              {inp('caseClassification', 'تصنيف القضية', 'مثال: محضر ضرب، نفقة، حضانة...')}
               {sel('caseDegree',  'درجة القضية',  DEGREES)}
             </div>
           </div>

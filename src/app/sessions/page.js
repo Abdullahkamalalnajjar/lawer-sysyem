@@ -48,9 +48,9 @@ function SessionModal({ session, cases, clientMap, onClose, onSave, saving }) {
     roll:        session.roll || '',
     decision:    session.decision || '',
     sessionDate: session.sessionDate?.split('T')[0] || '',
-    requests:    session.requests || '',
+    request:     session.request || '',
     sessionType: session.sessionType || 'مرافعة',
-  } : { caseId:'', roll:'', decision:'', sessionDate:'', requests:'', sessionType:'مرافعة' })
+  } : { caseId:'', roll:'', decision:'', sessionDate:'', request:'', sessionType:'مرافعة' })
   const [errors, setErrors] = useState({})
 
   const validate = () => {
@@ -128,8 +128,8 @@ function SessionModal({ session, cases, clientMap, onClose, onSave, saving }) {
               {/* Requests */}
               <div className="form-group form-full">
                 <label className="form-label">الطلبات</label>
-                <textarea className="form-input" rows={3} placeholder="طلبات الجلسة..." value={form.requests}
-                  onChange={e=>setForm(p=>({...p,requests:e.target.value}))}
+                <textarea className="form-input" rows={3} placeholder="طلبات الجلسة..." value={form.request}
+                  onChange={e=>setForm(p=>({...p,request:e.target.value}))}
                   style={{resize:'vertical'}} />
               </div>
             </div>
@@ -345,6 +345,7 @@ function SessionsContent() {
                 <th>النوع</th>
                 <th>الجولة</th>
                 <th>القرار</th>
+                <th>الطلبات</th>
                 <th>الإجراءات</th>
               </tr></thead>
               <tbody>
@@ -373,6 +374,9 @@ function SessionsContent() {
                       <td className="td-secondary">{s.roll||'—'}</td>
                       <td style={{ maxWidth:'140px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
                         {s.decision||'—'}
+                      </td>
+                      <td style={{ maxWidth:'160px', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', color:'#555' }}>
+                        {s.request||'—'}
                       </td>
                       <td>
                         <div className="td-actions">

@@ -39,19 +39,12 @@ const CASE_TYPES = [
     'دستوري',
     'أخرى'
 ];
-const CLASSIFICATIONS = [
-    'بداية',
-    'استئناف',
-    'نقض',
-    'جنحة',
-    'جناية',
-    'دستوري'
-];
 const DEGREES = [
-    'أول',
-    'ثاني',
-    'ثالث',
-    'نهائي'
+    'عادي',
+    'معرضة',
+    'استئناف',
+    'معرضة استئنافية',
+    'نقض'
 ];
 function typeBadge(type) {
     const map = {
@@ -897,14 +890,14 @@ function CaseModal({ caseItem, clients, onClose, onSave, saving }) {
         caseType: caseItem.caseType || 'مدني',
         clientId: caseItem.clientId || '',
         opponentName: caseItem.opponentName || '',
-        caseClassification: caseItem.caseClassification || 'بداية',
+        caseClassification: caseItem.caseClassification || '',
         caseDegree: caseItem.caseDegree || 'أول'
     } : {
         caseNumber: '',
         caseType: 'مدني',
         clientId: '',
         opponentName: '',
-        caseClassification: 'بداية',
+        caseClassification: '',
         caseDegree: 'أول'
     });
     const [errors, setErrors] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({});
@@ -1129,7 +1122,7 @@ function CaseModal({ caseItem, clients, onClose, onSave, saving }) {
                                     inp('opponentName', 'اسم الخصم', 'اسم الطرف الخصم', {
                                         req: true
                                     }),
-                                    sel('caseClassification', 'تصنيف القضية', CLASSIFICATIONS),
+                                    inp('caseClassification', 'تصنيف القضية', 'مثال: محضر ضرب، نفقة، حضانة...'),
                                     sel('caseDegree', 'درجة القضية', DEGREES)
                                 ]
                             }, void 0, true, {

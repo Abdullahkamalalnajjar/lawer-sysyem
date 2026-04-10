@@ -318,13 +318,22 @@ async function getSession(id) {
     return data?.value;
 }
 async function createSession(body) {
-    const data = await post('/api/sessions', body);
+    // Keep date as plain YYYY-MM-DD — server does not accept time component
+    const safeBody = {
+        ...body,
+        sessionDate: body.sessionDate?.split('T')[0]
+    };
+    const data = await post('/api/sessions', safeBody);
     return data?.value;
 }
 async function updateSession(id, body) {
+    const safeBody = {
+        ...body,
+        sessionDate: body.sessionDate?.split('T')[0]
+    };
     const data = await put(`/api/sessions/${id}`, {
         id,
-        ...body
+        ...safeBody
     });
     return data?.value;
 }

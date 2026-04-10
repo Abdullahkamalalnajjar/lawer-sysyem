@@ -1,7 +1,9 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
+  "/bailiffs/page": "app/bailiffs/page.js",
   "/cases/page": "app/cases/page.js",
+  "/clients/page": "app/clients/page.js",
   "/dashboard/page": "app/dashboard/page.js",
+  "/finance/page": "app/finance/page.js",
   "/login/page": "app/login/page.js",
   "/page": "app/page.js",
   "/sessions/agenda/page": "app/sessions/agenda/page.js",
