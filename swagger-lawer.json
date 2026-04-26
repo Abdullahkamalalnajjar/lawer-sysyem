@@ -810,6 +810,600 @@
         }
       }
     },
+    "/api/bailiff-notices": {
+      "get": {
+        "tags": [
+          "BailiffNotices"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BailiffNoticeDtoIReadOnlyListResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BailiffNoticeDtoIReadOnlyListResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BailiffNoticeDtoIReadOnlyListResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "BailiffNotices"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBailiffNoticeCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBailiffNoticeCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBailiffNoticeCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BailiffNoticeDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BailiffNoticeDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BailiffNoticeDtoResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bailiff-notices/{id}": {
+      "get": {
+        "tags": [
+          "BailiffNotices"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BailiffNoticeDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BailiffNoticeDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BailiffNoticeDtoResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "BailiffNotices"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBailiffNoticeRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBailiffNoticeRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBailiffNoticeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BailiffNoticeDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BailiffNoticeDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BailiffNoticeDtoResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "BailiffNotices"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bailiff-notices/{id}/request-visibility": {
+      "post": {
+        "tags": [
+          "BailiffNotices"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestVisibilityRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestVisibilityRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestVisibilityRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/bailiff-notices/{id}/verify-visibility": {
+      "post": {
+        "tags": [
+          "BailiffNotices"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyVisibilityRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyVisibilityRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyVisibilityRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BailiffNoticeDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BailiffNoticeDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BailiffNoticeDtoResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/cases/{caseId}/attachments": {
       "post": {
         "tags": [
@@ -1936,6 +2530,1132 @@
         }
       }
     },
+    "/api/daily-accounts": {
+      "get": {
+        "tags": [
+          "DailyAccounts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAccountDtoIReadOnlyListResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAccountDtoIReadOnlyListResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAccountDtoIReadOnlyListResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DailyAccounts"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDailyAccountCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDailyAccountCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDailyAccountCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAccountDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAccountDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAccountDtoResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/daily-accounts/{id}": {
+      "get": {
+        "tags": [
+          "DailyAccounts"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAccountDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAccountDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAccountDtoResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "DailyAccounts"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDailyAccountRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDailyAccountRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDailyAccountRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAccountDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAccountDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAccountDtoResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DailyAccounts"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/daily-attachments": {
+      "get": {
+        "tags": [
+          "DailyAttachments"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAttachmentDtoIReadOnlyListResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAttachmentDtoIReadOnlyListResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAttachmentDtoIReadOnlyListResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DailyAttachments"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDailyAttachmentCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDailyAttachmentCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDailyAttachmentCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAttachmentDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAttachmentDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAttachmentDtoResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/daily-attachments/{id}": {
+      "get": {
+        "tags": [
+          "DailyAttachments"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAttachmentDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAttachmentDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAttachmentDtoResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "DailyAttachments"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDailyAttachmentRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDailyAttachmentRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDailyAttachmentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAttachmentDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAttachmentDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAttachmentDtoResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DailyAttachments"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/daily-attachments/{id}/images": {
+      "post": {
+        "tags": [
+          "DailyAttachments"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "File": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "File": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAttachmentImageDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAttachmentImageDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DailyAttachmentImageDtoResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/financial-records": {
       "get": {
         "tags": [
@@ -2425,6 +4145,376 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/notes": {
+      "get": {
+        "tags": [
+          "Notes"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NoteDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NoteDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NoteDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Notes"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNoteCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNoteCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNoteCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoteDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoteDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoteDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/notes/{id}": {
+      "get": {
+        "tags": [
+          "Notes"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoteDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoteDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoteDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Notes"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateNoteCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateNoteCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateNoteCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Notes"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/OfficeExpenses": {
+      "get": {
+        "tags": [
+          "OfficeExpenses"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OfficeExpenseDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OfficeExpenseDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OfficeExpenseDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "OfficeExpenses"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOfficeExpenseCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOfficeExpenseCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOfficeExpenseCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OfficeExpenseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OfficeExpenseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OfficeExpenseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/OfficeExpenses/{id}": {
+      "get": {
+        "tags": [
+          "OfficeExpenses"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OfficeExpenseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OfficeExpenseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OfficeExpenseDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "OfficeExpenses"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOfficeExpenseCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOfficeExpenseCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOfficeExpenseCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "OfficeExpenses"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -2921,6 +5011,201 @@
           }
         }
       }
+    },
+    "/api/sessions/calendar": {
+      "get": {
+        "tags": [
+          "Sessions"
+        ],
+        "parameters": [
+          {
+            "name": "startDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionCalendarDtoIReadOnlyListResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionCalendarDtoIReadOnlyListResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionCalendarDtoIReadOnlyListResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sessions/today": {
+      "post": {
+        "tags": [
+          "Sessions"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSessionForTodayRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSessionForTodayRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSessionForTodayRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDtoResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDtoResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionDtoResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3076,6 +5361,103 @@
         },
         "additionalProperties": false
       },
+      "BailiffNoticeDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "place": {
+            "type": "string",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "isVisible": {
+            "type": "boolean"
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BailiffNoticeAttachmentDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BailiffNoticeDtoIReadOnlyListResult": {
+        "type": "object",
+        "properties": {
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isError": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BailiffNoticeDto"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "topError": {
+            "$ref": "#/components/schemas/Error"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BailiffNoticeDtoResult": {
+        "type": "object",
+        "properties": {
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isError": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "value": {
+            "$ref": "#/components/schemas/BailiffNoticeDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "topError": {
+            "$ref": "#/components/schemas/Error"
+          }
+        },
+        "additionalProperties": false
+      },
       "CaseAttachmentDto": {
         "type": "object",
         "properties": {
@@ -3164,6 +5546,13 @@
           "numberOfSessions": {
             "type": "integer",
             "format": "int32"
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CaseAttachmentDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3338,6 +5727,10 @@
             "type": "string",
             "nullable": true
           },
+          "caseNumber": {
+            "type": "string",
+            "nullable": true
+          },
           "numberOfCases": {
             "type": "integer",
             "format": "int32"
@@ -3406,6 +5799,31 @@
         },
         "additionalProperties": false
       },
+      "CreateBailiffNoticeCommand": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "place": {
+            "type": "string",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "isVisible": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateCaseCommand": {
         "type": "object",
         "properties": {
@@ -3450,6 +5868,46 @@
           "address": {
             "type": "string",
             "nullable": true
+          },
+          "caseNumber": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateDailyAccountCommand": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "userId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateDailyAttachmentCommand": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "clientName": {
+            "type": "string",
+            "nullable": true
+          },
+          "caseNumber": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3457,21 +5915,57 @@
       "CreateFinancialRecordCommand": {
         "type": "object",
         "properties": {
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "depositNumber": {
-            "type": "string",
-            "nullable": true
-          },
           "clientId": {
             "type": "string",
             "format": "uuid"
           },
-          "caseId": {
+          "caseNumber": {
             "type": "string",
-            "format": "uuid"
+            "nullable": true
+          },
+          "agreedAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "currentAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "finalTotal": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateNoteCommand": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateOfficeExpenseCommand": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3502,6 +5996,263 @@
           "sessionType": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateSessionForTodayRequest": {
+        "type": "object",
+        "properties": {
+          "roll": {
+            "type": "string",
+            "nullable": true
+          },
+          "decision": {
+            "type": "string",
+            "nullable": true
+          },
+          "caseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "requests": {
+            "type": "string",
+            "nullable": true
+          },
+          "sessionType": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DailyAccountDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DailyAccountDtoIReadOnlyListResult": {
+        "type": "object",
+        "properties": {
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isError": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DailyAccountDto"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "topError": {
+            "$ref": "#/components/schemas/Error"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DailyAccountDtoResult": {
+        "type": "object",
+        "properties": {
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isError": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "value": {
+            "$ref": "#/components/schemas/DailyAccountDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "topError": {
+            "$ref": "#/components/schemas/Error"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DailyAttachmentDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "clientName": {
+            "type": "string",
+            "nullable": true
+          },
+          "caseNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DailyAttachmentImageDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DailyAttachmentDtoIReadOnlyListResult": {
+        "type": "object",
+        "properties": {
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isError": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DailyAttachmentDto"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "topError": {
+            "$ref": "#/components/schemas/Error"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DailyAttachmentDtoResult": {
+        "type": "object",
+        "properties": {
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isError": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "value": {
+            "$ref": "#/components/schemas/DailyAttachmentDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "topError": {
+            "$ref": "#/components/schemas/Error"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DailyAttachmentImageDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "dailyAttachmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "filePath": {
+            "type": "string",
+            "nullable": true
+          },
+          "fileName": {
+            "type": "string",
+            "nullable": true
+          },
+          "fileType": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DailyAttachmentImageDtoResult": {
+        "type": "object",
+        "properties": {
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isError": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "value": {
+            "$ref": "#/components/schemas/DailyAttachmentImageDto"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "topError": {
+            "$ref": "#/components/schemas/Error"
           }
         },
         "additionalProperties": false
@@ -3577,21 +6328,25 @@
             "type": "string",
             "format": "uuid"
           },
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "depositNumber": {
-            "type": "string",
-            "nullable": true
-          },
           "clientId": {
             "type": "string",
             "format": "uuid"
           },
-          "caseId": {
+          "caseNumber": {
             "type": "string",
-            "format": "uuid"
+            "nullable": true
+          },
+          "agreedAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "currentAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "finalTotal": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false
@@ -3676,6 +6431,24 @@
         },
         "additionalProperties": false
       },
+      "NoteDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ObjectResult": {
         "type": "object",
         "properties": {
@@ -3701,6 +6474,28 @@
           },
           "topError": {
             "$ref": "#/components/schemas/Error"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OfficeExpenseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3782,6 +6577,16 @@
         },
         "additionalProperties": false
       },
+      "RequestVisibilityRequest": {
+        "type": "object",
+        "properties": {
+          "memberUserId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RestoreDeletedUserRequest": {
         "required": [
           "email",
@@ -3797,6 +6602,85 @@
           "password": {
             "minLength": 1,
             "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SessionCalendarDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "roll": {
+            "type": "string",
+            "nullable": true
+          },
+          "decision": {
+            "type": "string",
+            "nullable": true
+          },
+          "sessionDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "caseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "caseNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "clientName": {
+            "type": "string",
+            "nullable": true
+          },
+          "opponentName": {
+            "type": "string",
+            "nullable": true
+          },
+          "sessionType": {
+            "type": "string",
+            "nullable": true
+          },
+          "requests": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SessionCalendarDtoIReadOnlyListResult": {
+        "type": "object",
+        "properties": {
+          "isSuccess": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isError": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SessionCalendarDto"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "topError": {
+            "$ref": "#/components/schemas/Error"
           }
         },
         "additionalProperties": false
@@ -3942,6 +6826,35 @@
         },
         "additionalProperties": false
       },
+      "UpdateBailiffNoticeRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "place": {
+            "type": "string",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "isVisible": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "UpdateCaseRequest": {
         "type": "object",
         "properties": {
@@ -3994,6 +6907,61 @@
           "address": {
             "type": "string",
             "nullable": true
+          },
+          "caseNumber": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateDailyAccountRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "userId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateDailyAttachmentRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "clientName": {
+            "type": "string",
+            "nullable": true
+          },
+          "caseNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DailyAttachmentImageDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4005,21 +6973,65 @@
             "type": "string",
             "format": "uuid"
           },
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "depositNumber": {
-            "type": "string",
-            "nullable": true
-          },
           "clientId": {
             "type": "string",
             "format": "uuid"
           },
-          "caseId": {
+          "caseNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "agreedAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "currentAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "finalTotal": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateNoteCommand": {
+        "type": "object",
+        "properties": {
+          "id": {
             "type": "string",
             "format": "uuid"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateOfficeExpenseCommand": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4086,6 +7098,20 @@
           },
           "topError": {
             "$ref": "#/components/schemas/Error"
+          }
+        },
+        "additionalProperties": false
+      },
+      "VerifyVisibilityRequest": {
+        "type": "object",
+        "properties": {
+          "memberUserId": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

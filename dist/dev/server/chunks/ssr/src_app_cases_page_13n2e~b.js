@@ -164,7 +164,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                 style: {
                     position: 'fixed',
                     inset: 0,
-                    background: 'rgba(30,8,8,0.35)',
+                    background: 'rgba(15,23,42,0.35)',
                     backdropFilter: 'blur(3px)',
                     zIndex: 200,
                     animation: 'fadeIn 0.2s ease'
@@ -182,18 +182,18 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                     left: 0,
                     bottom: 0,
                     background: '#fff',
-                    boxShadow: '-8px 0 48px rgba(192,57,43,0.18)',
+                    boxShadow: '-8px 0 48px rgba(15,118,110,0.18)',
                     zIndex: 201,
                     display: 'flex',
                     flexDirection: 'column',
                     animation: 'slideInLeft 0.28s cubic-bezier(0.22,1,0.36,1)',
-                    borderRight: '1px solid rgba(192,57,43,0.12)'
+                    borderRight: '1px solid rgba(15,118,110,0.12)'
                 },
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         style: {
                             padding: '20px 24px',
-                            background: 'linear-gradient(135deg, #8b1a1a 0%, #c0392b 60%, #e74c3c 100%)',
+                            background: 'linear-gradient(135deg, #0f5e56 0%, #0f766e 60%, #14b8a6 100%)',
                             display: 'flex',
                             alignItems: 'flex-start',
                             justifyContent: 'space-between',
@@ -327,7 +327,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         style: {
                             display: 'flex',
-                            borderBottom: '2px solid rgba(192,57,43,0.10)',
+                            borderBottom: '2px solid rgba(15,118,110,0.10)',
                             flexShrink: 0
                         },
                         children: [
@@ -349,8 +349,8 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                     cursor: 'pointer',
                                     fontSize: '13px',
                                     fontWeight: tab === t.id ? '800' : '500',
-                                    color: tab === t.id ? '#c0392b' : '#9b7070',
-                                    borderBottom: tab === t.id ? '2px solid #c0392b' : '2px solid transparent',
+                                    color: tab === t.id ? '#0f766e' : '#64748b',
+                                    borderBottom: tab === t.id ? '2px solid #0f766e' : '2px solid transparent',
                                     marginBottom: '-2px',
                                     transition: 'all 0.2s',
                                     fontFamily: "'Cairo', sans-serif"
@@ -380,14 +380,14 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                 display: 'flex',
                                                 justifyContent: 'space-between',
                                                 padding: '13px 0',
-                                                borderBottom: i < infoRows.length - 1 ? '1px solid rgba(192,57,43,0.07)' : 'none',
+                                                borderBottom: i < infoRows.length - 1 ? '1px solid rgba(15,118,110,0.07)' : 'none',
                                                 alignItems: 'center'
                                             },
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     style: {
                                                         fontSize: '13px',
-                                                        color: '#9b7070',
+                                                        color: '#64748b',
                                                         fontWeight: '600'
                                                     },
                                                     children: row.label
@@ -400,7 +400,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                     style: {
                                                         fontSize: '14px',
                                                         fontWeight: row.bold ? '800' : '600',
-                                                        color: row.red ? '#c0392b' : '#1a0a0a'
+                                                        color: row.red ? '#0f766e' : '#0f172a'
                                                     },
                                                     children: row.value
                                                 }, void 0, false, {
@@ -424,7 +424,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                 onClick: ()=>onEdit(caseItem),
-                                                style: actionBtnStyle('#c0392b', '#fff'),
+                                                style: actionBtnStyle('#0f766e', '#fff'),
                                                 children: "✏️  تعديل بيانات القضية"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
@@ -433,7 +433,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                 onClick: ()=>setTab('attachments'),
-                                                style: actionBtnStyle('transparent', '#c0392b', '1.5px solid #c0392b'),
+                                                style: actionBtnStyle('transparent', '#0f766e', '1.5px solid #0f766e'),
                                                 children: "📎  إضافة مرافقة"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
@@ -457,7 +457,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         style: {
                                             fontSize: '13px',
-                                            color: '#9b7070',
+                                            color: '#64748b',
                                             marginBottom: '18px'
                                         },
                                         children: "ارفع المستندات والمرافقات المتعلقة بهذه القضية"
@@ -479,11 +479,11 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                             flexDirection: 'column',
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            border: `2px dashed ${dragOver ? '#c0392b' : file ? '#e74c3c' : 'rgba(192,57,43,0.25)'}`,
+                                            border: `2px dashed ${dragOver ? '#0f766e' : file ? '#14b8a6' : 'rgba(15,118,110,0.25)'}`,
                                             borderRadius: '14px',
                                             padding: '32px 20px',
                                             cursor: 'pointer',
-                                            background: dragOver ? 'rgba(192,57,43,0.06)' : file ? 'rgba(192,57,43,0.03)' : '#fdf9f9',
+                                            background: dragOver ? 'rgba(15,118,110,0.06)' : file ? 'rgba(15,118,110,0.03)' : '#fdf9f9',
                                             transition: 'all 0.2s ease',
                                             gap: '10px',
                                             textAlign: 'center'
@@ -502,7 +502,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 style: {
                                                     fontWeight: '700',
-                                                    color: '#1a0a0a',
+                                                    color: '#0f172a',
                                                     fontSize: '14px'
                                                 },
                                                 children: file ? file.name : 'اسحب الملف هنا أو اضغط للاختيار'
@@ -514,7 +514,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                             file ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 style: {
                                                     fontSize: '12px',
-                                                    color: '#9b7070'
+                                                    color: '#64748b'
                                                 },
                                                 children: [
                                                     (file.size / 1024).toFixed(1),
@@ -528,7 +528,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 style: {
                                                     fontSize: '12px',
-                                                    color: '#9b7070'
+                                                    color: '#64748b'
                                                 },
                                                 children: "PDF, Word, صور — حجم أقصى 10 MB"
                                             }, void 0, false, {
@@ -566,7 +566,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                 onClick: handleUpload,
                                                 disabled: !file || uploading,
                                                 style: {
-                                                    ...actionBtnStyle('#c0392b', '#fff'),
+                                                    ...actionBtnStyle('#0f766e', '#fff'),
                                                     flex: 1,
                                                     opacity: !file || uploading ? 0.55 : 1,
                                                     cursor: !file || uploading ? 'not-allowed' : 'pointer'
@@ -582,7 +582,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                     setFile(null);
                                                     if (fileRef.current) fileRef.current.value = '';
                                                 },
-                                                style: actionBtnStyle('transparent', '#9b7070', '1.5px solid rgba(192,57,43,0.20)'),
+                                                style: actionBtnStyle('transparent', '#64748b', '1.5px solid rgba(15,118,110,0.20)'),
                                                 children: "✕ إلغاء"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/cases/page.js",
@@ -604,7 +604,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                 style: {
                                                     fontSize: '12px',
                                                     fontWeight: '800',
-                                                    color: '#9b7070',
+                                                    color: '#64748b',
                                                     letterSpacing: '1px',
                                                     textTransform: 'uppercase',
                                                     marginBottom: '12px'
@@ -630,7 +630,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                     const imgUrl = att._localUrl || (att.filePath ? `${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$lib$2f$api$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["BASE_URL"]}/${att.filePath}` : null);
                                                     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         style: {
-                                                            border: '1px solid rgba(192,57,43,0.12)',
+                                                            border: '1px solid rgba(15,118,110,0.12)',
                                                             borderRadius: '12px',
                                                             overflow: 'hidden',
                                                             background: '#fdf9f9'
@@ -648,7 +648,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                                         maxHeight: '200px',
                                                                         objectFit: 'cover',
                                                                         display: 'block',
-                                                                        borderBottom: '1px solid rgba(192,57,43,0.10)'
+                                                                        borderBottom: '1px solid rgba(15,118,110,0.10)'
                                                                     }
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/cases/page.js",
@@ -688,7 +688,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                                                 style: {
                                                                                     fontSize: '12.5px',
                                                                                     fontWeight: '700',
-                                                                                    color: '#1a0a0a',
+                                                                                    color: '#0f172a',
                                                                                     overflow: 'hidden',
                                                                                     textOverflow: 'ellipsis',
                                                                                     whiteSpace: 'nowrap'
@@ -702,7 +702,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                                 style: {
                                                                                     fontSize: '11px',
-                                                                                    color: '#9b7070',
+                                                                                    color: '#64748b',
                                                                                     marginTop: '2px'
                                                                                 },
                                                                                 children: att.fileType
@@ -758,7 +758,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         style: {
                                             textAlign: 'center',
-                                            color: '#d4bfbf',
+                                            color: '#b0bec5',
                                             fontSize: '13px',
                                             marginTop: '28px'
                                         },
@@ -796,7 +796,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         style: {
                             padding: '16px 24px',
-                            borderTop: '1px solid rgba(192,57,43,0.08)',
+                            borderTop: '1px solid rgba(15,118,110,0.08)',
                             background: '#fdf9f9',
                             flexShrink: 0,
                             display: 'flex',
@@ -805,7 +805,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: onClose,
                             style: {
-                                ...actionBtnStyle('transparent', '#9b7070', '1.5px solid rgba(192,57,43,0.20)'),
+                                ...actionBtnStyle('transparent', '#64748b', '1.5px solid rgba(15,118,110,0.20)'),
                                 padding: '8px 20px',
                                 fontSize: '13px'
                             },
@@ -876,7 +876,7 @@ const actionBtnStyle = (bg, color, border = 'none')=>({
         cursor: 'pointer',
         fontFamily: "'Cairo', sans-serif",
         transition: 'all 0.18s',
-        boxShadow: bg === '#c0392b' ? '0 4px 14px rgba(192,57,43,0.28)' : 'none',
+        boxShadow: bg === '#0f766e' ? '0 4px 14px rgba(15,118,110,0.28)' : 'none',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -1727,8 +1727,8 @@ function CasesContent() {
                                             onClick: ()=>setDetail(c),
                                             style: {
                                                 cursor: 'pointer',
-                                                background: detailCase?.id === c.id ? 'rgba(192,57,43,0.05)' : undefined,
-                                                borderRight: detailCase?.id === c.id ? '3px solid #c0392b' : '3px solid transparent'
+                                                background: detailCase?.id === c.id ? 'rgba(15,118,110,0.05)' : undefined,
+                                                borderRight: detailCase?.id === c.id ? '3px solid #0f766e' : '3px solid transparent'
                                             },
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1743,7 +1743,7 @@ function CasesContent() {
                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         style: {
                                                             fontWeight: '800',
-                                                            color: '#c0392b',
+                                                            color: '#0f766e',
                                                             fontSize: '14px'
                                                         },
                                                         children: c.caseNumber

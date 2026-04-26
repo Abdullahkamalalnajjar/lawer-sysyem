@@ -16,15 +16,23 @@ function Sidebar({ currentPath, isOpen, onClose }) {
   const router = useRouter()
   const { user, logout } = useApp()
 
+  const isManager = user?.roles?.includes('Manager')
+
   const navItems = [
-    { href: '/dashboard', icon: '🏛️', label: 'لوحة التحكم' },
-    { href: '/clients',   icon: '👥', label: 'الموكلين' },
-    { href: '/cases',     icon: '⚖️', label: 'القضايا' },
-    { href: '/sessions',  icon: '📋', label: 'الجلسات' },
+    { href: '/dashboard',       icon: '🏛️', label: 'لوحة التحكم' },
+    { href: '/clients',         icon: '👥', label: 'الموكلين' },
+    { href: '/cases',           icon: '⚖️', label: 'القضايا' },
+    { href: '/sessions',        icon: '📋', label: 'الجلسات' },
     { href: '/sessions/agenda', icon: '📅', label: 'الأجندة' },
-    { href: '/bailiffs',  icon: '📜', label: 'المحضرين' },
-    { href: '/finance',   icon: '💰', label: 'المالية' },
+    { href: '/bailiffs',        icon: '📁', label: 'شغل إداري' },
+    { href: '/finance',         icon: '💰', label: 'المالية',           managerOnly: true },
+    { href: '/daily-accounts',  icon: '📊', label: 'الحسابات اليومية',  managerOnly: true },
+    { href: '/notes',           icon: '📝', label: 'الملاحظات',          managerOnly: true },
+    { href: '/office-expenses', icon: '🏢', label: 'مصروفات المكتب',    managerOnly: true },
+    { href: '/users',           icon: '👥', label: 'المستخدمين',        managerOnly: true },
   ]
+
+  const visibleItems = navItems.filter(item => !item.managerOnly || isManager)
 
   return (
     <aside className={`sidebar ${isOpen ? 'sidebar-open' : ''}`}>
@@ -32,8 +40,8 @@ function Sidebar({ currentPath, isOpen, onClose }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '13px' }}>
           <div className="sidebar-logo-icon">⚖️</div>
           <div className="sidebar-logo-text">
-            <h1>نظام المحاماة</h1>
-            <p>إدارة قانونية متكاملة</p>
+            <h1>مؤسسة اليقين</h1>
+            <p>الأستاذ / محمود البلوي</p>
           </div>
         </div>
         <button className="sidebar-close-btn" onClick={onClose} aria-label="إغلاق القائمة">✕</button>
@@ -41,7 +49,7 @@ function Sidebar({ currentPath, isOpen, onClose }) {
 
       <nav className="sidebar-nav">
         <p className="sidebar-section-title">القائمة الرئيسية</p>
-        {navItems.map(item => (
+        {visibleItems.map(item => (
           <a
             key={item.href}
             href={item.href}
@@ -148,7 +156,7 @@ export function AppProvider({ children }) {
 }
 
 // ==================== AUTH GUARD ====================
-export function AuthGuard({ children, title }) {
+export function AuthGuard({ children, title, requiredRole }) {
   const { user, initialized } = useApp()
   const router = useRouter()
   const pathname = usePathname()
@@ -161,12 +169,32 @@ export function AuthGuard({ children, title }) {
     }
   }, [user, initialized, router])
 
+  // Role-based access control
+  useEffect(() => {
+    if (initialized && user && requiredRole) {
+      const hasRole = user.roles?.includes(requiredRole)
+      if (!hasRole) {
+        router.push('/dashboard')
+      }
+    }
+  }, [initialized, user, requiredRole, router])
+
   if (!initialized || !user) {
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', flexDirection: 'column', gap: '16px' }}>
         <div style={{ fontSize: '36px', animation: 'spin 1s linear infinite' }}>⚖️</div>
         <div style={{ color: 'var(--text-muted)', fontSize: '14px' }}>جارٍ التحقق من الهوية...</div>
         <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); }}`}</style>
+      </div>
+    )
+  }
+
+  // Block render if role is required and user doesn't have it
+  if (requiredRole && !user.roles?.includes(requiredRole)) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', flexDirection: 'column', gap: '16px' }}>
+        <div style={{ fontSize: '48px' }}>🔒</div>
+        <div style={{ color: 'var(--text-muted)', fontSize: '16px', fontWeight: '600' }}>غير مصرح بالوصول لهذه الصفحة</div>
       </div>
     )
   }

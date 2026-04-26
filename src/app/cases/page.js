@@ -90,7 +90,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
         onClick={onClose}
         style={{
           position: 'fixed', inset: 0,
-          background: 'rgba(30,8,8,0.35)',
+          background: 'rgba(15,23,42,0.35)',
           backdropFilter: 'blur(3px)',
           zIndex: 200,
           animation: 'fadeIn 0.2s ease',
@@ -101,17 +101,17 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
       <div className="case-drawer" style={{
         position: 'fixed', top: 0, left: 0, bottom: 0,
         background: '#fff',
-        boxShadow: '-8px 0 48px rgba(192,57,43,0.18)',
+        boxShadow: '-8px 0 48px rgba(15,118,110,0.18)',
         zIndex: 201,
         display: 'flex', flexDirection: 'column',
         animation: 'slideInLeft 0.28s cubic-bezier(0.22,1,0.36,1)',
-        borderRight: '1px solid rgba(192,57,43,0.12)',
+        borderRight: '1px solid rgba(15,118,110,0.12)',
       }}>
 
         {/* ── Header ── */}
         <div style={{
           padding: '20px 24px',
-          background: 'linear-gradient(135deg, #8b1a1a 0%, #c0392b 60%, #e74c3c 100%)',
+          background: 'linear-gradient(135deg, #0f5e56 0%, #0f766e 60%, #14b8a6 100%)',
           display: 'flex', alignItems: 'flex-start',
           justifyContent: 'space-between', gap: '12px',
           flexShrink: 0,
@@ -136,7 +136,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
         </div>
 
         {/* ── Tabs ── */}
-        <div style={{ display: 'flex', borderBottom: '2px solid rgba(192,57,43,0.10)', flexShrink: 0 }}>
+        <div style={{ display: 'flex', borderBottom: '2px solid rgba(15,118,110,0.10)', flexShrink: 0 }}>
           {[
             { id: 'info',        label: '📋 معلومات القضية' },
             { id: 'attachments', label: `📎 المرافقات${allAttachments.length ? ` (${allAttachments.length})` : ''}` },
@@ -148,8 +148,8 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                 flex: 1, padding: '13px 8px',
                 background: 'none', border: 'none', cursor: 'pointer',
                 fontSize: '13px', fontWeight: tab === t.id ? '800' : '500',
-                color: tab === t.id ? '#c0392b' : '#9b7070',
-                borderBottom: tab === t.id ? '2px solid #c0392b' : '2px solid transparent',
+                color: tab === t.id ? '#0f766e' : '#64748b',
+                borderBottom: tab === t.id ? '2px solid #0f766e' : '2px solid transparent',
                 marginBottom: '-2px',
                 transition: 'all 0.2s',
                 fontFamily: "'Cairo', sans-serif",
@@ -170,14 +170,14 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                 <div key={i} style={{
                   display: 'flex', justifyContent: 'space-between',
                   padding: '13px 0',
-                  borderBottom: i < infoRows.length - 1 ? '1px solid rgba(192,57,43,0.07)' : 'none',
+                  borderBottom: i < infoRows.length - 1 ? '1px solid rgba(15,118,110,0.07)' : 'none',
                   alignItems: 'center',
                 }}>
-                  <span style={{ fontSize: '13px', color: '#9b7070', fontWeight: '600' }}>{row.label}</span>
+                  <span style={{ fontSize: '13px', color: '#64748b', fontWeight: '600' }}>{row.label}</span>
                   <span style={{
                     fontSize: '14px',
                     fontWeight: row.bold ? '800' : '600',
-                    color: row.red ? '#c0392b' : '#1a0a0a',
+                    color: row.red ? '#0f766e' : '#0f172a',
                   }}>
                     {row.value}
                   </span>
@@ -188,13 +188,13 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
               <div style={{ marginTop: '28px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <button
                   onClick={() => onEdit(caseItem)}
-                  style={actionBtnStyle('#c0392b', '#fff')}
+                  style={actionBtnStyle('#0f766e', '#fff')}
                 >
                   ✏️ &nbsp;تعديل بيانات القضية
                 </button>
                 <button
                   onClick={() => setTab('attachments')}
-                  style={actionBtnStyle('transparent', '#c0392b', '1.5px solid #c0392b')}
+                  style={actionBtnStyle('transparent', '#0f766e', '1.5px solid #0f766e')}
                 >
                   📎 &nbsp;إضافة مرافقة
                 </button>
@@ -205,7 +205,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
           {/* ── ATTACHMENTS TAB ── */}
           {tab === 'attachments' && (
             <div>
-              <p style={{ fontSize: '13px', color: '#9b7070', marginBottom: '18px' }}>
+              <p style={{ fontSize: '13px', color: '#64748b', marginBottom: '18px' }}>
                 ارفع المستندات والمرافقات المتعلقة بهذه القضية
               </p>
 
@@ -218,26 +218,26 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                 style={{
                   display: 'flex', flexDirection: 'column',
                   alignItems: 'center', justifyContent: 'center',
-                  border: `2px dashed ${dragOver ? '#c0392b' : file ? '#e74c3c' : 'rgba(192,57,43,0.25)'}`,
+                  border: `2px dashed ${dragOver ? '#0f766e' : file ? '#14b8a6' : 'rgba(15,118,110,0.25)'}`,
                   borderRadius: '14px',
                   padding: '32px 20px', cursor: 'pointer',
                   background: dragOver
-                    ? 'rgba(192,57,43,0.06)'
-                    : file ? 'rgba(192,57,43,0.03)' : '#fdf9f9',
+                    ? 'rgba(15,118,110,0.06)'
+                    : file ? 'rgba(15,118,110,0.03)' : '#fdf9f9',
                   transition: 'all 0.2s ease', gap: '10px',
                   textAlign: 'center',
                 }}
               >
                 <span style={{ fontSize: '36px' }}>{fileIcon}</span>
-                <span style={{ fontWeight: '700', color: '#1a0a0a', fontSize: '14px' }}>
+                <span style={{ fontWeight: '700', color: '#0f172a', fontSize: '14px' }}>
                   {file ? file.name : 'اسحب الملف هنا أو اضغط للاختيار'}
                 </span>
                 {file ? (
-                  <span style={{ fontSize: '12px', color: '#9b7070' }}>
+                  <span style={{ fontSize: '12px', color: '#64748b' }}>
                     {(file.size / 1024).toFixed(1)} KB — {file.type || ext}
                   </span>
                 ) : (
-                  <span style={{ fontSize: '12px', color: '#9b7070' }}>
+                  <span style={{ fontSize: '12px', color: '#64748b' }}>
                     PDF, Word, صور — حجم أقصى 10 MB
                   </span>
                 )}
@@ -256,7 +256,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                   onClick={handleUpload}
                   disabled={!file || uploading}
                   style={{
-                    ...actionBtnStyle('#c0392b', '#fff'),
+                    ...actionBtnStyle('#0f766e', '#fff'),
                     flex: 1,
                     opacity: (!file || uploading) ? 0.55 : 1,
                     cursor: (!file || uploading) ? 'not-allowed' : 'pointer',
@@ -267,7 +267,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                 {file && (
                   <button
                     onClick={() => { setFile(null); if (fileRef.current) fileRef.current.value = '' }}
-                    style={actionBtnStyle('transparent', '#9b7070', '1.5px solid rgba(192,57,43,0.20)')}
+                    style={actionBtnStyle('transparent', '#64748b', '1.5px solid rgba(15,118,110,0.20)')}
                   >
                     ✕ إلغاء
                   </button>
@@ -277,7 +277,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
               {/* ── Existing + new attachment list ── */}
               {allAttachments.length > 0 ? (
                 <div style={{ marginTop: '24px' }}>
-                  <div style={{ fontSize: '12px', fontWeight: '800', color: '#9b7070', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '12px' }}>
+                  <div style={{ fontSize: '12px', fontWeight: '800', color: '#64748b', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '12px' }}>
                     المرافقات ({allAttachments.length})
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -286,7 +286,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                       const imgUrl  = att._localUrl || (att.filePath ? `${BASE_URL}/${att.filePath}` : null)
                       return (
                         <div key={att.id || i} style={{
-                          border: '1px solid rgba(192,57,43,0.12)',
+                          border: '1px solid rgba(15,118,110,0.12)',
                           borderRadius: '12px',
                           overflow: 'hidden',
                           background: '#fdf9f9',
@@ -302,7 +302,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                                   maxHeight: '200px',
                                   objectFit: 'cover',
                                   display: 'block',
-                                  borderBottom: '1px solid rgba(192,57,43,0.10)',
+                                  borderBottom: '1px solid rgba(15,118,110,0.10)',
                                 }}
                               />
                             </a>
@@ -316,10 +316,10 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                               {isImage ? '🖼️' : att.fileType?.includes('pdf') ? '📑' : '📄'}
                             </span>
                             <div style={{ flex: 1, minWidth: 0 }}>
-                              <div style={{ fontSize: '12.5px', fontWeight: '700', color: '#1a0a0a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                              <div style={{ fontSize: '12.5px', fontWeight: '700', color: '#0f172a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                 {att.fileName}
                               </div>
-                              <div style={{ fontSize: '11px', color: '#9b7070', marginTop: '2px' }}>
+                              <div style={{ fontSize: '11px', color: '#64748b', marginTop: '2px' }}>
                                 {att.fileType}
                               </div>
                             </div>
@@ -341,7 +341,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                   </div>
                 </div>
               ) : (
-                <div style={{ textAlign: 'center', color: '#d4bfbf', fontSize: '13px', marginTop: '28px' }}>
+                <div style={{ textAlign: 'center', color: '#b0bec5', fontSize: '13px', marginTop: '28px' }}>
                   <div style={{ fontSize: '36px', marginBottom: '8px' }}>📁</div>
                   لا توجد مرافقات بعد
                 </div>
@@ -353,12 +353,12 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
         {/* ── Footer ── */}
         <div style={{
           padding: '16px 24px',
-          borderTop: '1px solid rgba(192,57,43,0.08)',
+          borderTop: '1px solid rgba(15,118,110,0.08)',
           background: '#fdf9f9',
           flexShrink: 0,
           display: 'flex', justifyContent: 'flex-end',
         }}>
-          <button onClick={onClose} style={{ ...actionBtnStyle('transparent', '#9b7070', '1.5px solid rgba(192,57,43,0.20)'), padding: '8px 20px', fontSize: '13px' }}>
+          <button onClick={onClose} style={{ ...actionBtnStyle('transparent', '#64748b', '1.5px solid rgba(15,118,110,0.20)'), padding: '8px 20px', fontSize: '13px' }}>
             إغلاق
           </button>
         </div>
@@ -394,7 +394,7 @@ const actionBtnStyle = (bg, color, border = 'none') => ({
   fontWeight: '700', fontSize: '13.5px',
   cursor: 'pointer', fontFamily: "'Cairo', sans-serif",
   transition: 'all 0.18s',
-  boxShadow: bg === '#c0392b' ? '0 4px 14px rgba(192,57,43,0.28)' : 'none',
+  boxShadow: bg === '#0f766e' ? '0 4px 14px rgba(15,118,110,0.28)' : 'none',
   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
 })
 
@@ -618,13 +618,13 @@ function CasesContent() {
                     onClick={() => setDetail(c)}
                     style={{
                       cursor: 'pointer',
-                      background: detailCase?.id === c.id ? 'rgba(192,57,43,0.05)' : undefined,
-                      borderRight: detailCase?.id === c.id ? '3px solid #c0392b' : '3px solid transparent',
+                      background: detailCase?.id === c.id ? 'rgba(15,118,110,0.05)' : undefined,
+                      borderRight: detailCase?.id === c.id ? '3px solid #0f766e' : '3px solid transparent',
                     }}
                   >
                     <td className="td-secondary">{i + 1}</td>
                     <td>
-                      <span style={{ fontWeight: '800', color: '#c0392b', fontSize: '14px' }}>
+                      <span style={{ fontWeight: '800', color: '#0f766e', fontSize: '14px' }}>
                         {c.caseNumber}
                       </span>
                     </td>

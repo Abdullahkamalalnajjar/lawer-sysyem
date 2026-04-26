@@ -41,10 +41,20 @@ __turbopack_context__.s([
     ()=>createCase,
     "createClient",
     ()=>createClient,
+    "createDailyAccount",
+    ()=>createDailyAccount,
+    "createDailyAttachment",
+    ()=>createDailyAttachment,
     "createFinancialRecord",
     ()=>createFinancialRecord,
+    "createNote",
+    ()=>createNote,
+    "createOfficeExpense",
+    ()=>createOfficeExpense,
     "createSession",
     ()=>createSession,
+    "createSessionForToday",
+    ()=>createSessionForToday,
     "deleteBailiffNotice",
     ()=>deleteBailiffNotice,
     "deleteCase",
@@ -53,14 +63,24 @@ __turbopack_context__.s([
     ()=>deleteClient,
     "deleteCurrentUser",
     ()=>deleteCurrentUser,
+    "deleteDailyAccount",
+    ()=>deleteDailyAccount,
+    "deleteDailyAttachment",
+    ()=>deleteDailyAttachment,
     "deleteFinancialRecord",
     ()=>deleteFinancialRecord,
+    "deleteNote",
+    ()=>deleteNote,
+    "deleteOfficeExpense",
+    ()=>deleteOfficeExpense,
     "deleteSession",
     ()=>deleteSession,
     "deleteUser",
     ()=>deleteUser,
     "getAccessToken",
     ()=>getAccessToken,
+    "getBailiffNotice",
+    ()=>getBailiffNotice,
     "getBailiffNotices",
     ()=>getBailiffNotices,
     "getCase",
@@ -73,10 +93,28 @@ __turbopack_context__.s([
     ()=>getClients,
     "getCurrentUser",
     ()=>getCurrentUser,
+    "getDailyAccount",
+    ()=>getDailyAccount,
+    "getDailyAccounts",
+    ()=>getDailyAccounts,
+    "getDailyAttachment",
+    ()=>getDailyAttachment,
+    "getDailyAttachments",
+    ()=>getDailyAttachments,
+    "getDeletedUsers",
+    ()=>getDeletedUsers,
     "getFinancialRecord",
     ()=>getFinancialRecord,
     "getFinancialRecords",
     ()=>getFinancialRecords,
+    "getNote",
+    ()=>getNote,
+    "getNotes",
+    ()=>getNotes,
+    "getOfficeExpense",
+    ()=>getOfficeExpense,
+    "getOfficeExpenses",
+    ()=>getOfficeExpenses,
     "getRefreshToken",
     ()=>getRefreshToken,
     "getSession",
@@ -89,6 +127,10 @@ __turbopack_context__.s([
     ()=>getUsers,
     "login",
     ()=>login,
+    "requestBailiffVisibility",
+    ()=>requestBailiffVisibility,
+    "restoreDeletedUser",
+    ()=>restoreDeletedUser,
     "signup",
     ()=>signup,
     "updateBailiffNotice",
@@ -97,14 +139,26 @@ __turbopack_context__.s([
     ()=>updateCase,
     "updateClient",
     ()=>updateClient,
+    "updateDailyAccount",
+    ()=>updateDailyAccount,
+    "updateDailyAttachment",
+    ()=>updateDailyAttachment,
     "updateFinancialRecord",
     ()=>updateFinancialRecord,
+    "updateNote",
+    ()=>updateNote,
+    "updateOfficeExpense",
+    ()=>updateOfficeExpense,
     "updateSession",
     ()=>updateSession,
     "uploadBailiffNoticeAttachment",
     ()=>uploadBailiffNoticeAttachment,
     "uploadCaseAttachment",
-    ()=>uploadCaseAttachment
+    ()=>uploadCaseAttachment,
+    "uploadDailyAttachmentImage",
+    ()=>uploadDailyAttachmentImage,
+    "verifyBailiffVisibility",
+    ()=>verifyBailiffVisibility
 ]);
 const BASE_URL = 'https://lawer-api.runasp.net';
 // ── Token helpers ────────────────────────────────────────────
@@ -160,9 +214,18 @@ async function request(path, options = {}, retry = true) {
         isSuccess: true,
         value: null
     };
-    const data = await res.json();
+    // Handle empty body (e.g. 403 with no content)
+    const text = await res.text();
+    let data = null;
+    if (text) {
+        try {
+            data = JSON.parse(text);
+        } catch (e) {
+            console.warn('JSON parse failed:', e.message, text?.substring(0, 200));
+        }
+    }
     if (!res.ok) {
-        const msg = data?.topError?.description || data?.errors?.[0]?.description || data?.title || `خطأ ${res.status}`;
+        const msg = data?.topError?.description || data?.errors?.[0]?.description || data?.title || (res.status === 403 ? 'غير مصرح بالوصول' : `خطأ ${res.status}`);
         throw new Error(msg);
     }
     return data;
@@ -265,6 +328,15 @@ function getUsers() {
 function deleteUser(userId) {
     return del(`/identity/${userId}`);
 }
+function getDeletedUsers() {
+    return get('/identity/users/deleted');
+}
+function restoreDeletedUser({ email, password }) {
+    return post('/identity/restore-deleted-user', {
+        email,
+        password
+    });
+}
 async function getClients() {
     const data = await get('/api/clients');
     return toList(data);
@@ -344,6 +416,10 @@ async function getSessionsCalendar(startDate, endDate) {
     const data = await get(`/api/sessions/calendar?startDate=${startDate}&endDate=${endDate}`);
     return toList(data);
 }
+async function createSessionForToday(body) {
+    const data = await post('/api/sessions/today', body);
+    return data?.value;
+}
 async function getFinancialRecords() {
     const data = await get('/api/financial-records');
     return toList(data);
@@ -392,6 +468,10 @@ async function getBailiffNotices() {
     const data = await get('/api/bailiff-notices');
     return toList(data);
 }
+async function getBailiffNotice(id) {
+    const data = await get(`/api/bailiff-notices/${id}`);
+    return data?.value;
+}
 async function createBailiffNotice(body) {
     const data = await post('/api/bailiff-notices', body);
     return data?.value;
@@ -428,6 +508,128 @@ async function uploadBailiffNoticeAttachment(bailiffNoticeId, file) {
     const data = await res.json();
     return data?.value ?? data;
 }
+async function requestBailiffVisibility(id, memberUserId) {
+    return post(`/api/bailiff-notices/${id}/request-visibility`, {
+        memberUserId
+    });
+}
+async function verifyBailiffVisibility(id, memberUserId, code) {
+    const data = await post(`/api/bailiff-notices/${id}/verify-visibility`, {
+        memberUserId,
+        code
+    });
+    return data?.value ?? data;
+}
+async function getDailyAccounts() {
+    const data = await get('/api/daily-accounts');
+    return toList(data);
+}
+async function getDailyAccount(id) {
+    const data = await get(`/api/daily-accounts/${id}`);
+    return data?.value;
+}
+async function createDailyAccount(body) {
+    const data = await post('/api/daily-accounts', body);
+    return data?.value;
+}
+async function updateDailyAccount(id, body) {
+    const data = await put(`/api/daily-accounts/${id}`, {
+        id,
+        ...body
+    });
+    return data?.value;
+}
+function deleteDailyAccount(id) {
+    return del(`/api/daily-accounts/${id}`);
+}
+async function getDailyAttachments() {
+    const data = await get('/api/daily-attachments');
+    return toList(data);
+}
+async function getDailyAttachment(id) {
+    const data = await get(`/api/daily-attachments/${id}`);
+    return data?.value;
+}
+async function createDailyAttachment(body) {
+    const data = await post('/api/daily-attachments', body);
+    return data?.value;
+}
+async function updateDailyAttachment(id, body) {
+    const data = await put(`/api/daily-attachments/${id}`, {
+        id,
+        ...body
+    });
+    return data?.value;
+}
+function deleteDailyAttachment(id) {
+    return del(`/api/daily-attachments/${id}`);
+}
+async function uploadDailyAttachmentImage(attachmentId, file) {
+    const token = getAccessToken();
+    const formData = new FormData();
+    formData.append('File', file);
+    const res = await fetch(`${BASE_URL}/api/daily-attachments/${attachmentId}/images`, {
+        method: 'POST',
+        headers: token ? {
+            Authorization: `Bearer ${token}`
+        } : {},
+        body: formData
+    });
+    if (!res.ok) {
+        let msg = `خطأ ${res.status}`;
+        try {
+            const err = await res.json();
+            msg = err?.topError?.description || err?.errors?.[0]?.description || msg;
+        } catch  {}
+        throw new Error(msg);
+    }
+    const data = await res.json();
+    return data?.value ?? data;
+}
+async function getNotes() {
+    const data = await get('/api/notes');
+    return Array.isArray(data) ? data : toList(data);
+}
+async function getNote(id) {
+    const data = await get(`/api/notes/${id}`);
+    return data?.value ?? data;
+}
+async function createNote(body) {
+    const data = await post('/api/notes', body);
+    return data?.value ?? data;
+}
+async function updateNote(id, body) {
+    const data = await put(`/api/notes/${id}`, {
+        id,
+        ...body
+    });
+    return data?.value ?? data;
+}
+function deleteNote(id) {
+    return del(`/api/notes/${id}`);
+}
+async function getOfficeExpenses() {
+    const data = await get('/api/OfficeExpenses');
+    return Array.isArray(data) ? data : toList(data);
+}
+async function getOfficeExpense(id) {
+    const data = await get(`/api/OfficeExpenses/${id}`);
+    return data?.value ?? data;
+}
+async function createOfficeExpense(body) {
+    const data = await post('/api/OfficeExpenses', body);
+    return data?.value ?? data;
+}
+async function updateOfficeExpense(id, body) {
+    const data = await put(`/api/OfficeExpenses/${id}`, {
+        id,
+        ...body
+    });
+    return data?.value ?? data;
+}
+function deleteOfficeExpense(id) {
+    return del(`/api/OfficeExpenses/${id}`);
+}
 }),
 "[project]/src/app/components/AppShell.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
@@ -458,6 +660,7 @@ function useApp() {
 function Sidebar({ currentPath, isOpen, onClose }) {
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
     const { user, logout } = useApp();
+    const isManager = user?.roles?.includes('Manager');
     const navItems = [
         {
             href: '/dashboard',
@@ -486,15 +689,41 @@ function Sidebar({ currentPath, isOpen, onClose }) {
         },
         {
             href: '/bailiffs',
-            icon: '📜',
-            label: 'المحضرين'
+            icon: '📁',
+            label: 'شغل إداري'
         },
         {
             href: '/finance',
             icon: '💰',
-            label: 'المالية'
+            label: 'المالية',
+            managerOnly: true
+        },
+        {
+            href: '/daily-accounts',
+            icon: '📊',
+            label: 'الحسابات اليومية',
+            managerOnly: true
+        },
+        {
+            href: '/notes',
+            icon: '📝',
+            label: 'الملاحظات',
+            managerOnly: true
+        },
+        {
+            href: '/office-expenses',
+            icon: '🏢',
+            label: 'مصروفات المكتب',
+            managerOnly: true
+        },
+        {
+            href: '/users',
+            icon: '👥',
+            label: 'المستخدمين',
+            managerOnly: true
         }
     ];
+    const visibleItems = navItems.filter((item)=>!item.managerOnly || isManager);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("aside", {
         className: `sidebar ${isOpen ? 'sidebar-open' : ''}`,
         children: [
@@ -516,36 +745,36 @@ function Sidebar({ currentPath, isOpen, onClose }) {
                                 children: "⚖️"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/components/AppShell.js",
-                                lineNumber: 33,
+                                lineNumber: 41,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "sidebar-logo-text",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                        children: "نظام المحاماة"
+                                        children: "مؤسسة اليقين"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/components/AppShell.js",
-                                        lineNumber: 35,
+                                        lineNumber: 43,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        children: "إدارة قانونية متكاملة"
+                                        children: "الأستاذ / محمود البلوي"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/components/AppShell.js",
-                                        lineNumber: 36,
+                                        lineNumber: 44,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/components/AppShell.js",
-                                lineNumber: 34,
+                                lineNumber: 42,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/components/AppShell.js",
-                        lineNumber: 32,
+                        lineNumber: 40,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -555,13 +784,13 @@ function Sidebar({ currentPath, isOpen, onClose }) {
                         children: "✕"
                     }, void 0, false, {
                         fileName: "[project]/src/app/components/AppShell.js",
-                        lineNumber: 39,
+                        lineNumber: 47,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/components/AppShell.js",
-                lineNumber: 31,
+                lineNumber: 39,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -572,10 +801,10 @@ function Sidebar({ currentPath, isOpen, onClose }) {
                         children: "القائمة الرئيسية"
                     }, void 0, false, {
                         fileName: "[project]/src/app/components/AppShell.js",
-                        lineNumber: 43,
+                        lineNumber: 51,
                         columnNumber: 9
                     }, this),
-                    navItems.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                    visibleItems.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                             href: item.href,
                             className: `sidebar-link ${currentPath === item.href ? 'active' : ''}`,
                             onClick: (e)=>{
@@ -589,20 +818,20 @@ function Sidebar({ currentPath, isOpen, onClose }) {
                                     children: item.icon
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/components/AppShell.js",
-                                    lineNumber: 51,
+                                    lineNumber: 59,
                                     columnNumber: 13
                                 }, this),
                                 item.label
                             ]
                         }, item.href, true, {
                             fileName: "[project]/src/app/components/AppShell.js",
-                            lineNumber: 45,
+                            lineNumber: 53,
                             columnNumber: 11
                         }, this))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/components/AppShell.js",
-                lineNumber: 42,
+                lineNumber: 50,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -616,7 +845,7 @@ function Sidebar({ currentPath, isOpen, onClose }) {
                                 children: user?.email?.[0]?.toUpperCase() || 'م'
                             }, void 0, false, {
                                 fileName: "[project]/src/app/components/AppShell.js",
-                                lineNumber: 59,
+                                lineNumber: 67,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -626,7 +855,7 @@ function Sidebar({ currentPath, isOpen, onClose }) {
                                         children: user?.email || 'المستخدم'
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/components/AppShell.js",
-                                        lineNumber: 61,
+                                        lineNumber: 69,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -634,19 +863,19 @@ function Sidebar({ currentPath, isOpen, onClose }) {
                                         children: user?.roles?.[0] || 'محامٍ قانوني'
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/components/AppShell.js",
-                                        lineNumber: 62,
+                                        lineNumber: 70,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/components/AppShell.js",
-                                lineNumber: 60,
+                                lineNumber: 68,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/components/AppShell.js",
-                        lineNumber: 58,
+                        lineNumber: 66,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -655,19 +884,19 @@ function Sidebar({ currentPath, isOpen, onClose }) {
                         children: "تسجيل الخروج 🚪"
                     }, void 0, false, {
                         fileName: "[project]/src/app/components/AppShell.js",
-                        lineNumber: 65,
+                        lineNumber: 73,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/components/AppShell.js",
-                lineNumber: 57,
+                lineNumber: 65,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/components/AppShell.js",
-        lineNumber: 30,
+        lineNumber: 38,
         columnNumber: 5
     }, this);
 }
@@ -685,12 +914,12 @@ function Header({ onMenuToggle }) {
             children: "☰"
         }, void 0, false, {
             fileName: "[project]/src/app/components/AppShell.js",
-            lineNumber: 77,
+            lineNumber: 85,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/components/AppShell.js",
-        lineNumber: 76,
+        lineNumber: 84,
         columnNumber: 5
     }, this);
 }
@@ -711,12 +940,12 @@ function ToastContainer({ toasts, removeToast }) {
                 ]
             }, t.id, true, {
                 fileName: "[project]/src/app/components/AppShell.js",
-                lineNumber: 87,
+                lineNumber: 95,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/src/app/components/AppShell.js",
-        lineNumber: 85,
+        lineNumber: 93,
         columnNumber: 5
     }, this);
 }
@@ -788,17 +1017,17 @@ function AppProvider({ children }) {
                 removeToast: removeToast
             }, void 0, false, {
                 fileName: "[project]/src/app/components/AppShell.js",
-                lineNumber: 145,
+                lineNumber: 153,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/components/AppShell.js",
-        lineNumber: 143,
+        lineNumber: 151,
         columnNumber: 5
     }, this);
 }
-function AuthGuard({ children, title }) {
+function AuthGuard({ children, title, requiredRole }) {
     const { user, initialized } = useApp();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
     const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["usePathname"])();
@@ -810,6 +1039,20 @@ function AuthGuard({ children, title }) {
     }, [
         user,
         initialized,
+        router
+    ]);
+    // Role-based access control
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        if (initialized && user && requiredRole) {
+            const hasRole = user.roles?.includes(requiredRole);
+            if (!hasRole) {
+                router.push('/dashboard');
+            }
+        }
+    }, [
+        initialized,
+        user,
+        requiredRole,
         router
     ]);
     if (!initialized || !user) {
@@ -831,7 +1074,7 @@ function AuthGuard({ children, title }) {
                     children: "⚖️"
                 }, void 0, false, {
                     fileName: "[project]/src/app/components/AppShell.js",
-                    lineNumber: 167,
+                    lineNumber: 185,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -842,20 +1085,61 @@ function AuthGuard({ children, title }) {
                     children: "جارٍ التحقق من الهوية..."
                 }, void 0, false, {
                     fileName: "[project]/src/app/components/AppShell.js",
-                    lineNumber: 168,
+                    lineNumber: 186,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("style", {
                     children: `@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); }}`
                 }, void 0, false, {
                     fileName: "[project]/src/app/components/AppShell.js",
-                    lineNumber: 169,
+                    lineNumber: 187,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/components/AppShell.js",
-            lineNumber: 166,
+            lineNumber: 184,
+            columnNumber: 7
+        }, this);
+    }
+    // Block render if role is required and user doesn't have it
+    if (requiredRole && !user.roles?.includes(requiredRole)) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            style: {
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: '100vh',
+                flexDirection: 'column',
+                gap: '16px'
+            },
+            children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    style: {
+                        fontSize: '48px'
+                    },
+                    children: "🔒"
+                }, void 0, false, {
+                    fileName: "[project]/src/app/components/AppShell.js",
+                    lineNumber: 196,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    style: {
+                        color: 'var(--text-muted)',
+                        fontSize: '16px',
+                        fontWeight: '600'
+                    },
+                    children: "غير مصرح بالوصول لهذه الصفحة"
+                }, void 0, false, {
+                    fileName: "[project]/src/app/components/AppShell.js",
+                    lineNumber: 197,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "[project]/src/app/components/AppShell.js",
+            lineNumber: 195,
             columnNumber: 7
         }, this);
     }
@@ -867,7 +1151,7 @@ function AuthGuard({ children, title }) {
                 onClick: ()=>setIsMobileMenuOpen(false)
             }, void 0, false, {
                 fileName: "[project]/src/app/components/AppShell.js",
-                lineNumber: 177,
+                lineNumber: 205,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Sidebar, {
@@ -876,7 +1160,7 @@ function AuthGuard({ children, title }) {
                 onClose: ()=>setIsMobileMenuOpen(false)
             }, void 0, false, {
                 fileName: "[project]/src/app/components/AppShell.js",
-                lineNumber: 179,
+                lineNumber: 207,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -886,7 +1170,7 @@ function AuthGuard({ children, title }) {
                         onMenuToggle: ()=>setIsMobileMenuOpen(true)
                     }, void 0, false, {
                         fileName: "[project]/src/app/components/AppShell.js",
-                        lineNumber: 181,
+                        lineNumber: 209,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -894,19 +1178,19 @@ function AuthGuard({ children, title }) {
                         children: children
                     }, void 0, false, {
                         fileName: "[project]/src/app/components/AppShell.js",
-                        lineNumber: 182,
+                        lineNumber: 210,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/components/AppShell.js",
-                lineNumber: 180,
+                lineNumber: 208,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/components/AppShell.js",
-        lineNumber: 175,
+        lineNumber: 203,
         columnNumber: 5
     }, this);
 }

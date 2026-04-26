@@ -59,7 +59,7 @@ function DashboardContent() {
             <span>الرئيسية</span> <span>›</span> <span className="active">لوحة التحكم</span>
           </p>
           <h2>مرحباً، البيانات الشاملة</h2>
-          <p>إليك نظرة عامة على نظام إدارة المحاماة</p>
+          <p>إليك نظرة عامة على نظام مؤسسة اليقين</p>
         </div>
         <button className="btn btn-primary" onClick={() => router.push('/clients')}>
           ➕ إضافة موكل جديد
@@ -159,7 +159,7 @@ function DashboardContent() {
                 return (
                   <div key={s.id} style={{
                     padding: '14px', borderRadius: '10px',
-                    background: 'rgba(201,168,76,0.05)',
+                    background: 'rgba(15,118,110,0.05)',
                     border: '1px solid var(--border-gold)',
                     display: 'flex', justifyContent: 'space-between', alignItems: 'center'
                   }}>

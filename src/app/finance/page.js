@@ -2,39 +2,36 @@
 
 import { useState, useEffect } from 'react'
 import { useApp, AuthGuard } from '../components/AppShell'
-import { getFinancialRecords, createFinancialRecord, updateFinancialRecord, deleteFinancialRecord, getCases, getClients } from '../lib/api'
+import {
+  getFinancialRecords, createFinancialRecord, updateFinancialRecord, deleteFinancialRecord,
+  getClients
+} from '../lib/api'
 
 export default function FinancePage() {
   return (
-    <AuthGuard title="السجلات المالية">
+    <AuthGuard title="السجلات المالية" requiredRole="Manager">
       <FinanceContent />
     </AuthGuard>
   )
 }
 
 // ── Modal ───────────────────────────────────────────────────
-function FinanceModal({ record, cases, clients, onClose, onSave, saving }) {
+function FinanceModal({ record, clients, onClose, onSave, saving }) {
   const [form, setForm] = useState(record ? {
-    date:          record.date?.split('T')[0] || '',
-    depositNumber: record.depositNumber || '',
-    clientId:      record.clientId || '',
-    caseId:        record.caseId || '',
+    clientId:      record.clientId     || '',
+    caseNumber:    record.caseNumber   || '',
+    agreedAmount:  record.agreedAmount  ?? '',
+    currentAmount: record.currentAmount ?? '',
+    finalTotal:    record.finalTotal    ?? '',
   } : {
-    date: new Date().toISOString().split('T')[0],
-    depositNumber: '', clientId: '', caseId: '',
+    clientId: '', caseNumber: '', agreedAmount: '', currentAmount: '', finalTotal: '',
   })
   const [errors, setErrors] = useState({})
 
-  // Filter cases by selected client
-  const clientCases = form.clientId
-    ? cases.filter(c => c.clientId === form.clientId)
-    : cases
-
   const validate = () => {
     const errs = {}
-    if (!form.date)      errs.date      = 'التاريخ مطلوب'
-    if (!form.clientId)  errs.clientId  = 'يجب اختيار الموكل'
-    if (!form.caseId)    errs.caseId    = 'يجب اختيار القضية'
+    if (!form.clientId) errs.clientId = 'يجب اختيار الموكل'
+    if (form.agreedAmount === '' || isNaN(Number(form.agreedAmount))) errs.agreedAmount = 'المبلغ المتفق عليه مطلوب'
     return errs
   }
 
@@ -42,7 +39,13 @@ function FinanceModal({ record, cases, clients, onClose, onSave, saving }) {
     e.preventDefault()
     const errs = validate()
     if (Object.keys(errs).length) { setErrors(errs); return }
-    onSave(form)
+    onSave({
+      clientId:      form.clientId,
+      caseNumber:    form.caseNumber   || null,
+      agreedAmount:  Number(form.agreedAmount),
+      currentAmount: form.currentAmount !== '' ? Number(form.currentAmount) : 0,
+      finalTotal:    form.finalTotal    !== '' ? Number(form.finalTotal)    : 0,
+    })
   }
 
   return (
@@ -58,27 +61,12 @@ function FinanceModal({ record, cases, clients, onClose, onSave, saving }) {
         <form onSubmit={handleSubmit} id="finance-form">
           <div className="modal-body">
             <div className="form-grid">
-              {/* Date */}
-              <div className="form-group">
-                <label className="form-label"><span className="form-required">*</span>التاريخ</label>
-                <input className="form-input" type="date" dir="ltr" value={form.date}
-                  onChange={e => setForm(p => ({ ...p, date: e.target.value }))}
-                  style={errors.date ? { borderColor: 'var(--danger)' } : {}} />
-                {errors.date && <span style={{ fontSize: '12px', color: 'var(--danger)' }}>{errors.date}</span>}
-              </div>
-
-              {/* Deposit number */}
-              <div className="form-group">
-                <label className="form-label">رقم الإيداع</label>
-                <input className="form-input" placeholder="مثال: DEP-001" dir="ltr" value={form.depositNumber}
-                  onChange={e => setForm(p => ({ ...p, depositNumber: e.target.value }))} />
-              </div>
 
               {/* Client */}
-              <div className="form-group">
+              <div className="form-group form-full">
                 <label className="form-label"><span className="form-required">*</span>الموكل</label>
                 <select className="form-select" value={form.clientId}
-                  onChange={e => setForm(p => ({ ...p, clientId: e.target.value, caseId: '' }))}
+                  onChange={e => setForm(p => ({ ...p, clientId: e.target.value }))}
                   style={errors.clientId ? { borderColor: 'var(--danger)' } : {}}>
                   <option value="">-- اختر الموكل --</option>
                   {clients.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
@@ -86,17 +74,40 @@ function FinanceModal({ record, cases, clients, onClose, onSave, saving }) {
                 {errors.clientId && <span style={{ fontSize: '12px', color: 'var(--danger)' }}>{errors.clientId}</span>}
               </div>
 
-              {/* Case */}
-              <div className="form-group">
-                <label className="form-label"><span className="form-required">*</span>القضية</label>
-                <select className="form-select" value={form.caseId}
-                  onChange={e => setForm(p => ({ ...p, caseId: e.target.value }))}
-                  style={errors.caseId ? { borderColor: 'var(--danger)' } : {}}>
-                  <option value="">-- اختر القضية --</option>
-                  {clientCases.map(c => <option key={c.id} value={c.id}>{c.caseNumber}</option>)}
-                </select>
-                {errors.caseId && <span style={{ fontSize: '12px', color: 'var(--danger)' }}>{errors.caseId}</span>}
+              {/* Case Number */}
+              <div className="form-group form-full">
+                <label className="form-label">رقم القضية</label>
+                <input className="form-input" placeholder="مثال: 2024/1234" dir="ltr"
+                  value={form.caseNumber}
+                  onChange={e => setForm(p => ({ ...p, caseNumber: e.target.value }))} />
               </div>
+
+              {/* Agreed Amount */}
+              <div className="form-group">
+                <label className="form-label"><span className="form-required">*</span>المبلغ المتفق عليه</label>
+                <input className="form-input" type="number" min="0" step="0.01" placeholder="0.00" dir="ltr"
+                  value={form.agreedAmount}
+                  onChange={e => setForm(p => ({ ...p, agreedAmount: e.target.value }))}
+                  style={errors.agreedAmount ? { borderColor: 'var(--danger)' } : {}} />
+                {errors.agreedAmount && <span style={{ fontSize: '12px', color: 'var(--danger)' }}>{errors.agreedAmount}</span>}
+              </div>
+
+              {/* Current Amount */}
+              <div className="form-group">
+                <label className="form-label">المبلغ الحالي المدفوع</label>
+                <input className="form-input" type="number" min="0" step="0.01" placeholder="0.00" dir="ltr"
+                  value={form.currentAmount}
+                  onChange={e => setForm(p => ({ ...p, currentAmount: e.target.value }))} />
+              </div>
+
+              {/* Final Total */}
+              <div className="form-group form-full">
+                <label className="form-label">الإجمالي النهائي</label>
+                <input className="form-input" type="number" min="0" step="0.01" placeholder="0.00" dir="ltr"
+                  value={form.finalTotal}
+                  onChange={e => setForm(p => ({ ...p, finalTotal: e.target.value }))} />
+              </div>
+
             </div>
           </div>
           <div className="modal-footer">
@@ -113,9 +124,9 @@ function FinanceModal({ record, cases, clients, onClose, onSave, saving }) {
 
 // ── Main content ─────────────────────────────────────────────
 function FinanceContent() {
-  const { showToast } = useApp()
+  const { showToast, user } = useApp()
+  const isManager = user?.roles?.includes('Manager')
   const [records, setRecords]   = useState([])
-  const [cases, setCases]       = useState([])
   const [clients, setClients]   = useState([])
   const [loading, setLoading]   = useState(true)
   const [saving, setSaving]     = useState(false)
@@ -126,9 +137,8 @@ function FinanceContent() {
   const load = async () => {
     setLoading(true)
     try {
-      const [r, c, cl] = await Promise.all([getFinancialRecords(), getCases(), getClients()])
+      const [r, cl] = await Promise.all([getFinancialRecords(), getClients()])
       setRecords(r)
-      setCases(c)
       setClients(cl)
     } catch (err) {
       showToast(err.message || 'فشل تحميل البيانات', 'error')
@@ -140,16 +150,21 @@ function FinanceContent() {
   useEffect(() => { load() }, [])
 
   const clientMap = Object.fromEntries(clients.map(c => [c.id, c.name]))
-  const caseMap   = Object.fromEntries(cases.map(c => [c.id, c.caseNumber]))
 
   const filtered = records.filter(r => {
     if (!search) return true
     return (
       (clientMap[r.clientId] || '').includes(search) ||
-      (caseMap[r.caseId] || '').includes(search) ||
-      (r.depositNumber || '').includes(search)
+      (r.caseNumber || '').includes(search)
     )
   })
+
+  // Stats
+  const totalAgreed  = records.reduce((s, r) => s + (r.agreedAmount  || 0), 0)
+  const totalCurrent = records.reduce((s, r) => s + (r.currentAmount || 0), 0)
+  const totalFinal   = records.reduce((s, r) => s + (r.finalTotal    || 0), 0)
+
+  const fmt = (n) => Number(n || 0).toLocaleString('ar-EG', { minimumFractionDigits: 2 })
 
   const handleSave = async (form) => {
     setSaving(true)
@@ -181,29 +196,39 @@ function FinanceContent() {
     }
   }
 
-  const formatDate = (d) => {
-    if (!d) return '—'
-    return new Date(d).toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' })
-  }
-
   return (
     <>
       <div className="page-header">
         <div className="page-header-left">
           <p className="page-header-breadcrumb"><span>الرئيسية</span> <span>›</span> <span className="active">المالية</span></p>
           <h2>السجلات المالية</h2>
-          <p>إدارة الإيداعات والسجلات المالية للقضايا</p>
+          <p>إدارة المبالغ المتفق عليها والمدفوعات لكل موكل</p>
         </div>
-        <button id="add-finance-btn" className="btn btn-primary" onClick={() => { setEdit(null); setModal(true) }}>
-          ➕ إضافة سجل مالي
-        </button>
+        {isManager && (
+          <button id="add-finance-btn" className="btn btn-primary" onClick={() => { setEdit(null); setModal(true) }}>
+            ➕ إضافة سجل مالي
+          </button>
+        )}
       </div>
 
       {/* Stats */}
-      <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(3,1fr)', marginBottom: '24px' }}>
-        <div className="stat-card"><div className="stat-icon gold">💰</div><div className="stat-info"><h3>{records.length}</h3><p>إجمالي السجلات</p></div></div>
-        <div className="stat-card"><div className="stat-icon blue">👥</div><div className="stat-info"><h3>{new Set(records.map(r => r.clientId)).size}</h3><p>موكلين لديهم سجلات</p></div></div>
-        <div className="stat-card"><div className="stat-icon green">📁</div><div className="stat-info"><h3>{new Set(records.map(r => r.caseId)).size}</h3><p>قضايا لها سجلات</p></div></div>
+      <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(4,1fr)', marginBottom: '24px' }}>
+        <div className="stat-card">
+          <div className="stat-icon gold">💰</div>
+          <div className="stat-info"><h3>{records.length}</h3><p>إجمالي السجلات</p></div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-icon blue">📝</div>
+          <div className="stat-info"><h3 style={{ fontSize: '16px' }}>{fmt(totalAgreed)}</h3><p>إجمالي المتفق عليه</p></div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-icon green">✅</div>
+          <div className="stat-info"><h3 style={{ fontSize: '16px' }}>{fmt(totalCurrent)}</h3><p>إجمالي المدفوع</p></div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-icon red">🏁</div>
+          <div className="stat-info"><h3 style={{ fontSize: '16px' }}>{fmt(totalFinal)}</h3><p>الإجمالي النهائي</p></div>
+        </div>
       </div>
 
       <div className="card">
@@ -211,7 +236,7 @@ function FinanceContent() {
           <div className="search-input-wrapper">
             <span className="search-input-icon">🔍</span>
             <input id="finance-search" className="search-input"
-              placeholder="ابحث باسم الموكل أو رقم القضية أو الإيداع..."
+              placeholder="ابحث باسم الموكل أو رقم القضية..."
               value={search} onChange={e => setSearch(e.target.value)} />
           </div>
         </div>
@@ -228,31 +253,46 @@ function FinanceContent() {
           <div className="table-wrapper">
             <table>
               <thead><tr>
-                <th>#</th><th>التاريخ</th><th>رقم الإيداع</th><th>الموكل</th><th>القضية</th><th>الإجراءات</th>
+                <th>#</th>
+                <th>الموكل</th>
+                <th>رقم القضية</th>
+                <th>المبلغ المتفق عليه</th>
+                <th>المبلغ الحالي</th>
+                <th>الإجمالي النهائي</th>
+                {isManager && <th>الإجراءات</th>}
               </tr></thead>
               <tbody>
                 {filtered.map((r, i) => (
                   <tr key={r.id}>
                     <td className="td-secondary">{i + 1}</td>
-                    <td style={{ fontWeight: '600' }}>{formatDate(r.date)}</td>
+                    <td style={{ fontWeight: '600' }}>{clientMap[r.clientId] || '—'}</td>
                     <td>
-                      {r.depositNumber
-                        ? <span className="badge badge-gold">{r.depositNumber}</span>
+                      {r.caseNumber
+                        ? <span className="badge badge-gold">{r.caseNumber}</span>
                         : <span className="td-secondary">—</span>
                       }
                     </td>
-                    <td style={{ fontWeight: '600' }}>{clientMap[r.clientId] || '—'}</td>
-                    <td>
-                      <span style={{ color: 'var(--gold-bright)', fontWeight: '700' }}>
-                        {caseMap[r.caseId] || '—'}
-                      </span>
+                    <td style={{ fontWeight: '700', color: 'var(--gold-bright)' }}>
+                      {fmt(r.agreedAmount)}
                     </td>
-                    <td>
-                      <div className="td-actions">
-                        <button className="btn btn-secondary btn-sm btn-icon" onClick={() => { setEdit(r); setModal(true) }} title="تعديل" id={`edit-finance-${r.id}`}>✏️</button>
-                        <button className="btn btn-danger btn-sm btn-icon" onClick={() => handleDelete(r.id)} title="حذف" id={`delete-finance-${r.id}`}>🗑️</button>
-                      </div>
+                    <td style={{ fontWeight: '600', color: '#16a34a' }}>
+                      {fmt(r.currentAmount)}
                     </td>
+                    <td style={{ fontWeight: '700' }}>
+                      {fmt(r.finalTotal)}
+                    </td>
+                    {isManager && (
+                      <td>
+                        <div className="td-actions">
+                          <button className="btn btn-secondary btn-sm btn-icon"
+                            onClick={() => { setEdit(r); setModal(true) }}
+                            title="تعديل" id={`edit-finance-${r.id}`}>✏️</button>
+                          <button className="btn btn-danger btn-sm btn-icon"
+                            onClick={() => handleDelete(r.id)}
+                            title="حذف" id={`delete-finance-${r.id}`}>🗑️</button>
+                        </div>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>
@@ -264,7 +304,6 @@ function FinanceContent() {
       {showModal && (
         <FinanceModal
           record={editRecord}
-          cases={cases}
           clients={clients}
           onClose={() => { setModal(false); setEdit(null) }}
           onSave={handleSave}

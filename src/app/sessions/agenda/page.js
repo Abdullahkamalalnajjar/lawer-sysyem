@@ -18,11 +18,11 @@ export default function AgendaPage() {
 
 const SESSION_TYPES = ['مرافعة', 'حكم', 'تحقيق', 'صلح', 'إشكال', 'أخرى']
 const TYPE_COLORS = {
-  'مرافعة': { bg: 'rgba(192,57,43,0.12)', color: '#c0392b', border: 'rgba(192,57,43,0.30)' },
+  'مرافعة': { bg: 'rgba(15,118,110,0.12)', color: '#0f766e', border: 'rgba(15,118,110,0.30)' },
   'حكم':    { bg: 'rgba(37,99,235,0.10)',  color: '#1d4ed8', border: 'rgba(37,99,235,0.25)' },
   'تحقيق':  { bg: 'rgba(217,119,6,0.10)',  color: '#b45309', border: 'rgba(217,119,6,0.25)' },
   'صلح':    { bg: 'rgba(5,150,105,0.10)',  color: '#047857', border: 'rgba(5,150,105,0.25)' },
-  'إشكال':  { bg: 'rgba(139,26,26,0.10)',  color: '#8b1a1a', border: 'rgba(139,26,26,0.25)' },
+  'إشكال':  { bg: 'rgba(15,94,86,0.10)',  color: '#0f5e56', border: 'rgba(15,94,86,0.25)' },
   'أخرى':   { bg: 'rgba(107,49,64,0.08)',  color: '#7a3345', border: 'rgba(107,49,64,0.20)' },
 }
 
@@ -398,7 +398,7 @@ function AgendaContent() {
                       {(s.roll || s.decision) && (
                         <div style={{ marginTop:'10px', paddingTop:'10px', borderTop:'1px dashed #eee' }}>
                           {s.roll     && <div style={{ fontSize:'11.5px', color:'#555', marginBottom:'3px' }}><b style={{color:'#222'}}>الجولة:</b> {s.roll}</div>}
-                          {s.decision && <div style={{ fontSize:'12px', color:'#8b1a1a', fontWeight:'600' }}><b style={{color:'#222'}}>القرار:</b> {s.decision}</div>}
+                          {s.decision && <div style={{ fontSize:'12px', color:'#0f5e56', fontWeight:'600' }}><b style={{color:'#222'}}>القرار:</b> {s.decision}</div>}
                         </div>
                       )}
                       <div style={{ display:'flex', gap:'8px', marginTop:'12px' }}>
@@ -407,7 +407,7 @@ function AgendaContent() {
                           ✏️ تعديل
                         </button>
                         <button onClick={() => handleDelete(s.id)}
-                          style={{ background:'#fef2f2', color:'#b91c1c', border:'1px solid #fecaca', padding:'7px 12px', borderRadius:'6px', fontSize:'12px', fontWeight:'600', cursor:'pointer' }}>
+                          style={{ background:'#f0fdfa', color:'#b91c1c', border:'1px solid #fecaca', padding:'7px 12px', borderRadius:'6px', fontSize:'12px', fontWeight:'600', cursor:'pointer' }}>
                           🗑️
                         </button>
                       </div>
@@ -482,7 +482,7 @@ function AgendaContent() {
         .agenda-nav-today { width: auto; padding: 0 14px; font-size: 13px; font-weight: 700; }
         .agenda-cal-title { text-align: right; }
         .agenda-cal-month { font-size: 20px; font-weight: 900; color: #222; font-family: 'Cairo', sans-serif; }
-        .agenda-cal-month span { color: #8b1a1a; }
+        .agenda-cal-month span { color: #0f5e56; }
         .agenda-cal-count { font-size: 12px; color: #888; margin-top: 2px; }
 
         /* ── Day names row ── */
@@ -513,7 +513,7 @@ function AgendaContent() {
         .agenda-cell:hover { background: #fafafa; }
         .agenda-cell-empty { min-height: 100px; background: #fbfbfb; }
         .agenda-cell-today { background: #f8fafc; }
-        .agenda-cell-selected { background: #fef2f2; box-shadow: inset 0 0 0 2px #c0392b; }
+        .agenda-cell-selected { background: #f0fdfa; box-shadow: inset 0 0 0 2px #0f766e; }
 
         .agenda-day-num {
           display: flex; align-items: center; justify-content: center;
@@ -521,8 +521,8 @@ function AgendaContent() {
           font-size: 13px; font-weight: 600; color: #444;
           margin-bottom: 6px;
         }
-        .agenda-day-num-today  { background: #c0392b; color: #fff; font-weight: 800; }
-        .agenda-day-num-sel    { background: #8b1a1a; color: #fff; }
+        .agenda-day-num-today  { background: #0f766e; color: #fff; font-weight: 800; }
+        .agenda-day-num-sel    { background: #0f5e56; color: #fff; }
 
         .agenda-pills { display: flex; flex-direction: column; gap: 3px; }
         .agenda-pill {
@@ -571,7 +571,7 @@ function AgendaContent() {
           display: none;
           background: none;
           border: none;
-          color: #c0392b;
+          color: #0f766e;
           font-size: 14px;
           font-weight: 700;
           font-family: 'Cairo', sans-serif;

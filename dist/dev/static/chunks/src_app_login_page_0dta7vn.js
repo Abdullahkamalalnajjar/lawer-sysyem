@@ -71,7 +71,7 @@ function LoginPage() {
           display: flex;
           font-family: 'Cairo', sans-serif;
           direction: rtl;
-          background: #0d0d0d;
+          background: #0a1628;
           position: relative;
           overflow: hidden;
         }
@@ -81,10 +81,10 @@ function LoginPage() {
           position: fixed;
           inset: 0;
           z-index: 0;
-          background: radial-gradient(ellipse 80% 60% at 20% 50%, rgba(139,26,26,0.35) 0%, transparent 60%),
-                      radial-gradient(ellipse 60% 80% at 80% 20%, rgba(192,57,43,0.20) 0%, transparent 55%),
-                      radial-gradient(ellipse 50% 50% at 50% 100%, rgba(100,20,20,0.25) 0%, transparent 70%),
-                      #0d0d0d;
+          background: radial-gradient(ellipse 80% 60% at 20% 50%, rgba(15,118,110,0.35) 0%, transparent 60%),
+                      radial-gradient(ellipse 60% 80% at 80% 20%, rgba(15,118,110,0.20) 0%, transparent 55%),
+                      radial-gradient(ellipse 50% 50% at 50% 100%, rgba(10,80,76,0.25) 0%, transparent 70%),
+                      #0a1628;
         }
         .login-bg-orb {
           position: absolute;
@@ -95,19 +95,19 @@ function LoginPage() {
         }
         .login-bg-orb-1 {
           width: 500px; height: 500px;
-          background: radial-gradient(circle, rgba(192,57,43,0.5), transparent 70%);
+          background: radial-gradient(circle, rgba(15,118,110,0.5), transparent 70%);
           top: -150px; left: -100px;
           animation-delay: 0s;
         }
         .login-bg-orb-2 {
           width: 350px; height: 350px;
-          background: radial-gradient(circle, rgba(139,26,26,0.4), transparent 70%);
+          background: radial-gradient(circle, rgba(15,118,110,0.4), transparent 70%);
           bottom: -100px; right: -80px;
           animation-delay: -3s;
         }
         .login-bg-orb-3 {
           width: 200px; height: 200px;
-          background: radial-gradient(circle, rgba(231,76,60,0.3), transparent 70%);
+          background: radial-gradient(circle, rgba(15,118,110,0.3), transparent 70%);
           top: 40%; left: 40%;
           animation-delay: -5s;
         }
@@ -170,7 +170,7 @@ function LoginPage() {
           margin-bottom: 20px;
         }
         .login-headline span {
-          background: linear-gradient(135deg, #e74c3c, #f39c12);
+          background: linear-gradient(135deg, #14b8a6, #2dd4bf);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -195,8 +195,8 @@ function LoginPage() {
         .login-feature-dot {
           width: 38px; height: 38px;
           border-radius: 10px;
-          background: rgba(192,57,43,0.20);
-          border: 1px solid rgba(192,57,43,0.35);
+          background: rgba(15,118,110,0.20);
+          border: 1px solid rgba(15,118,110,0.35);
           display: flex; align-items: center; justify-content: center;
           font-size: 16px;
           flex-shrink: 0;
@@ -236,11 +236,11 @@ function LoginPage() {
         .login-card-icon {
           width: 64px; height: 64px;
           border-radius: 18px;
-          background: linear-gradient(135deg, #8b1a1a, #c0392b);
+          background: linear-gradient(135deg, #0f5e56, #0f766e);
           display: flex; align-items: center; justify-content: center;
           font-size: 28px;
           margin: 0 auto 20px;
-          box-shadow: 0 12px 32px rgba(192,57,43,0.4);
+          box-shadow: 0 12px 32px rgba(15,118,110,0.4);
         }
         .login-card-title {
           font-size: 26px;
@@ -300,9 +300,9 @@ function LoginPage() {
         }
         .login-input::placeholder { color: rgba(255,255,255,0.25); }
         .login-input:focus {
-          border-color: rgba(192,57,43,0.70);
-          background: rgba(192,57,43,0.08);
-          box-shadow: 0 0 0 4px rgba(192,57,43,0.15);
+          border-color: rgba(15,118,110,0.70);
+          background: rgba(15,118,110,0.08);
+          box-shadow: 0 0 0 4px rgba(15,118,110,0.15);
         }
         .login-input-pass { padding-left: 48px; }
         .login-eye-btn {
@@ -325,13 +325,13 @@ function LoginPage() {
           display: flex;
           align-items: center;
           gap: 10px;
-          background: rgba(231,76,60,0.15);
-          border: 1px solid rgba(231,76,60,0.30);
+          background: rgba(15,118,110,0.15);
+          border: 1px solid rgba(15,118,110,0.30);
           border-radius: 12px;
           padding: 12px 16px;
           margin-bottom: 20px;
           font-size: 13px;
-          color: #f1948a;
+          color: #5eead4;
           font-weight: 600;
           animation: shake 0.4s ease;
         }
@@ -347,14 +347,14 @@ function LoginPage() {
           padding: 15px;
           border-radius: 14px;
           border: none;
-          background: linear-gradient(135deg, #8b1a1a 0%, #c0392b 50%, #e74c3c 100%);
+          background: linear-gradient(135deg, #0f5e56 0%, #0f766e 50%, #14b8a6 100%);
           color: #fff;
           font-size: 15px;
           font-weight: 800;
           font-family: 'Cairo', sans-serif;
           cursor: pointer;
           transition: all 0.25s;
-          box-shadow: 0 8px 24px rgba(192,57,43,0.45);
+          box-shadow: 0 8px 24px rgba(15,118,110,0.45);
           position: relative;
           overflow: hidden;
           margin-top: 8px;
@@ -371,7 +371,7 @@ function LoginPage() {
         .login-submit:hover:not(:disabled)::before { opacity: 1; }
         .login-submit:hover:not(:disabled) {
           transform: translateY(-2px);
-          box-shadow: 0 14px 32px rgba(192,57,43,0.55);
+          box-shadow: 0 14px 32px rgba(15,118,110,0.55);
         }
         .login-submit:active:not(:disabled) { transform: translateY(0); }
         .login-submit:disabled { opacity: 0.65; cursor: not-allowed; }
@@ -475,7 +475,7 @@ function LoginPage() {
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     className: "login-logo-text",
-                                                    children: "نظام إدارة المحاماة"
+                                                    children: "مؤسسة اليقين"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/login/page.js",
                                                     lineNumber: 408,

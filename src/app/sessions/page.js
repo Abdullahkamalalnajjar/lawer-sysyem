@@ -18,11 +18,11 @@ export default function SessionsPage() {
 
 const SESSION_TYPES = ['مرافعة', 'حكم', 'تحقيق', 'صلح', 'إشكال', 'أخرى']
 const TYPE_COLORS = {
-  'مرافعة': { bg: 'rgba(192,57,43,0.12)', color: '#c0392b', border: 'rgba(192,57,43,0.30)' },
+  'مرافعة': { bg: 'rgba(15,118,110,0.12)', color: '#0f766e', border: 'rgba(15,118,110,0.30)' },
   'حكم':    { bg: 'rgba(37,99,235,0.10)',  color: '#1d4ed8', border: 'rgba(37,99,235,0.25)' },
   'تحقيق':  { bg: 'rgba(217,119,6,0.10)',  color: '#b45309', border: 'rgba(217,119,6,0.25)' },
   'صلح':    { bg: 'rgba(5,150,105,0.10)',  color: '#047857', border: 'rgba(5,150,105,0.25)' },
-  'إشكال':  { bg: 'rgba(139,26,26,0.10)',  color: '#8b1a1a', border: 'rgba(139,26,26,0.25)' },
+  'إشكال':  { bg: 'rgba(15,94,86,0.10)',  color: '#0f5e56', border: 'rgba(15,94,86,0.25)' },
   'أخرى':   { bg: 'rgba(107,49,64,0.08)',  color: '#7a3345', border: 'rgba(107,49,64,0.20)' },
 }
 
@@ -357,12 +357,12 @@ function SessionsContent() {
                     <tr key={s.id} style={{ opacity: past ? 0.70 : 1 }}>
                       <td className="td-secondary">{i+1}</td>
                       <td>
-                        <div style={{ fontWeight:'700', color: past?'#9b7070':'#1a0a0a', fontSize:'13px' }}>
+                        <div style={{ fontWeight:'700', color: past?'#64748b':'#0f172a', fontSize:'13px' }}>
                           {d.getDate()} {ARABIC_MONTHS[d.getMonth()]}
                         </div>
-                        <div style={{ fontSize:'11px', color:'#9b7070' }}>{d.getFullYear()}</div>
+                        <div style={{ fontSize:'11px', color:'#64748b' }}>{d.getFullYear()}</div>
                       </td>
-                      <td style={{ fontWeight:'700', color:'#c0392b' }}>{s.caseNumber||'—'}</td>
+                      <td style={{ fontWeight:'700', color:'#0f766e' }}>{s.caseNumber||'—'}</td>
                       <td style={{ fontWeight:'600' }}>{s.clientName||'—'}</td>
                       <td className="td-secondary">{s.opponentName||'—'}</td>
                       <td>
@@ -417,13 +417,13 @@ const navBtn = {
   cursor:'pointer', fontSize:'18px', display:'flex', alignItems:'center', justifyContent:'center',
 }
 const smRedBtn = {
-  background:'#c0392b', color:'#fff', border:'none', borderRadius:'8px',
+  background:'#0f766e', color:'#fff', border:'none', borderRadius:'8px',
   padding:'7px 14px', fontSize:'12px', fontWeight:'700', cursor:'pointer',
   fontFamily:"'Cairo', sans-serif",
 }
 const smEditBtn = {
-  background:'rgba(192,57,43,0.08)', color:'#c0392b',
-  border:'1px solid rgba(192,57,43,0.20)', borderRadius:'8px',
+  background:'rgba(15,118,110,0.08)', color:'#0f766e',
+  border:'1px solid rgba(15,118,110,0.20)', borderRadius:'8px',
   padding:'5px 10px', fontSize:'12px', fontWeight:'700', cursor:'pointer',
   fontFamily:"'Cairo', sans-serif",
 }

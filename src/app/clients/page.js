@@ -16,8 +16,8 @@ export default function ClientsPage() {
 function ClientModal({ client, onClose, onSave, saving }) {
   const [form, setForm] = useState(
     client
-      ? { name: client.name || '', phoneNumber: client.phoneNumber || '', address: client.address || '' }
-      : { name: '', phoneNumber: '', address: '' }
+      ? { name: client.name || '', phoneNumber: client.phoneNumber || '', address: client.address || '', caseNumber: client.caseNumber || '' }
+      : { name: '', phoneNumber: '', address: '', caseNumber: '' }
   )
   const [errors, setErrors] = useState({})
 
@@ -66,9 +66,10 @@ function ClientModal({ client, onClose, onSave, saving }) {
         <form onSubmit={handleSubmit} id="client-form">
           <div className="modal-body">
             <div className="form-grid">
-              {field('name', 'الاسم الكامل', 'مثال: أحمد محمد علي', true)}
-              {field('phoneNumber', 'رقم الهاتف', '01xxxxxxxxx', true, { dir: 'ltr' })}
-              {field('address', 'العنوان / محل الإقامة', 'مثال: القاهرة - مدينة نصر', false, { full: true })}
+              {field('name',        'الاسم الكامل',              'مثال: أحمد محمد علي',         true)}
+              {field('phoneNumber', 'رقم الهاتف',              '01xxxxxxxxx',                          true, { dir: 'ltr' })}
+              {field('caseNumber',  'رقم القضية',              'مثال: 2024/1234',                        false, { dir: 'ltr' })}
+              {field('address',     'العنوان / محل الإقامة', 'مثال: القاهرة - مدينة نصر',  false, { full: true })}
             </div>
           </div>
           <div className="modal-footer">
@@ -108,9 +109,10 @@ function ClientsContent() {
   useEffect(() => { load() }, [])
 
   const filtered = clients.filter(c =>
-    (c.name || '').includes(search) ||
+    (c.name        || '').includes(search) ||
     (c.phoneNumber || '').includes(search) ||
-    (c.address || '').includes(search)
+    (c.address     || '').includes(search) ||
+    (c.caseNumber  || '').includes(search)
   )
 
   const handleSave = async (form) => {
@@ -211,8 +213,9 @@ function ClientsContent() {
                   <th>#</th>
                   <th>الاسم الكامل</th>
                   <th>رقم الهاتف</th>
+                  <th>رقم القضية</th>
                   <th>العنوان</th>
-                  <th>القضايا</th>
+                  <th>عدد القضايا</th>
                   <th>الإجراءات</th>
                 </tr>
               </thead>
@@ -234,6 +237,11 @@ function ClientsContent() {
                       </div>
                     </td>
                     <td className="td-secondary" style={{ direction: 'ltr', textAlign: 'right' }}>{c.phoneNumber}</td>
+                    <td>
+                      {c.caseNumber
+                        ? <span className="badge badge-gold">{c.caseNumber}</span>
+                        : <span className="td-secondary">—</span>}
+                    </td>
                     <td className="td-secondary">{c.address || '—'}</td>
                     <td>
                       <span className={`badge ${(c.numberOfCases || 0) > 0 ? 'badge-gold' : 'badge-gray'}`}>

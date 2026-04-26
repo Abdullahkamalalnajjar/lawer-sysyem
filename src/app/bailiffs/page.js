@@ -3,11 +3,9 @@ import { useState, useEffect, useMemo } from 'react'
 import { useApp, AuthGuard } from '@/app/components/AppShell'
 import {
   getBailiffNotices, createBailiffNotice, updateBailiffNotice, deleteBailiffNotice,
-  uploadBailiffNoticeAttachment,
-  getCases, getClients, BASE_URL
+  uploadBailiffNoticeAttachment, getUsers, requestBailiffVisibility, verifyBailiffVisibility, BASE_URL
 } from '@/app/lib/api'
 
-// shared styling
 const chipStyle = {
   padding: '3px 10px', borderRadius: '99px',
   background: 'rgba(255,255,255,0.20)',
@@ -29,27 +27,24 @@ const actionBtnStyle = (bg, color) => ({
 })
 
 // ══════════════════════════════════════════════════════════════
-// BAILIFF MODAL
+// MODAL — Create / Edit BailiffNotice
+// Schema: { userId?, description?, place?, date }
 // ══════════════════════════════════════════════════════════════
-function BailiffModal({ item, cases, clients, onClose, onSave, saving }) {
+function BailiffModal({ item, users, onClose, onSave, saving }) {
   const [form, setForm] = useState(item ? {
-    clientId: item.clientId || '',
-    caseId: item.caseId || '',
-    noticeType: item.noticeType || '',
-    deliveryDate: item.deliveryDate ? item.deliveryDate.split('T')[0] : '',
-    opponentName: item.opponentName || ''
+    userId:      item.userId      || '',
+    description: item.description || '',
+    place:       item.place       || '',
+    date:        item.date        || '',
+    isVisible:   item.isVisible   ?? true,
   } : {
-    clientId: '', caseId: '', noticeType: 'إنذار رسمي', deliveryDate: '', opponentName: ''
+    userId: '', description: '', place: '', date: new Date().toISOString().split('T')[0], isVisible: true,
   })
   const [errors, setErrors] = useState({})
 
   const validate = () => {
     const errs = {}
-    if (!form.clientId) errs.clientId = 'اختر الموكل'
-    if (!form.caseId) errs.caseId = 'اختر القضية'
-    if (!form.noticeType.trim()) errs.noticeType = 'نوع الإنذار مطلوب'
-    if (!form.deliveryDate) errs.deliveryDate = 'تاريخ التسليم مطلوب'
-    if (!form.opponentName.trim()) errs.opponentName = 'اسم الخصم/المنذر إليه مطلوب'
+    if (!form.date) errs.date = 'التاريخ مطلوب'
     return errs
   }
 
@@ -57,64 +52,82 @@ function BailiffModal({ item, cases, clients, onClose, onSave, saving }) {
     e.preventDefault()
     const errs = validate()
     if (Object.keys(errs).length) { setErrors(errs); return }
-    onSave(form)
+    onSave({
+      userId:      form.userId      || null,
+      description: form.description || null,
+      place:       form.place       || null,
+      date:        form.date,
+      isVisible:   form.isVisible,
+    })
   }
 
   return (
     <div className="modal-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
-      <div className="modal" style={{ maxWidth: '600px' }}>
+      <div className="modal" style={{ maxWidth: '560px' }}>
         <div className="modal-header">
-          <div className="modal-title"><div className="modal-title-icon">📜</div>{item ? 'تعديل إنذار المحضر' : 'إضافة إنذار محضر جديد'}</div>
+          <div className="modal-title">
+            <div className="modal-title-icon">📜</div>
+            {item ? 'تعديل السجل الإداري' : 'إضافة سجل إداري جديد'}
+          </div>
           <button className="modal-close" onClick={onClose}>✕</button>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="modal-body">
             <div className="form-grid">
-              
+
+              {/* User selector */}
               <div className="form-group form-full">
-                <label className="form-label"><span className="form-required">*</span> الموكل</label>
-                <select className="form-select" value={form.clientId}
-                  onChange={e => setForm({ ...form, clientId: e.target.value })}
-                  style={errors.clientId ? { borderColor: 'var(--danger)' } : {}}>
-                  <option value="">اختر الموكل</option>
-                  {clients.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                <label className="form-label">المستخدم</label>
+                <select className="form-select" value={form.userId}
+                  onChange={e => setForm(p => ({ ...p, userId: e.target.value }))}>
+                  <option value="">-- اختر المستخدم (اختياري) --</option>
+                  {users.map(u => (
+                    <option key={u.userId} value={u.userId}>
+                      {u.email}{u.roles?.length ? ` — ${u.roles.join(', ')}` : ''}
+                    </option>
+                  ))}
                 </select>
-                {errors.clientId && <span style={{ fontSize: '12px', color: 'var(--danger)' }}>{errors.clientId}</span>}
               </div>
 
-              <div className="form-group form-full">
-                <label className="form-label"><span className="form-required">*</span> القضية المرتبطة</label>
-                <select className="form-select" value={form.caseId}
-                  onChange={e => setForm({ ...form, caseId: e.target.value })}
-                  style={errors.caseId ? { borderColor: 'var(--danger)' } : {}}>
-                  <option value="">اختر القضية</option>
-                  {cases.filter(c => !form.clientId || c.clientId === form.clientId).map(c => <option key={c.id} value={c.id}>{c.caseNumber} - {c.caseType}</option>)}
+              {/* Date */}
+              <div className="form-group">
+                <label className="form-label"><span className="form-required">*</span>التاريخ</label>
+                <input type="date" className="form-input" value={form.date}
+                  onChange={e => setForm(p => ({ ...p, date: e.target.value }))}
+                  style={errors.date ? { borderColor: 'var(--danger)' } : {}} />
+                {errors.date && <span style={{ fontSize: '12px', color: 'var(--danger)' }}>{errors.date}</span>}
+              </div>
+
+              {/* Place */}
+              <div className="form-group">
+                <label className="form-label">المكان</label>
+                <select className="form-select" value={form.place}
+                  onChange={e => setForm(p => ({ ...p, place: e.target.value }))}>
+                  <option value="">-- اختر المكان --</option>
+                  <option value="بنها">بنها</option>
+                  <option value="شبين">شبين</option>
+                  <option value="مكان خارجي">مكان خارجي</option>
                 </select>
-                {errors.caseId && <span style={{ fontSize: '12px', color: 'var(--danger)' }}>{errors.caseId}</span>}
               </div>
 
-              <div className="form-group">
-                <label className="form-label"><span className="form-required">*</span> نوع الإنذار</label>
-                <input className="form-input" value={form.noticeType} placeholder="مثال: إنذار عرض، إعلان دعوى..."
-                  onChange={e => setForm({ ...form, noticeType: e.target.value })}
-                  style={errors.noticeType ? { borderColor: 'var(--danger)' } : {}} />
-                {errors.noticeType && <span style={{ fontSize: '12px', color: 'var(--danger)' }}>{errors.noticeType}</span>}
-              </div>
-
-              <div className="form-group">
-                <label className="form-label"><span className="form-required">*</span> تاريخ الإعلان / التسليم</label>
-                <input type="date" className="form-input" value={form.deliveryDate}
-                  onChange={e => setForm({ ...form, deliveryDate: e.target.value })}
-                  style={errors.deliveryDate ? { borderColor: 'var(--danger)' } : {}} />
-                {errors.deliveryDate && <span style={{ fontSize: '12px', color: 'var(--danger)' }}>{errors.deliveryDate}</span>}
-              </div>
-
+              {/* Description */}
               <div className="form-group form-full">
-                <label className="form-label"><span className="form-required">*</span> اسم الخصم / المُعلن إليه</label>
-                <input className="form-input" value={form.opponentName} placeholder="اسم المطلوب إعلانه"
-                  onChange={e => setForm({ ...form, opponentName: e.target.value })}
-                  style={errors.opponentName ? { borderColor: 'var(--danger)' } : {}} />
-                {errors.opponentName && <span style={{ fontSize: '12px', color: 'var(--danger)' }}>{errors.opponentName}</span>}
+                <label className="form-label">البيان / الوصف</label>
+                <textarea className="form-input" rows={4}
+                  placeholder="تفاصيل المهمة والمعلومات ذات الصلة..."
+                  value={form.description}
+                  onChange={e => setForm(p => ({ ...p, description: e.target.value }))}
+                  style={{ resize: 'vertical', minHeight: '100px' }} />
+              </div>
+
+              {/* isVisible toggle */}
+              <div className="form-group form-full">
+                <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', fontSize: '14px', fontWeight: '600', color: 'var(--text-primary)' }}>
+                  <input type="checkbox" checked={form.isVisible}
+                    onChange={e => setForm(p => ({ ...p, isVisible: e.target.checked }))}
+                    style={{ width: '18px', height: '18px', accentColor: '#0f766e', cursor: 'pointer' }} />
+                  مرئي للجميع
+                </label>
               </div>
 
             </div>
@@ -132,9 +145,9 @@ function BailiffModal({ item, cases, clients, onClose, onSave, saving }) {
 }
 
 // ══════════════════════════════════════════════════════════════
-// BAILIFF DRAWER (Details & Attachments)
+// DRAWER — Details & Attachments
 // ══════════════════════════════════════════════════════════════
-function BailiffDrawer({ item, clientName, caseNum, onClose, onEdit, onUploadDone, showToast }) {
+function BailiffDrawer({ item, isManager, onClose, onEdit, onUploadDone, showToast }) {
   const [tab, setTab] = useState('info')
   const [isUploading, setIsUp] = useState(false)
 
@@ -161,62 +174,74 @@ function BailiffDrawer({ item, clientName, caseNum, onClose, onEdit, onUploadDon
       <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', zIndex: 200 }} onClick={onClose} />
       <div style={{
         position: 'fixed', top: 0, left: 0, bottom: 0, width: '430px', background: '#fff',
-        boxShadow: '-8px 0 48px rgba(192,57,43,0.18)', zIndex: 201,
-        display: 'flex', flexDirection: 'column', animation: 'slideInLeft 0.28s cubic-bezier(0.22,1,0.36,1)',
+        boxShadow: '-8px 0 48px rgba(15,118,110,0.18)', zIndex: 201,
+        display: 'flex', flexDirection: 'column',
       }}>
-        <div style={{ padding: '20px 24px', background: 'linear-gradient(135deg, #8b1a1a 0%, #c0392b 60%, #dc2626 100%)', display: 'flex', justifyContent: 'space-between' }}>
+        {/* Header */}
+        <div style={{ padding: '20px 24px', background: 'linear-gradient(135deg, #0f5e56 0%, #0f766e 60%, #14b8a6 100%)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <span style={{ fontSize: '24px' }}>📜</span>
               <div>
                 <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.65)', fontWeight: '600' }}>تفاصيل إنذار المحضر</div>
-                <div style={{ fontSize: '18px', fontWeight: '900', color: '#fff' }}>{item.noticeType}</div>
+                <div style={{ fontSize: '16px', fontWeight: '900', color: '#fff' }}>
+                  {item.place || 'إنذار محضر'}
+                </div>
               </div>
             </div>
             <div style={{ marginTop: '8px', display: 'flex', gap: '8px' }}>
-              <span style={chipStyle}>{item.deliveryDate?.split('T')[0]}</span>
+              <span style={chipStyle}>{item.date}</span>
             </div>
           </div>
           <button onClick={onClose} style={closeBtnStyle}>✕</button>
         </div>
 
-        <div style={{ display: 'flex', borderBottom: '2px solid rgba(192,57,43,0.10)' }}>
-          {[ { id: 'info', label: 'معلومات الإنذار' }, { id: 'atts', label: `المرفقات (${atts.length})` } ].map(t => (
+        {/* Tabs */}
+        <div style={{ display: 'flex', borderBottom: '2px solid rgba(15,118,110,0.10)' }}>
+          {[{ id: 'info', label: 'بيانات الإنذار' }, { id: 'atts', label: `المرفقات (${atts.length})` }].map(t => (
             <button key={t.id} onClick={() => setTab(t.id)}
-              style={{ flex: 1, padding: '13px 8px', background: 'none', border: 'none', cursor: 'pointer', fontSize: '13px', fontWeight: tab === t.id ? '800' : '500', color: tab === t.id ? '#c0392b' : '#9b7070', borderBottom: tab === t.id ? '2px solid #c0392b' : '2px solid transparent' }}>
+              style={{ flex: 1, padding: '13px 8px', background: 'none', border: 'none', cursor: 'pointer', fontSize: '13px', fontWeight: tab === t.id ? '800' : '500', color: tab === t.id ? '#0f766e' : '#64748b', borderBottom: tab === t.id ? '2px solid #0f766e' : '2px solid transparent' }}>
               {t.label}
             </button>
           ))}
         </div>
 
+        {/* Body */}
         <div style={{ flex: 1, overflowY: 'auto', padding: '24px' }}>
           {tab === 'info' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div style={{ background: '#fcf9f9', padding: '16px', borderRadius: '12px', border: '1px solid rgba(192,57,43,0.1)' }}>
-                <div style={{ fontSize: '11px', color: '#9b7070', fontWeight: '700' }}>المُعلن إليه / الخصم</div>
-                <div style={{ fontSize: '15px', color: '#1a0a0a', fontWeight: '700' }}>{item.opponentName}</div>
+              <div style={{ background: '#f7faf9', padding: '16px', borderRadius: '12px', border: '1px solid rgba(15,118,110,0.1)' }}>
+                <div style={{ fontSize: '11px', color: '#64748b', fontWeight: '700', marginBottom: '4px' }}>التاريخ</div>
+                <div style={{ fontSize: '15px', color: '#0f172a', fontWeight: '700' }}>{item.date || '—'}</div>
               </div>
-              <div style={{ background: '#fcfcfc', padding: '16px', borderRadius: '12px', border: '1px solid #eee' }}>
-                <div style={{ fontSize: '11px', color: '#777', fontWeight: '700' }}>الموكل</div>
-                <div style={{ fontSize: '14px', color: '#333', fontWeight: '700' }}>{clientName || '—'}</div>
-                <hr style={{ margin: '12px 0', border: 'none', borderTop: '1px solid #eee' }} />
-                <div style={{ fontSize: '11px', color: '#777', fontWeight: '700' }}>القضية المرتبطة</div>
-                <div style={{ fontSize: '14px', color: '#333', fontWeight: '700' }}>{caseNum || '—'}</div>
+              <div style={{ background: '#f7faf9', padding: '16px', borderRadius: '12px', border: '1px solid rgba(15,118,110,0.1)' }}>
+                <div style={{ fontSize: '11px', color: '#64748b', fontWeight: '700', marginBottom: '4px' }}>المكان</div>
+                <div style={{ fontSize: '15px', color: '#0f172a', fontWeight: '700' }}>{item.place || '—'}</div>
               </div>
-              
-              <button onClick={() => onEdit(item)} style={{ ...actionBtnStyle('#fcf9f9', '#c0392b'), border: '1px solid rgba(192,57,43,0.2)', marginTop: 'auto' }}>✏️ تعديل البيانات</button>
+              {item.description && (
+                <div style={{ background: '#fcfcfc', padding: '16px', borderRadius: '12px', border: '1px solid #eee' }}>
+                  <div style={{ fontSize: '11px', color: '#777', fontWeight: '700', marginBottom: '4px' }}>البيان</div>
+                  <div style={{ fontSize: '14px', color: '#333', lineHeight: '1.7' }}>{item.description}</div>
+                </div>
+              )}
+              {isManager && (
+                <button onClick={() => onEdit(item)} style={{ ...actionBtnStyle('#f7faf9', '#0f766e'), border: '1px solid rgba(15,118,110,0.2)' }}>
+                  ✏️ تعديل البيانات
+                </button>
+              )}
             </div>
           )}
 
           {tab === 'atts' && (
             <div>
-              <label style={{ ...actionBtnStyle('#fcf9f9', '#c0392b'), border: '1px dashed #c0392b', marginBottom: '16px' }}>
-                {isUploading ? '⏳ جاري الرفع...' : '➕ رفع مستند لإنذار المحضر'}
-                <input type="file" style={{ display: 'none' }} accept="image/*,.pdf" onChange={handleUpload} disabled={isUploading} />
-              </label>
-
+              {isManager && (
+                <label style={{ ...actionBtnStyle('#f7faf9', '#0f766e'), border: '1px dashed #0f766e', marginBottom: '16px', cursor: 'pointer' }}>
+                  {isUploading ? '⏳ جاري الرفع...' : '➕ رفع مستند'}
+                  <input type="file" style={{ display: 'none' }} accept="image/*,.pdf" onChange={handleUpload} disabled={isUploading} />
+                </label>
+              )}
               {atts.length === 0 ? (
-                <div style={{ textAlign: 'center', color: '#9b7070', padding: '40px 0' }}>لا توجد مرفقات</div>
+                <div style={{ textAlign: 'center', color: '#64748b', padding: '40px 0' }}>لا توجد مرفقات</div>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                   {atts.map(a => (
@@ -226,7 +251,8 @@ function BailiffDrawer({ item, clientName, caseNum, onClose, onEdit, onUploadDon
                         <div style={{ fontSize: '13px', fontWeight: '700', color: '#333', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.fileName}</div>
                         <div style={{ fontSize: '11px', color: '#888' }}>{a.fileType}</div>
                       </div>
-                      <a href={`${BASE_URL}/${a.filePath}`} target="_blank" rel="noreferrer" style={{ background: '#f4f4f5', padding: '6px 12px', borderRadius: '6px', fontSize: '12px', color: '#333', textDecoration: 'none', fontWeight: '600' }}>عرض</a>
+                      <a href={`${BASE_URL}/${a.filePath}`} target="_blank" rel="noreferrer"
+                        style={{ background: '#f4f4f5', padding: '6px 12px', borderRadius: '6px', fontSize: '12px', color: '#333', textDecoration: 'none', fontWeight: '600' }}>عرض</a>
                     </div>
                   ))}
                 </div>
@@ -244,54 +270,130 @@ function BailiffDrawer({ item, clientName, caseNum, onClose, onEdit, onUploadDon
 // ══════════════════════════════════════════════════════════════
 export default function BailiffsPage() {
   return (
-    <AuthGuard title="إنذارات المحضرين">
+    <AuthGuard title="شغل إداري">
       <BailiffsContent />
     </AuthGuard>
   )
 }
 
+// ── Unlock Modal for Members ──────────────────────────────────
+function UnlockModal({ noticeId, userId, onClose, onUnlocked, showToast }) {
+  const [step, setStep] = useState('request') // 'request' | 'verify'
+  const [code, setCode] = useState('')
+  const [busy, setBusy] = useState(false)
+
+  const handleRequest = async () => {
+    setBusy(true)
+    try {
+      await requestBailiffVisibility(noticeId, userId)
+      showToast('تم إرسال كود التحقق')
+      setStep('verify')
+    } catch (e) { showToast(e.message || 'فشل إرسال الكود', 'error') }
+    finally { setBusy(false) }
+  }
+
+  const handleVerify = async () => {
+    if (!code.trim()) return
+    setBusy(true)
+    try {
+      await verifyBailiffVisibility(noticeId, userId, code.trim())
+      showToast('تم فتح السجل بنجاح')
+      onUnlocked()
+    } catch (e) { showToast(e.message || 'كود خاطئ', 'error') }
+    finally { setBusy(false) }
+  }
+
+  return (
+    <div className="modal-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
+      <div className="modal" style={{ maxWidth: '400px' }}>
+        <div className="modal-header">
+          <div className="modal-title">
+            <div className="modal-title-icon">🔐</div>
+            {step === 'request' ? 'طلب فتح سجل مخفي' : 'إدخال كود التحقق'}
+          </div>
+          <button className="modal-close" onClick={onClose}>✕</button>
+        </div>
+        <div className="modal-body">
+          {step === 'request' ? (
+            <div style={{ textAlign: 'center', padding: '20px 0' }}>
+              <div style={{ fontSize: '48px', marginBottom: '16px' }}>🔒</div>
+              <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: '1.7', marginBottom: '20px' }}>
+                هذا السجل مخفي. اضغط لطلب كود التحقق لفتحه.
+              </p>
+              <button className="btn btn-primary" onClick={handleRequest} disabled={busy} style={{ width: '100%' }}>
+                {busy ? '⏳ جاري الإرسال...' : '📩 طلب كود التحقق'}
+              </button>
+            </div>
+          ) : (
+            <div style={{ padding: '20px 0' }}>
+              <div style={{ textAlign: 'center', fontSize: '48px', marginBottom: '16px' }}>📬</div>
+              <p style={{ fontSize: '13px', color: 'var(--text-secondary)', textAlign: 'center', marginBottom: '16px' }}>
+                تم إرسال كود التحقق. أدخله هنا:
+              </p>
+              <input className="form-input" placeholder="أدخل الكود" dir="ltr"
+                value={code} onChange={e => setCode(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && handleVerify()}
+                style={{ textAlign: 'center', fontSize: '20px', letterSpacing: '6px', fontWeight: '800', marginBottom: '16px' }} />
+              <button className="btn btn-primary" onClick={handleVerify} disabled={busy || !code.trim()} style={{ width: '100%' }}>
+                {busy ? '⏳ جاري التحقق...' : '✅ تأكيد الكود'}
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function BailiffsContent() {
-  const { showToast } = useApp()
-  const [data, setData] = useState([])
-  const [clients, setClients] = useState([])
-  const [cases, setCases] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [search, setSearch] = useState('')
-  const [showModal, setModal] = useState(false)
-  const [editingItem, setEdit] = useState(null)
+  const { showToast, user } = useApp()
+  const isManager = user?.roles?.includes('Manager')
+  const [data, setData]         = useState([])
+  const [users, setUsers]       = useState([])
+  const [loading, setLoading]   = useState(true)
+  const [search, setSearch]     = useState('')
+  const [showModal, setModal]   = useState(false)
+  const [editingItem, setEdit]  = useState(null)
   const [detailItem, setDetail] = useState(null)
-  const [saving, setSaving] = useState(false)
+  const [saving, setSaving]     = useState(false)
+  const [unlockTarget, setUnlockTarget] = useState(null) // notice id to unlock
+  const [unlockedIds, setUnlockedIds]   = useState(new Set()) // locally unlocked
 
   const load = async () => {
     setLoading(true)
     try {
-      const [ds, cls, css] = await Promise.all([ getBailiffNotices(), getClients(), getCases() ])
+      const ds = await getBailiffNotices()
       setData(ds)
-      setClients(cls)
-      setCases(css)
     } catch (err) { showToast(err.message || 'فشل التحميل', 'error') }
-    finally { setLoading(false) }
+    // Load users separately — may fail for non-Manager
+    try {
+      const usersRes = await getUsers()
+      const list = Array.isArray(usersRes) ? usersRes : (usersRes?.value ?? [])
+      setUsers(list)
+    } catch {}
+    setLoading(false)
   }
 
   useEffect(() => { load() }, [])
 
-  const clientMap = useMemo(() => Object.fromEntries(clients.map(c => [c.id, c.name])), [clients])
-  const caseMap = useMemo(() => Object.fromEntries(cases.map(c => [c.id, c.caseNumber])), [cases])
+  // userId → email map
+  const userMap = Object.fromEntries(users.map(u => [u.userId, u.email]))
 
   const filtered = useMemo(() => {
-    return data.filter(d => 
-      !search || 
-      d.noticeType?.includes(search) || 
-      d.opponentName?.includes(search) ||
-      clientMap[d.clientId]?.includes(search)
+    return data.filter(d =>
+      !search ||
+      d.description?.includes(search) ||
+      d.place?.includes(search) ||
+      d.date?.includes(search) ||
+      (userMap[d.userId] || '').includes(search)
     )
-  }, [data, search, clientMap])
+  }, [data, search, userMap])
 
   const handleSave = async (form) => {
     setSaving(true)
     try {
       if (editingItem?.id) { await updateBailiffNotice(editingItem.id, form); showToast('تم التعديل') }
-      else                 { await createBailiffNotice(form); showToast('تم الإضافة') }
+      else                 { await createBailiffNotice(form); showToast('تم إضافة الإنذار') }
       setModal(false); setEdit(null)
       await load()
     } catch(e) { showToast(e.message, 'error') }
@@ -310,9 +412,10 @@ function BailiffsContent() {
 
   const onUploadDone = async () => {
     try {
-      const notice = (await getBailiffNotices()).find(b => b.id === detailItem.id)
-      if (notice) setDetail(notice)
-      await load()
+      const notices = await getBailiffNotices()
+      const updated = notices.find(b => b.id === detailItem?.id)
+      if (updated) setDetail(updated)
+      setData(notices)
     } catch {}
   }
 
@@ -321,70 +424,126 @@ function BailiffsContent() {
       <div className="page-header">
         <div className="page-header-left">
           <p className="page-header-breadcrumb">
-            <span>الرئيسية</span> <span>›</span> <span className="active">قسم المحضرين</span>
+            <span>الرئيسية</span> <span>›</span> <span className="active">شغل إداري</span>
           </p>
-          <h2>إنذارات المحضرين</h2>
-          <p>متابعة إعلانات وإنذارات المحكمة ({data.length} إنذار)</p>
+          <h2>شغل إداري</h2>
+          <p>متابعة المهام والإجراءات الإدارية ({data.length} سجل)</p>
         </div>
-        <button className="btn btn-primary" onClick={() => { setEdit(null); setModal(true) }}>
-          ➕ تسجيل إنذار محضر
-        </button>
+        {isManager && (
+          <button className="btn btn-primary" onClick={() => { setEdit(null); setModal(true) }}>
+            ➕ إضافة سجل إداري
+          </button>
+        )}
       </div>
 
       <div className="card">
         <div className="search-bar">
           <div className="search-input-wrapper" style={{ flex: 2 }}>
             <span className="search-input-icon">🔍</span>
-            <input className="search-input" placeholder="ابحث باسم الموكل، الخصم المُنذر، أو نوع الإعلان..."
+            <input className="search-input" placeholder="ابحث بالبيان أو المكان أو التاريخ..."
               value={search} onChange={e => setSearch(e.target.value)} />
           </div>
         </div>
 
         {loading ? (
-           <div className="empty-state"><div style={{fontSize:'36px'}}>⏳</div><p>جاري تحميل الإنذارات...</p></div>
+          <div className="empty-state"><div style={{ fontSize: '36px' }}>⏳</div><p>جاري تحميل الإنذارات...</p></div>
         ) : filtered.length === 0 ? (
-           <div className="empty-state"><div className="empty-state-icon">📜</div><h3>لا توجد إنذارات</h3><p>لم يتم العثور على أي معلومات مسجلة بقسم المحضرين.</p></div>
+          <div className="empty-state">
+            <div className="empty-state-icon">📁</div>
+            <h3>لا توجد سجلات إدارية</h3>
+            <p>لم يتم تسجيل أي مهام إدارية بعد.</p>
+          </div>
         ) : (
           <div className="table-wrapper">
             <table>
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>نوع الإنذار / الإعلان</th>
-                  <th>تاريخ الإعلان</th>
-                  <th>اسم الموكل</th>
-                  <th>رقم القضية</th>
-                  <th>المُعلن إليه / الخصم</th>
-                  <th>المرفقات</th>
-                  <th>الإجراءات</th>
+                  <th>التاريخ</th>
+                  <th>المستخدم</th>
+                  <th>المكان</th>
+                  <th>البيان</th>
+                  {!isManager && <th>الحالة</th>}
+                  {isManager && <th>الإجراءات</th>}
                 </tr>
               </thead>
               <tbody>
-                {filtered.map((d, i) => (
-                  <tr key={d.id} onClick={() => setDetail(d)} style={{ cursor: 'pointer', background: detailItem?.id === d.id ? 'rgba(192,57,43,0.05)' : undefined, borderRight: detailItem?.id === d.id ? '3px solid #c0392b' : '3px solid transparent' }}>
-                    <td className="td-secondary">{i + 1}</td>
-                    <td><span style={{ fontWeight: '800', color: '#c0392b', fontSize: '13.5px' }}>{d.noticeType}</span></td>
-                    <td className="td-secondary">{d.deliveryDate?.split('T')[0] || '—'}</td>
-                    <td style={{ fontWeight: '600' }}>{clientMap[d.clientId] || '—'}</td>
-                    <td><span className="badge badge-gray">{caseMap[d.caseId] || '—'}</span></td>
-                    <td className="td-secondary">{d.opponentName}</td>
-                    <td><span className="badge badge-gold">{d.attachments?.length || 0} مرفق</span></td>
-                    <td>
-                       <div className="td-actions" onClick={e => e.stopPropagation()}>
-                         <button className="btn btn-secondary btn-sm btn-icon" onClick={() => { setEdit(d); setModal(true) }}>✏️</button>
-                         <button className="btn btn-danger btn-sm btn-icon" onClick={() => handleDelete(d.id)}>🗑️</button>
-                       </div>
+                {filtered.map((d, i) => {
+                  const isHidden = !isManager && d.isVisible === false && !unlockedIds.has(d.id)
+                  return (
+                  <tr key={d.id} onClick={() => !isHidden && setDetail(d)}
+                    style={{ cursor: isHidden ? 'default' : 'pointer', position: 'relative', background: detailItem?.id === d.id ? 'rgba(15,118,110,0.05)' : undefined, borderRight: detailItem?.id === d.id ? '3px solid #0f766e' : '3px solid transparent' }}>
+                    <td className="td-secondary" style={isHidden ? { filter: 'blur(6px)', userSelect: 'none' } : {}}>{i + 1}</td>
+                    <td style={{ fontWeight: '700', color: 'var(--gold-bright)', ...(isHidden ? { filter: 'blur(6px)', userSelect: 'none' } : {}) }}>{d.date || '—'}</td>
+                    <td className="td-secondary" style={isHidden ? { filter: 'blur(6px)', userSelect: 'none' } : {}}>{userMap[d.userId] || '—'}</td>
+                    <td style={{ fontWeight: '600', ...(isHidden ? { filter: 'blur(6px)', userSelect: 'none' } : {}) }}>{d.place || '—'}</td>
+                    <td className="td-secondary" style={{ maxWidth: '260px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', ...(isHidden ? { filter: 'blur(6px)', userSelect: 'none' } : {}) }}>
+                      {d.description || '—'}
                     </td>
+
+                    {!isManager && (
+                      <td onClick={e => e.stopPropagation()}>
+                        {isHidden ? (
+                          <button className="btn btn-secondary btn-sm"
+                            onClick={() => setUnlockTarget(d.id)}
+                            style={{ fontSize: '11px', padding: '4px 12px', whiteSpace: 'nowrap' }}>
+                            🔒 طلب إظهار
+                          </button>
+                        ) : (
+                          <span className="badge badge-gold">✅ مرئي</span>
+                        )}
+                      </td>
+                    )}
+
+                    {isManager && (
+                      <td>
+                        <div className="td-actions" onClick={e => e.stopPropagation()}>
+                          <button className="btn btn-secondary btn-sm btn-icon" onClick={() => { setEdit(d); setModal(true) }}>✏️</button>
+                          <button className="btn btn-danger btn-sm btn-icon" onClick={() => handleDelete(d.id)}>🗑️</button>
+                        </div>
+                      </td>
+                    )}
                   </tr>
-                ))}
+                  )
+                })}
               </tbody>
             </table>
           </div>
         )}
       </div>
 
-      {showModal && <BailiffModal item={editingItem} cases={cases} clients={clients} onClose={() => { setModal(false); setEdit(null) }} onSave={handleSave} saving={saving} />}
-      {detailItem && <BailiffDrawer item={detailItem} clientName={clientMap[detailItem.clientId]} caseNum={caseMap[detailItem.caseId]} onClose={() => setDetail(null)} onEdit={c => { setEdit(c); setModal(true) }} onUploadDone={onUploadDone} showToast={showToast} />}
+      {showModal && (
+        <BailiffModal
+          item={editingItem}
+          users={users}
+          onClose={() => { setModal(false); setEdit(null) }}
+          onSave={handleSave}
+          saving={saving}
+        />
+      )}
+      {detailItem && (
+        <BailiffDrawer
+          item={detailItem}
+          isManager={isManager}
+          onClose={() => setDetail(null)}
+          onEdit={c => { setEdit(c); setModal(true) }}
+          onUploadDone={onUploadDone}
+          showToast={showToast}
+        />
+      )}
+      {unlockTarget && (
+        <UnlockModal
+          noticeId={unlockTarget}
+          userId={user?.userId}
+          onClose={() => setUnlockTarget(null)}
+          onUnlocked={() => {
+            setUnlockedIds(prev => new Set([...prev, unlockTarget]))
+            setUnlockTarget(null)
+            load()
+          }}
+          showToast={showToast}
+        />
+      )}
     </>
   )
 }
