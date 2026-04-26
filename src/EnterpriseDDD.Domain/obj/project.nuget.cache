@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "BKCse+pKRbU=",
+  "success": true,
+  "projectFilePath": "/Users/kemo/Desktop/LawerSystem/src/EnterpriseDDD.Domain/EnterpriseDDD.Domain.csproj",
+  "expectedPackageFiles": [
+    "/Users/kemo/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

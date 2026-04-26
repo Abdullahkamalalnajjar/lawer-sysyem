@@ -1,0 +1,157 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/kemo/Desktop/LawerSystem/src/EnterpriseDDD.Application/EnterpriseDDD.Application.csproj": {}
+  },
+  "projects": {
+    "/Users/kemo/Desktop/LawerSystem/src/EnterpriseDDD.Application/EnterpriseDDD.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/kemo/Desktop/LawerSystem/src/EnterpriseDDD.Application/EnterpriseDDD.Application.csproj",
+        "projectName": "EnterpriseDDD.Application",
+        "projectPath": "/Users/kemo/Desktop/LawerSystem/src/EnterpriseDDD.Application/EnterpriseDDD.Application.csproj",
+        "packagesPath": "/Users/kemo/.nuget/packages/",
+        "outputPath": "/Users/kemo/Desktop/LawerSystem/src/EnterpriseDDD.Application/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/kemo/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/kemo/Desktop/LawerSystem/src/EnterpriseDDD.Domain/EnterpriseDDD.Domain.csproj": {
+                "projectPath": "/Users/kemo/Desktop/LawerSystem/src/EnterpriseDDD.Domain/EnterpriseDDD.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.100"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[12.1.1, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[14.1.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.24, )"
+            },
+            "Microsoft.Extensions.Caching.Hybrid": {
+              "target": "Package",
+              "version": "[10.4.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.103/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/kemo/Desktop/LawerSystem/src/EnterpriseDDD.Domain/EnterpriseDDD.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/kemo/Desktop/LawerSystem/src/EnterpriseDDD.Domain/EnterpriseDDD.Domain.csproj",
+        "projectName": "EnterpriseDDD.Domain",
+        "projectPath": "/Users/kemo/Desktop/LawerSystem/src/EnterpriseDDD.Domain/EnterpriseDDD.Domain.csproj",
+        "packagesPath": "/Users/kemo/.nuget/packages/",
+        "outputPath": "/Users/kemo/Desktop/LawerSystem/src/EnterpriseDDD.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/kemo/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.100"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "MediatR.Contracts": {
+              "target": "Package",
+              "version": "[2.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.103/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

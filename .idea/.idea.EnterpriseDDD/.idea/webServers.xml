@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="dbec25ce-5cfa-4e1f-8854-3619ddaedfd0" name="ecommerce-api" url="http://ecommerce-api.tryasp.net">
+        <fileTransfer rootFolder="/wwwroot" host="ecommerce-api.tryasp.net" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="d3333989-bd61-4d65-98ed-851cccb16f9d" name="lawer-api" url="http://lawer-api.runasp.net">
+        <fileTransfer rootFolder="/wwwroot" host="lawer-api.runasp.net" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
