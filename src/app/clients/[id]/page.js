@@ -15,10 +15,25 @@ const chipStyle = { padding:'4px 12px', borderRadius:'99px', background:'rgba(25
 const btnS = (bg, color, border='none') => ({ background:bg, color, border: border==='none'?'none':border, borderRadius:'10px', padding:'10px 20px', fontWeight:'700', fontSize:'13.5px', cursor:'pointer', fontFamily:"'Cairo',sans-serif" })
 const tabBtn = (active) => ({ padding:'13px 24px', background:'none', border:'none', cursor:'pointer', fontSize:'14px', fontWeight: active?'800':'500', color: active?'#0f766e':'#64748b', borderBottom: active?'2px solid #0f766e':'2px solid transparent', marginBottom:'-2px', transition:'all 0.2s', fontFamily:"'Cairo',sans-serif" })
 
+const CASE_TYPES = ['مدني','جنائي','جنح','تجاري','إداري','أحوال شخصية','عمالي','دستوري','أخرى']
+const DEGREES    = ['عادي','معرضة','استئناف','معرضة استئنافية','نقض']
+
 // ── Add Case Modal ────────────────────────────────────────────
-function AddCaseModal({ clientId, onClose, onSaved }) {
+function AddCaseModal({ clientId, cases = [], onClose, onSaved }) {
   const { showToast } = useApp()
-  const [form, setForm] = useState({ caseNumber:'', caseType:'', opponent:'', degree:'' })
+
+  // Auto-generate next case number
+  const getNextCaseNumber = () => {
+    const currentYear = new Date().getFullYear()
+    const nums = cases.map(c => {
+      const match = (c.caseNumber || '').match(/^(\d+)/)
+      return match ? parseInt(match[1], 10) : 0
+    }).filter(n => !isNaN(n))
+    const nextNum = nums.length > 0 ? Math.max(...nums) + 1 : 1
+    return `${nextNum}/${currentYear}`
+  }
+
+  const [form, setForm] = useState({ caseNumber: getNextCaseNumber(), caseType: 'مدني', opponent: '', degree: DEGREES[0] })
   const [saving, setSaving] = useState(false)
   const f = (k) => ({ value: form[k], onChange: e => setForm(p=>({...p,[k]:e.target.value})) })
 
@@ -50,8 +65,7 @@ function AddCaseModal({ clientId, onClose, onSaved }) {
             <div className="form-group">
               <label className="form-label">نوع القضية</label>
               <select className="form-select" {...f('caseType')}>
-                <option value="">-- اختر --</option>
-                {['مدني','جنائي','تجاري','أسرة','عمالي','إداري'].map(t=><option key={t}>{t}</option>)}
+                {CASE_TYPES.map(t=><option key={t}>{t}</option>)}
               </select>
             </div>
             <div className="form-group">
@@ -60,11 +74,13 @@ function AddCaseModal({ clientId, onClose, onSaved }) {
             </div>
             <div className="form-group">
               <label className="form-label">الدرجة</label>
-              <input className="form-input" placeholder="مثال: ابتدائي" {...f('degree')} />
+              <select className="form-select" {...f('degree')}>
+                {DEGREES.map(d=><option key={d}>{d}</option>)}
+              </select>
             </div>
           </div></div>
           <div className="modal-footer">
-            <button type="submit" className="btn btn-primary" disabled={saving}>{saving?'⏳ جارٍ الحفظ...':'➕ إضافة القضية'}</button>
+            <button type="submit" className="btn btn-primary" disabled={saving}>{saving?'⏳ جارن الحفظ...':'➕ إضافة القضية'}</button>
             <button type="button" className="btn btn-secondary" onClick={onClose}>إلغاء</button>
           </div>
         </form>
@@ -347,7 +363,7 @@ function ClientDetail() {
         </div>
       )}
 
-      {showAddCase && <AddCaseModal clientId={id} onClose={()=>setShowAddCase(false)} onSaved={()=>{ setShowAddCase(false); reload() }} />}
+      {showAddCase && <AddCaseModal clientId={id} cases={cases} onClose={()=>setShowAddCase(false)} onSaved={()=>{ setShowAddCase(false); reload() }} />}
       {showAddSess && <AddSessionModal clientCases={cases} onClose={()=>setShowAddSess(false)} onSaved={()=>{ setShowAddSess(false); reload() }} />}
     </>
   )
