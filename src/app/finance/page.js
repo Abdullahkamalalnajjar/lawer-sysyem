@@ -244,14 +244,28 @@ function FinanceContent() {
     paymentsMap[pid].push(p)
   })
 
-  // Clients tab filter — only parent records
-  const years = [...new Set(parentRecords.map(r => r.date?.slice(0,4)).filter(Boolean))].sort((a,b)=>b-a)
-  const filteredClients = parentRecords.filter(r => {
-    const d = r.date || ''
-    if (filterYear  && !d.startsWith(filterYear))    return false
-    if (filterMonth && d.slice(5,7) !== filterMonth) return false
-    if (search && !(clientMap[r.clientId]||'').includes(search)) return false
+  // Clients tab filter — show parent if its own date OR any sub-payment date matches
+  const years = [...new Set(
+    [...parentRecords, ...paymentRecords].map(r => r.date?.slice(0,4)).filter(Boolean)
+  )].sort((a,b) => b-a)
+
+  const dateMatchesPeriod = (dateStr) => {
+    if (!dateStr) return false
+    if (filterYear  && !dateStr.startsWith(filterYear))     return false
+    if (filterMonth && dateStr.slice(5,7) !== filterMonth)  return false
     return true
+  }
+
+  const filteredClients = parentRecords.filter(r => {
+    // Name search
+    if (search && !(clientMap[r.clientId]||'').includes(search)) return false
+    // If no date filter — show all
+    if (!filterYear && !filterMonth) return true
+    // Parent date matches
+    if (dateMatchesPeriod(r.date)) return true
+    // Any sub-payment date matches
+    const subs = paymentsMap[r.id] || []
+    return subs.some(p => dateMatchesPeriod(p.date))
   })
   const hasFilter = filterMonth || filterYear || search
   const resetFilters = () => { setFilterMonth(''); setFilterYear(''); setSearch('') }
@@ -365,7 +379,10 @@ function FinanceContent() {
                     const agreedAmt  = r.originalAgreedAmount ?? r.agreedAmount ?? 0
                     const paidAmt    = r.paidAmount ?? 0
                     const remain     = r.remainingAmount ?? Math.max(0, agreedAmt - paidAmt)
-                    const subPayments = paymentsMap[r.id] || []
+                    const allSubs    = paymentsMap[r.id] || []
+                    const subPayments = (filterYear || filterMonth)
+                      ? allSubs.filter(p => dateMatchesPeriod(p.date))
+                      : allSubs
                     return (
                       <Fragment key={r.id}>
                         <tr key={r.id}>
