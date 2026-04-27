@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { useApp, AuthGuard } from '../components/AppShell'
 import {
   getSessions, createSession, updateSession, deleteSession,
@@ -141,7 +142,14 @@ function SessionsContent() {
   const [saving, setSaving]           = useState(false)
   const [search, setSearch]           = useState('')
   const [filterDate, setFilterDate]   = useState('')
-  const [filterCaseId, setFilterCaseId] = useState('')
+  const searchParams  = useSearchParams()
+  const [filterCaseId, setFilterCaseId] = useState(searchParams.get('caseId') || '')
+
+  // Sync when URL changes (e.g. navigating from cases page)
+  useEffect(() => {
+    const id = searchParams.get('caseId')
+    if (id) setFilterCaseId(id)
+  }, [searchParams])
 
   const clientMap = useMemo(
     () => Object.fromEntries(clients.map(c=>[c.id,c.name])),

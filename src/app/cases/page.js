@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import { useApp, AuthGuard } from '../components/AppShell'
 import { BASE_URL, getCases, createCase, updateCase, deleteCase, getClients } from '../lib/api'
 
@@ -24,7 +25,7 @@ function typeBadge(type) {
 // ══════════════════════════════════════════════════════════════
 // CASE DETAIL DRAWER
 // ══════════════════════════════════════════════════════════════
-function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showToast, isManager }) {
+function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showToast, isManager, onGoSessions }) {
   const [tab, setTab]         = useState('info')
   const [newImages, setNew]   = useState([])
   const [file, setFile]       = useState(null)
@@ -113,9 +114,10 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
               ))}
               <div style={{ marginTop: '28px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {isManager && (
-                  <button onClick={() => onEdit(caseItem)} style={actionBtnStyle('#0f766e', '#fff')}>✏️ &nbsp;تعديل بيانات القضية</button>
+                  <button onClick={() => onEdit(caseItem)} style={actionBtnStyle('var(--gold-primary)', '#fff')}>✏️ &nbsp;تعديل بيانات القضية</button>
                 )}
-                <button onClick={() => setTab('images')} style={actionBtnStyle('transparent', '#0f766e', '1.5px solid #0f766e')}>📂&nbsp;الملفات {allImages.length > 0 ? `(${allImages.length})` : ''}</button>
+                <button onClick={() => onGoSessions(caseItem.id)} style={actionBtnStyle('#1d4ed8', '#fff')}>📅 &nbsp;عرض جلسات القضية</button>
+                <button onClick={() => setTab('images')} style={actionBtnStyle('transparent', 'var(--gold-primary)', '1.5px solid var(--gold-primary)')}>📂&nbsp;الملفات {allImages.length > 0 ? `(${allImages.length})` : ''}</button>
               </div>
             </div>
           )}
@@ -326,7 +328,8 @@ function CaseModal({ caseItem, clients, onClose, onSave, saving }) {
 // ══════════════════════════════════════════════════════════════
 function CasesContent() {
   const { showToast, user } = useApp()
-  const isManager = user?.roles?.includes('Manager')
+  const router     = useRouter()
+  const isManager  = user?.roles?.includes('Manager')
   const [cases, setCases]         = useState([])
   const [clients, setClients]     = useState([])
   const [loading, setLoading]     = useState(true)
@@ -447,22 +450,28 @@ function CasesContent() {
                     onClick={() => setDetail(c)}
                     style={{
                       cursor: 'pointer',
-                      background: detailCase?.id === c.id ? 'rgba(15,118,110,0.05)' : undefined,
-                      borderRight: detailCase?.id === c.id ? '3px solid #0f766e' : '3px solid transparent',
+                      background: detailCase?.id === c.id ? 'rgba(37,99,235,0.05)' : undefined,
+                      borderRight: detailCase?.id === c.id ? '3px solid var(--gold-primary)' : '3px solid transparent',
                     }}
                   >
                     <td className="td-secondary">{i + 1}</td>
                     <td>
-                      <span style={{ fontWeight: '800', color: '#0f766e', fontSize: '14px' }}>
-                        {c.caseNumber}
-                      </span>
+                      <div style={{ display:'flex', alignItems:'center', gap:'8px' }} onClick={e => e.stopPropagation()}>
+                        <span style={{ fontWeight: '800', color: 'var(--gold-primary)', fontSize: '14px' }}>
+                          {c.caseNumber}
+                        </span>
+                        <button className="btn btn-primary btn-sm btn-icon"
+                          onClick={() => router.push(`/sessions?caseId=${c.id}`)}
+                          title="عرض جلسات القضية" id={`sessions-case-${c.id}`}
+                          style={{ fontSize:'11px', padding:'2px 7px', borderRadius:'6px' }}>📅</button>
+                      </div>
                     </td>
                     <td><span className={`badge ${typeBadge(c.caseType)}`}>{c.caseType}</span></td>
                     <td style={{ fontWeight: '600' }}>{clientMap[c.clientId] || '—'}</td>
                     <td className="td-secondary">{c.opponent || c.opponentName || '—'}</td>
                     <td className="td-secondary">{c.degree || c.caseDegree || '—'}</td>
                     <td>
-                      {isManager ? (
+                      {isManager && (
                         <div className="td-actions" onClick={e => e.stopPropagation()}>
                           <button className="btn btn-secondary btn-sm btn-icon"
                             onClick={() => { setEdit(c); setModal(true) }}
@@ -471,8 +480,6 @@ function CasesContent() {
                             onClick={() => handleDelete(c.id)}
                             title="حذف" id={`delete-case-${c.id}`}>🗑️</button>
                         </div>
-                      ) : (
-                        <span className="td-secondary" style={{ fontSize:'12px' }}>عرض فقط</span>
                       )}
                     </td>
                   </tr>
@@ -504,6 +511,7 @@ function CasesContent() {
           onUploadDone={() => load()}
           showToast={showToast}
           isManager={isManager}
+          onGoSessions={(caseId) => router.push(`/sessions?caseId=${caseId}`)}
         />
       )}
     </>
