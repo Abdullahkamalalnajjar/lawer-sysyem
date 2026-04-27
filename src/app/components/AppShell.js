@@ -21,7 +21,7 @@ function Sidebar({ currentPath, isCollapsed, onToggleCollapse, isMobileOpen, onM
     { href: '/dashboard',            icon: '🏛️', label: 'لوحة التحكم' },
     { href: '/clients',              icon: '👥', label: 'الموكلين' },
     { href: '/cases',                icon: '⚖️', label: 'القضايا' },
-    { href: '/qawady',               icon: '🧑‍⚖️', label: 'صور قواضي' },
+    { href: '/qawady',               icon: '📂', label: 'صور القضايا' },
     { href: '/sessions',             icon: '📋', label: 'الجلسات' },
     { href: '/sessions/agenda',      icon: '📅', label: 'الأجندة' },
     { href: '/administrative-works', icon: '🏛️', label: 'الأعمال الإدارية' },

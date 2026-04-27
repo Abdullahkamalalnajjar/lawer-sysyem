@@ -195,6 +195,7 @@ function AdminWorksContent() {
   const [showModal, setModal] = useState(false)
   const [editWork, setEdit]   = useState(null)
   const [expandedId, setExpandedId] = useState(null)
+  const [filterPlace, setFilterPlace] = useState('')
 
   const load = async () => {
     setLoading(true)
@@ -229,18 +230,20 @@ function AdminWorksContent() {
   const caseMap   = Object.fromEntries(cases.map(c => [c.id, c]))
   const clientMap = Object.fromEntries(clients.map(c => [c.id, c.name]))
 
-  const years = [...new Set(works.map(w => w.date?.slice(0,4)).filter(Boolean))].sort((a,b)=>b-a)
+  const years  = [...new Set(works.map(w => w.date?.slice(0,4)).filter(Boolean))].sort((a,b)=>b-a)
+  const places  = [...new Set(works.map(w => w.place).filter(Boolean))].sort()
 
   const filtered = works.filter(w => {
     const d = w.date || ''
     if (filterYear  && !d.startsWith(filterYear))    return false
     if (filterMonth && d.slice(5,7) !== filterMonth) return false
+    if (filterPlace && (w.place || '') !== filterPlace) return false
     if (search && !(w.statement||'').includes(search) && !(w.place||'').includes(search) && !(userMap[w.appUserId]||'').includes(search)) return false
     return true
   })
 
-  const hasFilter = filterMonth || filterYear || search
-  const resetFilters = () => { setFilterMonth(''); setFilterYear(''); setSearch('') }
+  const hasFilter = filterMonth || filterYear || search || filterPlace
+  const resetFilters = () => { setFilterMonth(''); setFilterYear(''); setSearch(''); setFilterPlace('') }
 
   const fmtDate = (d) => d ? new Date(d).toLocaleDateString('ar-EG') : '—'
 
@@ -333,6 +336,11 @@ function AdminWorksContent() {
             <option value="">كل السنوات</option>
             {years.map(y=><option key={y} value={y}>{y}</option>)}
           </select>
+          <select id="admin-works-place-filter" className="form-select" style={{ width:'140px', margin:0 }}
+            value={filterPlace} onChange={e => setFilterPlace(e.target.value)}>
+            <option value="">كل الأماكن</option>
+            {places.map(p => <option key={p} value={p}>{p}</option>)}
+          </select>
           {hasFilter && <button className="btn btn-secondary btn-sm" onClick={resetFilters}>✕ مسح</button>}
           {hasFilter && <span style={{ fontSize:'12px', color:'#64748b', fontWeight:'600' }}>{filtered.length} من {works.length}</span>}
         </div>
@@ -352,6 +360,7 @@ function AdminWorksContent() {
               <thead><tr>
                 <th>#</th>
                 <th>التاريخ</th>
+                <th>الموكل</th>
                 <th>المكان</th>
                 <th>البيان</th>
                 <th>المستخدم</th>
@@ -366,6 +375,13 @@ function AdminWorksContent() {
                   <tr key={w.id} style={{ opacity: w.isVisible ? 1 : 0.65 }}>
                     <td className="td-secondary">{i + 1}</td>
                     <td><span className="badge badge-gold">{fmtDate(w.date)}</span></td>
+                    <td style={{ fontWeight: '600', color: '#0f172a' }}>
+                      {(() => {
+                        const sess = sessions.find(s => s.id === w.sessionId)
+                        const cas  = sess ? caseMap[sess.caseId] : null
+                        return clientMap[cas?.clientId] || '—'
+                      })()}
+                    </td>
                     <td className="td-secondary">{w.place || '—'}</td>
                     <td
                       style={{ maxWidth: '320px', cursor: 'pointer', verticalAlign: 'top' }}

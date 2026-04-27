@@ -31,17 +31,17 @@ function QawadyModal({ item, onClose, onSave, saving }) {
         <div className="modal-header">
           <div className="modal-title">
             <div className="modal-title-icon">⚖️</div>
-            {item ? 'تعديل القاضي' : 'إضافة قاضٍ جديد'}
+            {item ? 'تعديل القضية' : 'إضافة قضية جديدة'}
           </div>
           <button className="modal-close" onClick={onClose}>✕</button>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="modal-body">
             <div className="form-group">
-              <label className="form-label"><span className="form-required">*</span>اسم القاضي</label>
+              <label className="form-label"><span className="form-required">*</span>اسم القضية</label>
               <input
                 className="form-input"
-                placeholder="مثال: القاضي أحمد محمد"
+                placeholder="مثال: قضية عبدالله محمد"
                 value={name}
                 onChange={e => { setName(e.target.value); setError('') }}
                 style={error ? { borderColor: 'var(--danger)' } : {}}
@@ -52,7 +52,7 @@ function QawadyModal({ item, onClose, onSave, saving }) {
           </div>
           <div className="modal-footer">
             <button type="submit" className="btn btn-primary" disabled={saving} id="save-qawady-btn">
-              {saving ? '⏳ جارٍ الحفظ...' : item ? '💾 حفظ التعديلات' : '➕ إضافة القاضي'}
+              {saving ? '⏳ جارٍ الحفظ...' : item ? '💾 حفظ التعديلات' : '➕ إضافة القضية'}
             </button>
             <button type="button" className="btn btn-secondary" onClick={onClose}>إلغاء</button>
           </div>
@@ -192,7 +192,7 @@ function QawadyContent() {
   }
 
   const handleDelete = async (id) => {
-    if (!confirm('هل أنت متأكد من حذف هذا القاضي؟')) return
+    if (!confirm('هل أنت متأكد من حذف هذه القضية؟')) return
     try {
       await deleteQawady(id)
       showToast('تم الحذف', 'error')
@@ -211,15 +211,15 @@ function QawadyContent() {
           <p className="page-header-breadcrumb">
             <span>الرئيسية</span> <span>›</span>
             <span>القضايا</span> <span>›</span>
-            <span className="active">صور قواضي</span>
+            <span className="active">صور القضايا</span>
           </p>
-          <h2>صور قواضي</h2>
-          <p>إدارة سجلات القضاة وصورهم</p>
+          <h2>صور القضايا</h2>
+          <p>إدارة ملفات ومستندات القضايا</p>
         </div>
         {isManager && (
           <button id="add-qawady-btn" className="btn btn-primary"
             onClick={() => { setEdit(null); setModal(true) }}>
-            ➕ إضافة قاضٍ
+            ➕ إضافة قضية
           </button>
         )}
       </div>
@@ -228,7 +228,7 @@ function QawadyContent() {
       <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(3,1fr)', marginBottom: '24px' }}>
         <div className="stat-card">
           <div className="stat-icon gold">⚖️</div>
-          <div className="stat-info"><h3>{list.length}</h3><p>إجمالي القضاة</p></div>
+          <div className="stat-info"><h3>{list.length}</h3><p>إجمالي القضايا</p></div>
         </div>
         <div className="stat-card">
           <div className="stat-icon blue">🖼️</div>
@@ -249,7 +249,7 @@ function QawadyContent() {
           <div className="search-input-wrapper">
             <span className="search-input-icon">🔍</span>
             <input id="qawady-search" className="search-input"
-              placeholder="ابحث باسم القاضي..."
+              placeholder="ابحث باسم القضية..."
               value={search} onChange={e => setSearch(e.target.value)} />
           </div>
         </div>

@@ -45,10 +45,10 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
       setNew(prev => [result, ...prev])
       setFile(null)
       if (fileRef.current) fileRef.current.value = ''
-      showToast('تم رفع الصورة بنجاح ✅')
+      showToast('تم رفع الملف بنجاح ✅')
       onUploadDone?.()
     } catch (err) {
-      showToast(err.message || 'فشل رفع الصورة', 'error')
+      showToast(err.message || 'فشل رفع الملف', 'error')
     } finally { setUL(false) }
   }
 
@@ -62,7 +62,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
 
   const tabs = [
     { id: 'info',   label: '📋 المعلومات' },
-    { id: 'images', label: `🖼️ الصور${allImages.length ? ` (${allImages.length})` : ''}` },
+    { id: 'images', label: `📂 الملفات${allImages.length ? ` (${allImages.length})` : ''}` },
   ]
 
   return (
@@ -84,7 +84,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
             <div style={{ marginTop: '8px', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
               <span style={chipStyle}>{caseItem.caseType}</span>
               <span style={chipStyle}>درجة {caseItem.degree || caseItem.caseDegree}</span>
-              {allImages.length > 0 && <span style={chipStyle}>🖼️ {allImages.length} صورة</span>}
+              {allImages.length > 0 && <span style={chipStyle}>📂 {allImages.length} ملف</span>}
             </div>
           </div>
           <button onClick={onClose} style={closeBtnStyle}>✕</button>
@@ -115,7 +115,7 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                 {isManager && (
                   <button onClick={() => onEdit(caseItem)} style={actionBtnStyle('#0f766e', '#fff')}>✏️ &nbsp;تعديل بيانات القضية</button>
                 )}
-                <button onClick={() => setTab('images')} style={actionBtnStyle('transparent', '#0f766e', '1.5px solid #0f766e')}>🖼️ &nbsp;الصور {allImages.length > 0 ? `(${allImages.length})` : ''}</button>
+                <button onClick={() => setTab('images')} style={actionBtnStyle('transparent', '#0f766e', '1.5px solid #0f766e')}>📂&nbsp;الملفات {allImages.length > 0 ? `(${allImages.length})` : ''}</button>
               </div>
             </div>
           )}
@@ -131,14 +131,14 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                 style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', border: `2px dashed ${dragOver ? '#0f766e' : file ? '#14b8a6' : 'rgba(15,118,110,0.25)'}`, borderRadius: '14px', padding: '24px 16px', cursor: 'pointer', background: dragOver ? 'rgba(15,118,110,0.06)' : file ? 'rgba(15,118,110,0.03)' : '#fafafa', transition: 'all 0.2s', gap: '8px', textAlign: 'center', marginBottom: '16px' }}
               >
                 <span style={{ fontSize: '32px' }}>{file ? '🖼️' : '📂'}</span>
-                <span style={{ fontWeight: '700', color: '#0f172a', fontSize: '13px' }}>{file ? file.name : 'اسحب صورة هنا أو اضغط للاختيار'}</span>
+                <span style={{ fontWeight: '700', color: '#0f172a', fontSize: '13px' }}>{file ? file.name : 'اسحب ملف هنا أو اضغط للاختيار'}</span>
                 {file && <span style={{ fontSize: '11px', color: '#64748b' }}>{(file.size / 1024).toFixed(1)} KB</span>}
-                <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={e => setFile(e.target.files[0] || null)} />
+                <input ref={fileRef} type="file" style={{ display: 'none' }} onChange={e => setFile(e.target.files[0] || null)} />
               </label>
 
               <div style={{ display: 'flex', gap: '8px', marginBottom: '20px' }}>
                 <button onClick={handleUpload} disabled={!file || uploading} style={{ ...actionBtnStyle('#0f766e', '#fff'), flex: 1, opacity: (!file || uploading) ? 0.55 : 1, cursor: (!file || uploading) ? 'not-allowed' : 'pointer' }}>
-                  {uploading ? '⏳ جارٍ الرفع...' : '📤 رفع الصورة'}
+                  {uploading ? '⏳ جارٍ الرفع...' : '📤 رفع الملف'}
                 </button>
                 {file && (
                   <button onClick={() => { setFile(null); if (fileRef.current) fileRef.current.value = '' }} style={actionBtnStyle('transparent', '#64748b', '1.5px solid rgba(15,118,110,0.20)')}>✕</button>
@@ -153,22 +153,33 @@ function CaseDrawer({ caseItem, clientName, onClose, onEdit, onUploadDone, showT
                 </div>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                  <div style={{ fontSize: '11px', fontWeight: '800', color: '#94a3b8', letterSpacing: '1px', textTransform: 'uppercase' }}>الصور ({allImages.length})</div>
-                  {allImages.map((img, i) => (
-                    <div key={img.id || i} style={{ border: '1px solid rgba(15,118,110,0.12)', borderRadius: '14px', overflow: 'hidden', background: '#f8fafc', boxShadow: '0 2px 8px rgba(15,118,110,0.05)' }}>
-                      <a href={img.url} target="_blank" rel="noreferrer" style={{ display: 'block' }}>
-                        <img src={img.url} alt={img.fileName} style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', display: 'block', borderBottom: '1px solid rgba(15,118,110,0.08)' }} onError={e => { e.target.style.display = 'none' }} />
-                      </a>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 14px' }}>
-                        <span style={{ fontSize: '18px' }}>🖼️</span>
-                        <div style={{ flex: 1, minWidth: 0 }}>
-                          <div style={{ fontSize: '12px', fontWeight: '700', color: '#0f172a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{img.fileName}</div>
-                          <div style={{ fontSize: '10px', color: '#94a3b8', marginTop: '2px' }}>{img.contentType}</div>
+                  <div style={{ fontSize: '11px', fontWeight: '800', color: '#94a3b8', letterSpacing: '1px', textTransform: 'uppercase' }}>الملفات ({allImages.length})</div>
+                  {allImages.map((img, i) => {
+                    const isImage = img.contentType?.startsWith('image') || /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(img.fileName || '')
+                    const isPdf   = img.contentType === 'application/pdf' || /\.pdf$/i.test(img.fileName || '')
+                    const fileIcon = isPdf ? '📄' : isImage ? '🖼️' : '📎'
+                    return (
+                      <div key={img.id || i} style={{ border: '1px solid rgba(15,118,110,0.12)', borderRadius: '14px', overflow: 'hidden', background: '#f8fafc', boxShadow: '0 2px 8px rgba(15,118,110,0.05)' }}>
+                        {isImage ? (
+                          <a href={img.url} target="_blank" rel="noreferrer" style={{ display: 'block' }}>
+                            <img src={img.url} alt={img.fileName} style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', display: 'block', borderBottom: '1px solid rgba(15,118,110,0.08)' }} onError={e => { e.target.style.display = 'none' }} />
+                          </a>
+                        ) : (
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80px', background: 'rgba(15,118,110,0.04)', borderBottom: '1px solid rgba(15,118,110,0.08)', fontSize: '36px' }}>
+                            {fileIcon}
+                          </div>
+                        )}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 14px' }}>
+                          <span style={{ fontSize: '18px' }}>{fileIcon}</span>
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <div style={{ fontSize: '12px', fontWeight: '700', color: '#0f172a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{img.fileName}</div>
+                            <div style={{ fontSize: '10px', color: '#94a3b8', marginTop: '2px' }}>{img.contentType}</div>
+                          </div>
+                          <a href={img.url} target="_blank" rel="noreferrer" style={{ background: 'rgba(15,118,110,0.08)', border: '1px solid rgba(15,118,110,0.15)', borderRadius: '8px', padding: '4px 10px', fontSize: '12px', fontWeight: '700', color: '#0f766e', textDecoration: 'none' }}>🔗 فتح</a>
                         </div>
-                        <a href={img.url} target="_blank" rel="noreferrer" style={{ background: 'rgba(15,118,110,0.08)', border: '1px solid rgba(15,118,110,0.15)', borderRadius: '8px', padding: '4px 10px', fontSize: '12px', fontWeight: '700', color: '#0f766e', textDecoration: 'none' }}>🔗 فتح</a>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
               )}
             </div>

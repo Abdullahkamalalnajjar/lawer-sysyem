@@ -214,10 +214,12 @@ function FinanceContent() {
   const [search, setSearch]  = useState('')
   const [filterMonth, setFilterMonth] = useState('')
   const [filterYear,  setFilterYear]  = useState('')
+  const [filterClient, setFilterClient] = useState('')
   const [editRecord, setEdit]   = useState(null)
   const [showModal, setModal]   = useState(false)
   const [payRecord, setPay]     = useState(null)
   const [activeMember, setActiveMember] = useState(null)
+  const [expandedRecord, setExpandedRecord] = useState(null)
 
   const load = async () => {
     setLoading(true)
@@ -257,7 +259,9 @@ function FinanceContent() {
   }
 
   const filteredClients = parentRecords.filter(r => {
-    // Name search
+    // Client dropdown filter
+    if (filterClient && r.clientId !== filterClient) return false
+    // Name text search
     if (search && !(clientMap[r.clientId]||'').includes(search)) return false
     // If no date filter — show all
     if (!filterYear && !filterMonth) return true
@@ -267,13 +271,18 @@ function FinanceContent() {
     const subs = paymentsMap[r.id] || []
     return subs.some(p => dateMatchesPeriod(p.date))
   })
-  const hasFilter = filterMonth || filterYear || search
-  const resetFilters = () => { setFilterMonth(''); setFilterYear(''); setSearch('') }
+  const hasFilter = filterMonth || filterYear || search || filterClient
+  const resetFilters = () => { setFilterMonth(''); setFilterYear(''); setSearch(''); setFilterClient('') }
 
-  // Totals from parent records using API fields
-  const totalAgreed = parentRecords.reduce((s, r) => s + (r.originalAgreedAmount ?? r.agreedAmount ?? 0), 0)
-  const totalPaid   = parentRecords.reduce((s, r) => s + (r.paidAmount || 0) + (paymentsMap[r.id]||[]).reduce((ps,p)=>ps+(p.paidAmount||0),0), 0)
-  const totalRemain = parentRecords.reduce((s, r) => s + (r.remainingAmount ?? 0), 0)
+  // Totals — always based on the currently filtered/searched set
+  const totalAgreed = filteredClients.reduce((s, r) => s + (r.originalAgreedAmount ?? r.agreedAmount ?? 0), 0)
+  const totalPaid   = filteredClients.reduce((s, r) => {
+    const subsToCount = (filterYear || filterMonth)
+      ? (paymentsMap[r.id]||[]).filter(p => dateMatchesPeriod(p.date))
+      : (paymentsMap[r.id]||[])
+    return s + (r.paidAmount || 0) + subsToCount.reduce((ps, p) => ps + (p.paidAmount || 0), 0)
+  }, 0)
+  const totalRemain = filteredClients.reduce((s, r) => s + (r.remainingAmount ?? 0), 0)
 
   // Members tab — group daily accounts by appUserIdentifier
   const memberMap = {}
@@ -345,11 +354,20 @@ function FinanceContent() {
       {/* ── CLIENTS TAB ── */}
       {tab === 'clients' && (
         <div className="card">
-          <div style={{ display:'flex', gap:'10px', padding:'16px 20px', borderBottom:'1px solid rgba(15,118,110,0.08)', flexWrap:'wrap', alignItems:'center' }}>
+        <div style={{ display:'flex', gap:'10px', padding:'16px 20px', borderBottom:'1px solid rgba(15,118,110,0.08)', flexWrap:'wrap', alignItems:'center' }}>
             <div className="search-input-wrapper" style={{ flex:1, minWidth:'180px' }}>
               <span className="search-input-icon">🔍</span>
               <input id="finance-search" className="search-input" placeholder="ابحث باسم الموكل..." value={search} onChange={e => setSearch(e.target.value)} />
             </div>
+            <select id="finance-client-filter" className="form-select" style={{ width:'170px', margin:0 }}
+              value={filterClient} onChange={e => { setFilterClient(e.target.value); setSearch('') }}>
+              <option value="">اختار موكل</option>
+              {clients
+                .filter(c => parentRecords.some(r => r.clientId === c.id))
+                .sort((a,b) => (a.name||'').localeCompare(b.name||'', 'ar'))
+                .map(c => <option key={c.id} value={c.id}>{c.name}</option>)
+              }
+            </select>
             <select className="form-select" style={{ width:'140px', margin:0 }}
               value={filterMonth} onChange={e => setFilterMonth(e.target.value)}>
               <option value="">كل الشهور</option>
@@ -361,7 +379,7 @@ function FinanceContent() {
               {years.map(y=><option key={y} value={y}>{y}</option>)}
             </select>
             {hasFilter && <button className="btn btn-secondary btn-sm" onClick={resetFilters}>✕ مسح</button>}
-            {hasFilter && <span style={{ fontSize:'12px', color:'#64748b', fontWeight:'600' }}>{filteredClients.length} من {records.length}</span>}
+            {hasFilter && <span style={{ fontSize:'12px', color:'#64748b', fontWeight:'600' }}>{filteredClients.length} من {parentRecords.length}</span>}
           </div>
           {loading ? (
             <div className="empty-state"><div style={{ fontSize:'36px' }}>⏳</div><p>جارٍ تحميل البيانات...</p></div>
@@ -376,16 +394,27 @@ function FinanceContent() {
                 <thead><tr><th>#</th><th>الموكل</th><th>التاريخ</th><th>المبلغ المتفق عليه</th><th>المدفوع</th><th>المتبقي</th><th>الإجراءات</th></tr></thead>
                 <tbody>
                   {filteredClients.map((r, i) => {
-                    const agreedAmt  = r.originalAgreedAmount ?? r.agreedAmount ?? 0
-                    const paidAmt    = r.paidAmount ?? 0
-                    const remain     = r.remainingAmount ?? Math.max(0, agreedAmt - paidAmt)
-                    const allSubs    = paymentsMap[r.id] || []
+                    const agreedAmt   = r.originalAgreedAmount ?? r.agreedAmount ?? 0
+                    const paidAmt     = r.paidAmount ?? 0
+                    const remain      = r.remainingAmount ?? Math.max(0, agreedAmt - paidAmt)
+                    const allSubs     = paymentsMap[r.id] || []
                     const subPayments = (filterYear || filterMonth)
                       ? allSubs.filter(p => dateMatchesPeriod(p.date))
                       : allSubs
+                    // Collapse by default when multiple records; expand on click
+                    const isMulti    = filteredClients.length > 1
+                    const isExpanded = isMulti ? expandedRecord === r.id : true
+                    const hasSubs    = subPayments.length > 0
                     return (
                       <Fragment key={r.id}>
-                        <tr key={r.id}>
+                        <tr
+                          key={r.id}
+                          style={{ cursor: hasSubs && isMulti ? 'pointer' : 'default' }}
+                          onClick={() => {
+                            if (hasSubs && isMulti)
+                              setExpandedRecord(prev => prev === r.id ? null : r.id)
+                          }}
+                        >
                           <td className="td-secondary">{i + 1}</td>
                           <td style={{ fontWeight:'600' }}>{clientMap[r.clientId] || '—'}</td>
                           <td className="td-secondary">{fmtDt(r.date)}</td>
@@ -394,7 +423,10 @@ function FinanceContent() {
                             {fmt(paidAmt)}
                             {subPayments.length > 0 && (
                               <span style={{ fontSize:'10px', color:'#0f766e', fontWeight:'700', marginRight:'4px' }}>
-                                +{subPayments.length} دفعة
+                                {isMulti
+                                  ? (isExpanded ? '▴ طي' : `+${subPayments.length} دفعة ▾`)
+                                  : `+${subPayments.length} دفعة`
+                                }
                               </span>
                             )}
                           </td>
@@ -408,7 +440,7 @@ function FinanceContent() {
                             </div>
                           </td>
                         </tr>
-                        {subPayments.map((p, pi) => (
+                        {isExpanded && subPayments.map((p, pi) => (
                           <tr key={p.id} style={{ background:'rgba(22,163,74,0.04)', borderTop:'none' }}>
                             <td style={{ color:'#94a3b8', fontSize:'11px', paddingRight:'28px' }}>└ {pi + 1}</td>
                             <td style={{ color:'#64748b', fontSize:'12px' }}>
@@ -423,18 +455,26 @@ function FinanceContent() {
                             <td></td>
                           </tr>
                         ))}
+                        {/* Per-record subtotal row — only when multiple records shown */}
+                        {filteredClients.length > 1 && (
+                          <tr style={{ background:'rgba(15,118,110,0.06)', borderTop:'2px solid rgba(15,118,110,0.15)' }}>
+                            <td colSpan={3} style={{ fontSize:'12px', fontWeight:'800', color:'#0f766e', padding:'8px 16px', textAlign:'right' }}>
+                              إجمالي: {clientMap[r.clientId] || '—'}
+                            </td>
+                            <td style={{ fontWeight:'800', color:'#1e40af', fontSize:'12px' }}>{fmt(agreedAmt)}</td>
+                            <td style={{ fontWeight:'800', color:'#16a34a', fontSize:'12px' }}>
+                              {fmt(paidAmt + subPayments.reduce((s, p) => s + (p.paidAmount || 0), 0))}
+                            </td>
+                            <td style={{ fontWeight:'800', color: remain > 0 ? '#dc2626' : '#16a34a', fontSize:'12px' }}>{fmt(remain)}</td>
+                            <td></td>
+                          </tr>
+                        )}
                       </Fragment>
                     )
                   })}
                 </tbody>
               </table>
-              {/* Footer total */}
-              <div style={{ padding:'14px 20px', borderTop:'2px solid rgba(15,118,110,0.08)', display:'flex', gap:'32px', background:'rgba(15,118,110,0.03)' }}>
-                <span style={{ fontSize:'13px', color:'#64748b', fontWeight:'600' }}>الإجمالي:</span>
-                <span style={{ fontSize:'13px', fontWeight:'800', color:'#1e40af' }}>متفق عليه: {fmt(totalAgreed)}</span>
-                <span style={{ fontSize:'13px', fontWeight:'800', color:'#16a34a' }}>مدفوع: {fmt(totalPaid)}</span>
-                <span style={{ fontSize:'13px', fontWeight:'800', color:'#dc2626' }}>متبقي: {fmt(totalRemain)}</span>
-              </div>
+
             </div>
           )}
         </div>
