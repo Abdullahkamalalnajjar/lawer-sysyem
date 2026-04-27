@@ -16,12 +16,15 @@ export default function DashboardPage() {
 function DashboardContent() {
   const { user, showToast } = useApp()
   const router = useRouter()
+  const isManager = user?.roles?.includes('Manager')
   const [data, setData]     = useState({ clients: [], cases: [], sessions: [], finance: [] })
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    Promise.all([getClients(), getCases(), getSessions(), getFinancialRecords()])
-      .then(([clients, cases, sessions, finance]) => {
+    const calls = [getClients(), getCases(), getSessions()]
+    if (isManager) calls.push(getFinancialRecords())
+    Promise.all(calls)
+      .then(([clients, cases, sessions, finance = []]) => {
         setData({ clients, cases, sessions, finance })
       })
       .catch(err => showToast(err.message || 'فشل تحميل البيانات', 'error'))
@@ -40,10 +43,10 @@ function DashboardContent() {
   const caseMap   = Object.fromEntries(data.cases.map(c => [c.id, c]))
 
   const statCards = [
-    { icon: '👥', label: 'إجمالي الموكلين', value: data.clients.length, color: 'gold', href: '/clients' },
-    { icon: '⚖️', label: 'القضايا المسجلة', value: data.cases.length,   color: 'blue', href: '/cases' },
+    { icon: '👥', label: 'إجمالي الموكلين', value: data.clients.length, color: 'gold',  href: '/clients' },
+    { icon: '⚖️', label: 'القضايا المسجلة', value: data.cases.length,   color: 'blue',  href: '/cases' },
     { icon: '📅', label: 'الجلسات المقررة', value: data.sessions.length, color: 'green', href: '/sessions' },
-    { icon: '💰', label: 'السجلات المالية', value: data.finance.length,  color: 'red', href: '/finance' },
+    ...(isManager ? [{ icon: '💰', label: 'السجلات المالية', value: data.finance.length, color: 'red', href: '/finance' }] : []),
   ]
 
   const formatDate = (d) => {
@@ -194,7 +197,7 @@ function DashboardContent() {
             { label: 'إضافة موكل', icon: '👤', href: '/clients' },
             { label: 'تسجيل قضية', icon: '📋', href: '/cases' },
             { label: 'حجز جلسة',   icon: '🗓️', href: '/sessions' },
-            { label: 'قيد مالي',   icon: '💵', href: '/finance' },
+            ...(isManager ? [{ label: 'قيد مالي', icon: '💵', href: '/finance' }] : []),
           ].map(a => (
             <button key={a.label} className="btn btn-secondary"
               style={{ flex: 1, minWidth: '120px', justifyContent: 'center', padding: '14px' }}

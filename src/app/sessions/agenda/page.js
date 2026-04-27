@@ -3,9 +3,8 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useApp, AuthGuard } from '../../components/AppShell'
 import {
-  getSessionsCalendar,
   getSessions, createSession, updateSession, deleteSession,
-  getCases, getClients,
+  getCases, getClients, getSessionsCalendar,
 } from '../../lib/api'
 
 export default function AgendaPage() {
@@ -30,7 +29,13 @@ const ARABIC_MONTHS = ['يناير','فبراير','مارس','أبريل','ما
 const ARABIC_DAYS   = ['أحد','اثن','ثلا','أرب','خمس','جمع','سبت']
 
 function fmt(d) { return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}` }
-function isoDate(d) { return d.toISOString().slice(0,10) }
+// Use LOCAL date getters — toISOString() gives UTC which shifts dates in UTC+ timezones
+function isoDate(d) {
+  const y  = d.getFullYear()
+  const m  = String(d.getMonth() + 1).padStart(2, '0')
+  const dd = String(d.getDate()).padStart(2, '0')
+  return `${y}-${m}-${dd}`
+}
 function sameDay(a, b) {
   return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate()
 }
@@ -38,13 +43,13 @@ function sameDay(a, b) {
 // ── Session Modal ──────────────────────────────────────────────
 function SessionModal({ session, cases, clientMap, onClose, onSave, saving }) {
   const [form, setForm] = useState(session ? {
-    caseId:      session.caseId || '',
-    roll:        session.roll || '',
-    decision:    session.decision || '',
-    sessionDate: session.sessionDate?.split('T')[0] || '',
-    requests:    session.requests || '',
-    sessionType: session.sessionType || 'مرافعة',
-  } : { caseId:'', roll:'', decision:'', sessionDate:'', requests:'', sessionType:'مرافعة' })
+    caseId:          session.caseId || '',
+    roll:            session.roll || '',
+    decision:        session.decision || '',
+    sessionDate:     session.sessionDate?.split('T')[0] || '',
+    nextSessionDate: session.nextSessionDate?.split('T')[0] || '',
+    requests:        session.requests || session.request || '',
+  } : { caseId:'', roll:'', decision:'', sessionDate:'', nextSessionDate:'', requests:'' })
   const [errors, setErrors] = useState({})
 
   const validate = () => {
@@ -91,11 +96,9 @@ function SessionModal({ session, cases, clientMap, onClose, onSave, saving }) {
                 {errors.sessionDate && <span style={{fontSize:'12px',color:'var(--danger)'}}>{errors.sessionDate}</span>}
               </div>
               <div className="form-group">
-                <label className="form-label">نوع الجلسة</label>
-                <select className="form-select" value={form.sessionType}
-                  onChange={e=>setForm(p=>({...p,sessionType:e.target.value}))}>
-                  {SESSION_TYPES.map(t=><option key={t}>{t}</option>)}
-                </select>
+                <label className="form-label">تاريخ الجلسة القادمة (اختياري)</label>
+                <input className="form-input" type="date" value={form.nextSessionDate} dir="ltr"
+                  onChange={e=>setForm(p=>({...p,nextSessionDate:e.target.value}))} />
               </div>
               <div className="form-group">
                 <label className="form-label">الجولة / الدور</label>
@@ -128,19 +131,20 @@ function SessionModal({ session, cases, clientMap, onClose, onSave, saving }) {
 }
 
 function SessionPill({ session, onClick }) {
-  const colors = TYPE_COLORS[session.sessionType] || TYPE_COLORS['أخرى']
+  const ended = session.isEnded
   return (
     <div
       onClick={() => onClick(session)}
       className="agenda-pill"
       style={{
-        background: colors.bg,
-        border: `1px solid ${colors.border}`,
-        color: colors.color,
+        background: ended ? 'rgba(100,116,139,0.10)' : 'rgba(15,118,110,0.12)',
+        border: `1px solid ${ended ? 'rgba(100,116,139,0.25)' : 'rgba(15,118,110,0.30)'}`,
+        color: ended ? '#64748b' : '#0f766e',
+        textDecoration: ended ? 'line-through' : 'none',
       }}
-      title={`${session.caseNumber} | ${session.clientName} | ${session.sessionType}`}
+      title={session.title}
     >
-      {session.caseNumber || '—'}
+      {session.title || '—'}
     </div>
   )
 }
@@ -169,14 +173,17 @@ function AgendaContent() {
   const loadCalendar = async (year, month) => {
     setLoading(true)
     try {
-      const start = new Date(year, month-1, 1)
-      const end   = new Date(year, month+1, 0)
-      const [sessions, c, cl] = await Promise.all([
-        getSessionsCalendar(fmt(start), fmt(end)),
+      // API treats `to` as exclusive — pass first day of next month to include the full viewed month
+      const firstDay  = new Date(year, month - 1, 1)
+      const firstNext = new Date(year, month, 1)          // first day of next month
+      const from = `${firstDay.getFullYear()}-${firstDay.getMonth()+1}-${firstDay.getDate()}`
+      const to   = `${firstNext.getFullYear()}-${firstNext.getMonth()+1}-${firstNext.getDate()}`
+      const [calData, c, cl] = await Promise.all([
+        getSessionsCalendar(from, to),
         getCases(),
         getClients(),
       ])
-      setCalSessions(sessions)
+      setCalSessions(calData)
       setCases(c)
       setClients(cl)
     } catch(err) {
@@ -191,7 +198,8 @@ function AgendaContent() {
   const byDate = useMemo(() => {
     const map = {}
     calSessions.forEach(s => {
-      const key = isoDate(new Date(s.sessionDate))
+      // Calendar API returns `start` (ISO datetime) instead of `sessionDate`
+      const key = isoDate(new Date(s.start || s.sessionDate))
       if (!map[key]) map[key] = []
       map[key].push(s)
     })
@@ -218,7 +226,7 @@ function AgendaContent() {
   const dayKey      = selectedDay ? isoDate(selectedDay) : null
   const daySessions = dayKey ? (byDate[dayKey] || []) : []
   const sessionCount   = calSessions.length
-  const upcomingCount  = calSessions.filter(s => new Date(s.sessionDate) >= today).length
+  const upcomingCount  = calSessions.filter(s => !s.isEnded).length
 
   const handleDayClick = (day, isSel) => {
     setSelectedDay(isSel ? null : day)
@@ -384,30 +392,40 @@ function AgendaContent() {
             ) : (
               <div style={{ display:'flex', flexDirection:'column', gap:'12px' }}>
                 {daySessions.map((s,i) => {
-                  const clr = TYPE_COLORS[s.sessionType] || TYPE_COLORS['أخرى']
+                  const caseObj = cases.find(c => c.id === s.caseId)
                   return (
-                    <div key={i} className="agenda-session-card" style={{ borderRight:`4px solid ${clr.color}` }}>
+                    <div key={i} className="agenda-session-card" style={{ borderRight: s.isEnded ? '4px solid #94a3b8' : '4px solid #0f766e' }}>
                       <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', gap:'8px' }}>
                         <div>
-                          <div style={{ fontSize:'14px', fontWeight:'800', color: clr.color }}>{s.caseNumber || '—'}</div>
-                          <div style={{ fontSize:'13px', color:'#333', marginTop:'4px', fontWeight:'700' }}>{s.clientName}</div>
-                          {s.opponentName && <div style={{ fontSize:'11.5px', color:'#777', marginTop:'2px' }}>ضد / {s.opponentName}</div>}
+                          <div style={{ fontSize:'14px', fontWeight:'800', color: s.isEnded ? '#64748b' : '#0f766e' }}>
+                            {s.title || caseObj?.caseNumber || '—'}
+                          </div>
+                          {caseObj && (
+                            <div style={{ fontSize:'12px', color:'#555', marginTop:'4px' }}>
+                              {clientMap[caseObj.clientId] || '—'}
+                            </div>
+                          )}
+                          {caseObj?.opponent && (
+                            <div style={{ fontSize:'11px', color:'#777', marginTop:'2px' }}>ضد / {caseObj.opponent}</div>
+                          )}
                         </div>
-                        <span style={{ padding:'3px 9px', borderRadius:'4px', fontSize:'10px', fontWeight:'800', color: clr.color, background: clr.bg, whiteSpace:'nowrap', flexShrink:0 }}>{s.sessionType}</span>
+                        <span style={{
+                          padding:'3px 9px', borderRadius:'4px',
+                          fontSize:'10px', fontWeight:'800',
+                          color: s.isEnded ? '#64748b' : '#0f766e',
+                          background: s.isEnded ? 'rgba(100,116,139,0.08)' : 'rgba(15,118,110,0.08)',
+                          whiteSpace:'nowrap', flexShrink:0,
+                        }}>
+                          {s.isEnded ? '✅ منتهية' : '⏳ قادمة'}
+                        </span>
                       </div>
-                      {(s.roll || s.decision) && (
-                        <div style={{ marginTop:'10px', paddingTop:'10px', borderTop:'1px dashed #eee' }}>
-                          {s.roll     && <div style={{ fontSize:'11.5px', color:'#555', marginBottom:'3px' }}><b style={{color:'#222'}}>الجولة:</b> {s.roll}</div>}
-                          {s.decision && <div style={{ fontSize:'12px', color:'#0f5e56', fontWeight:'600' }}><b style={{color:'#222'}}>القرار:</b> {s.decision}</div>}
-                        </div>
-                      )}
                       <div style={{ display:'flex', gap:'8px', marginTop:'12px' }}>
-                        <button onClick={() => { setEdit(s); setModal(true) }}
+                        <button onClick={() => { setEdit({ ...s, caseId: s.caseId }); setModal(true) }}
                           style={{ flex:1, background:'#f4f4f5', color:'#333', border:'1px solid #e4e4e7', padding:'7px', borderRadius:'6px', fontSize:'12px', fontWeight:'600', cursor:'pointer' }}>
                           ✏️ تعديل
                         </button>
                         <button onClick={() => handleDelete(s.id)}
-                          style={{ background:'#f0fdfa', color:'#b91c1c', border:'1px solid #fecaca', padding:'7px 12px', borderRadius:'6px', fontSize:'12px', fontWeight:'600', cursor:'pointer' }}>
+                          style={{ background:'#fff0f0', color:'#b91c1c', border:'1px solid #fecaca', padding:'7px 12px', borderRadius:'6px', fontSize:'12px', fontWeight:'600', cursor:'pointer' }}>
                           🗑️
                         </button>
                       </div>
