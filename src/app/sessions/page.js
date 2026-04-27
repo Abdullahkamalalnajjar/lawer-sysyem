@@ -21,7 +21,7 @@ const ARABIC_MONTHS = ['يناير','فبراير','مارس','أبريل','ما
 function isoDate(d) { return d.toISOString().slice(0,10) }
 
 // ── Add / Edit Session Modal ─────────────────────────────────
-function SessionModal({ session, cases, clientMap, onClose, onSave, saving }) {
+function SessionModal({ session, cases, clientMap, onClose, onSave, saving, defaultCaseId }) {
   const [form, setForm] = useState(session ? {
     caseId:          session.caseId || '',
     roll:            session.roll || '',
@@ -31,7 +31,7 @@ function SessionModal({ session, cases, clientMap, onClose, onSave, saving }) {
     requests:        session.requests || session.request || '',
     isEnded:         session.isEnded      ?? false,
     reminderSent:    true,
-  } : { caseId:'', roll:'', decision:'', sessionDate:'', nextSessionDate:'', requests:'', isEnded: false, reminderSent: true })
+  } : { caseId: defaultCaseId || '', roll:'', decision:'', sessionDate:'', nextSessionDate:'', requests:'', isEnded: false, reminderSent: true })
   const [errors, setErrors] = useState({})
 
   const validate = () => {
@@ -238,7 +238,9 @@ function SessionsContent() {
         {isManager && (
           <button id="add-session-btn" className="btn btn-primary"
             onClick={() => { setEdit(null); setModal(true) }}>
-            ➕ إضافة جلسة
+            {filterCaseId
+              ? `➕ إضافة جلسة للقضية`
+              : '➕ إضافة جلسة'}
           </button>
         )}
       </div>
@@ -366,6 +368,7 @@ function SessionsContent() {
           onClose={() => { setModal(false); setEdit(null) }}
           onSave={handleSave}
           saving={saving}
+          defaultCaseId={editSess ? undefined : filterCaseId}
         />
       )}
     </>
