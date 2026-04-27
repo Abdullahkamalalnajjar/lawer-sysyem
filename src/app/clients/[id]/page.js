@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { useApp, AuthGuard } from '../../components/AppShell'
-import { getClients, getClientCases, getClientSessions, updateClient, deleteClient, createCase, createSession } from '../../lib/api'
+import { getClients, getCases, getClientCases, getClientSessions, updateClient, deleteClient, createCase, createSession } from '../../lib/api'
 
 export default function ClientDetailPage() {
   return <AuthGuard title="ملف الموكل"><ClientDetail /></AuthGuard>
@@ -165,6 +165,7 @@ function ClientDetail() {
 
   const [client,   setClient]   = useState(null)
   const [cases,    setCases]    = useState([])
+  const [allCases, setAllCases] = useState([])   // all system cases for numbering
   const [sessions, setSessions] = useState([])
   const [loading,  setLoading]  = useState(true)
   const [tab,      setTab]      = useState('info')
@@ -176,11 +177,12 @@ function ClientDetail() {
 
   const reload = () => {
     setLoading(true)
-    Promise.all([getClients(), getClientCases(id), getClientSessions(id)])
-      .then(([all, c, s]) => {
+    Promise.all([getClients(), getCases(), getClientCases(id), getClientSessions(id)])
+      .then(([all, allC, c, s]) => {
         const found = all.find(cl => cl.id === id)
         setClient(found || null)
         setForm(found ? { name:found.name||'', phone:found.phone||found.phoneNumber||'', address:found.address||'', caseNumber:found.caseNumber||'' } : {})
+        setAllCases(allC)
         setCases(c); setSessions(s)
       })
       .catch(err => showToast(err.message || 'فشل تحميل البيانات', 'error'))
@@ -363,7 +365,7 @@ function ClientDetail() {
         </div>
       )}
 
-      {showAddCase && <AddCaseModal clientId={id} cases={cases} onClose={()=>setShowAddCase(false)} onSaved={()=>{ setShowAddCase(false); reload() }} />}
+      {showAddCase && <AddCaseModal clientId={id} cases={allCases} onClose={()=>setShowAddCase(false)} onSaved={()=>{ setShowAddCase(false); reload() }} />}
       {showAddSess && <AddSessionModal clientCases={cases} onClose={()=>setShowAddSess(false)} onSaved={()=>{ setShowAddSess(false); reload() }} />}
     </>
   )
