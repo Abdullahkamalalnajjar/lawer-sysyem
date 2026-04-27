@@ -232,7 +232,7 @@ const actionBtnStyle = (bg, color, border = 'none') => ({
 // ══════════════════════════════════════════════════════════════
 // CASE EDIT MODAL
 // ══════════════════════════════════════════════════════════════
-function CaseModal({ caseItem, clients, onClose, onSave, saving }) {
+function CaseModal({ caseItem, clients, cases = [], onClose, onSave, saving }) {
   const [form, setForm] = useState(caseItem ? {
     caseNumber: caseItem.caseNumber || '',
     caseType:   caseItem.caseType   || 'مدني',
@@ -243,6 +243,23 @@ function CaseModal({ caseItem, clients, onClose, onSave, saving }) {
     caseNumber: '', caseType: 'مدني', clientId: '', opponent: '', degree: DEGREES[0],
   })
   const [errors, setErrors] = useState({})
+
+  // Auto-generate case number when client is selected (add mode only)
+  useEffect(() => {
+    if (caseItem) return          // skip in edit mode
+    if (!form.clientId) return    // no client selected yet
+    if (form.caseNumber) return   // already filled by user
+
+    const currentYear = new Date().getFullYear()
+    // Parse all existing numbers (format: "123/2025" or "123")
+    const nums = cases.map(c => {
+      const match = (c.caseNumber || '').match(/^(\d+)/)
+      return match ? parseInt(match[1], 10) : 0
+    }).filter(n => !isNaN(n))
+    const nextNum = nums.length > 0 ? Math.max(...nums) + 1 : 1
+    setForm(p => ({ ...p, caseNumber: `${nextNum}/${currentYear}` }))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.clientId])
 
   const validate = () => {
     const errs = {}
@@ -495,6 +512,7 @@ function CasesContent() {
         <CaseModal
           caseItem={editingCase}
           clients={clients}
+          cases={cases}
           onClose={() => { setModal(false); setEdit(null) }}
           onSave={handleSave}
           saving={saving}
