@@ -92,7 +92,7 @@ function PaymentModal({ record, clientName, onClose, onSave, saving }) {
     onSave({ date: form.date, amount: Number(form.amount) })
   }
 
-  const remain = Math.max(0, (record?.agreedAmount || 0) - (record?.paidAmount || 0))
+  const remain = record?.remainingAmount ?? Math.max(0, (record?.originalAgreedAmount ?? record?.agreedAmount ?? 0) - (record?.paidAmount ?? 0))
 
   return (
     <div className="modal-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
