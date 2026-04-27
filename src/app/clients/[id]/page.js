@@ -19,21 +19,10 @@ const CASE_TYPES = ['مدني','جنائي','جنح','تجاري','إداري','
 const DEGREES    = ['عادي','معرضة','استئناف','معرضة استئنافية','نقض']
 
 // ── Add Case Modal ────────────────────────────────────────────
-function AddCaseModal({ clientId, cases = [], onClose, onSaved }) {
+function AddCaseModal({ clientId, defaultCaseNumber = '', onClose, onSaved }) {
   const { showToast } = useApp()
 
-  // Auto-generate next case number
-  const getNextCaseNumber = () => {
-    const currentYear = new Date().getFullYear()
-    const nums = cases.map(c => {
-      const match = (c.caseNumber || '').match(/^(\d+)/)
-      return match ? parseInt(match[1], 10) : 0
-    }).filter(n => !isNaN(n))
-    const nextNum = nums.length > 0 ? Math.max(...nums) + 1 : 1
-    return `${nextNum}/${currentYear}`
-  }
-
-  const [form, setForm] = useState({ caseNumber: getNextCaseNumber(), caseType: 'مدني', opponent: '', degree: DEGREES[0] })
+  const [form, setForm] = useState({ caseNumber: defaultCaseNumber, caseType: 'مدني', opponent: '', degree: DEGREES[0] })
   const [saving, setSaving] = useState(false)
   const f = (k) => ({ value: form[k], onChange: e => setForm(p=>({...p,[k]:e.target.value})) })
 
@@ -365,7 +354,7 @@ function ClientDetail() {
         </div>
       )}
 
-      {showAddCase && <AddCaseModal clientId={id} cases={allCases} onClose={()=>setShowAddCase(false)} onSaved={()=>{ setShowAddCase(false); reload() }} />}
+      {showAddCase && <AddCaseModal clientId={id} defaultCaseNumber={client?.caseNumber || ''} onClose={()=>setShowAddCase(false)} onSaved={()=>{ setShowAddCase(false); reload() }} />}
       {showAddSess && <AddSessionModal clientCases={cases} onClose={()=>setShowAddSess(false)} onSaved={()=>{ setShowAddSess(false); reload() }} />}
     </>
   )
