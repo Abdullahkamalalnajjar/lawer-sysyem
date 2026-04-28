@@ -17,14 +17,21 @@ export default function AdministrativeWorksPage() {
   )
 }
 
+// ── Predefined places ──────────────────────────────────────
+const PREDEFINED_PLACES = ['بنها', 'شبين', 'مكان خارجي']
+
 // ── Modal ───────────────────────────────────────────────────
 function AdminWorkModal({ work, users, sessions, clientMap, caseMap, onClose, onSave, saving }) {
+  // Determine initial placeMode based on existing value
+  const initPlace = work?.place || ''
+  const initPlaceMode = PREDEFINED_PLACES.includes(initPlace) ? initPlace : (initPlace ? '__custom__' : '')
+
   const [form, setForm] = useState(work ? {
     date:         work.date?.split('T')[0] || new Date().toISOString().split('T')[0],
     appUserId:    work.appUserId   || '',
     isForAllUsers: work.isForAllUsers ?? false,
     sessionId:    work.sessionId   || '',
-    place:        work.place       || '',
+    place:        initPlace,
     statement:    work.statement   || '',
     isVisible:    work.isVisible   ?? true,
   } : {
@@ -36,6 +43,7 @@ function AdminWorkModal({ work, users, sessions, clientMap, caseMap, onClose, on
     statement:    '',
     isVisible:    true,
   })
+  const [placeMode, setPlaceMode] = useState(initPlaceMode)
   const [errors, setErrors] = useState({})
 
   const validate = () => {
@@ -87,9 +95,35 @@ function AdminWorkModal({ work, users, sessions, clientMap, caseMap, onClose, on
               {/* Place */}
               <div className="form-group">
                 <label className="form-label">المكان</label>
-                <input className="form-input" placeholder="مثال: المحكمة الابتدائية"
-                  value={form.place}
-                  onChange={e => setForm(p => ({ ...p, place: e.target.value }))} />
+                <select
+                  className="form-select"
+                  value={placeMode}
+                  onChange={e => {
+                    const val = e.target.value
+                    setPlaceMode(val)
+                    if (val !== '__custom__') {
+                      setForm(p => ({ ...p, place: val }))
+                    } else {
+                      setForm(p => ({ ...p, place: '' }))
+                    }
+                  }}
+                >
+                  <option value="">-- اختر المكان --</option>
+                  {PREDEFINED_PLACES.map(pl => (
+                    <option key={pl} value={pl}>{pl}</option>
+                  ))}
+                  <option value="__custom__">آخر (اكتب يدوياً)</option>
+                </select>
+                {placeMode === '__custom__' && (
+                  <input
+                    className="form-input"
+                    placeholder="اكتب اسم المكان..."
+                    value={form.place}
+                    onChange={e => setForm(p => ({ ...p, place: e.target.value }))}
+                    style={{ marginTop: '8px' }}
+                    autoFocus
+                  />
+                )}
               </div>
 
               {/* User */}
@@ -237,7 +271,8 @@ function AdminWorksContent() {
     const d = w.date || ''
     if (filterYear  && !d.startsWith(filterYear))    return false
     if (filterMonth && d.slice(5,7) !== filterMonth) return false
-    if (filterPlace && (w.place || '') !== filterPlace) return false
+    if (filterPlace === '__no_place__' && w.place)   return false
+    if (filterPlace && filterPlace !== '__no_place__' && (w.place || '') !== filterPlace) return false
     if (search && !(w.statement||'').includes(search) && !(w.place||'').includes(search) && !(userMap[w.appUserId]||'').includes(search)) return false
     return true
   })
@@ -317,6 +352,98 @@ function AdminWorksContent() {
           </div>
         </div>
       </div>
+
+      {/* Place Cards */}
+      {places.length > 0 && (
+        <div style={{ marginBottom: '24px' }}>
+          <p style={{ fontSize: '13px', fontWeight: '700', color: '#64748b', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            📍 تصفية حسب المكان
+          </p>
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+            {/* All Card */}
+            <button
+              onClick={() => setFilterPlace('')}
+              style={{
+                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                gap: '6px', padding: '14px 20px', borderRadius: '14px', border: '2px solid',
+                borderColor: filterPlace === '' ? 'var(--primary)' : 'rgba(15,118,110,0.15)',
+                background: filterPlace === '' ? 'var(--primary)' : 'var(--surface)',
+                color: filterPlace === '' ? '#fff' : 'var(--primary)',
+                cursor: 'pointer', transition: 'all 0.2s ease',
+                boxShadow: filterPlace === '' ? '0 4px 16px rgba(15,118,110,0.35)' : '0 2px 8px rgba(0,0,0,0.06)',
+                fontFamily: 'inherit', minWidth: '90px',
+              }}
+            >
+              <span style={{ fontSize: '22px' }}>🗂️</span>
+              <span style={{ fontSize: '13px', fontWeight: '700' }}>الكل</span>
+              <span style={{
+                fontSize: '12px', fontWeight: '800',
+                background: filterPlace === '' ? 'rgba(255,255,255,0.25)' : 'var(--primary)',
+                color: filterPlace === '' ? '#fff' : '#fff',
+                borderRadius: '20px', padding: '1px 10px',
+              }}>{works.length}</span>
+            </button>
+
+            {/* No-place Card */}
+            {works.some(w => !w.place) && (
+              <button
+                onClick={() => setFilterPlace('__no_place__')}
+                style={{
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                  gap: '6px', padding: '14px 20px', borderRadius: '14px', border: '2px solid',
+                  borderColor: filterPlace === '__no_place__' ? 'var(--primary)' : 'rgba(15,118,110,0.15)',
+                  background: filterPlace === '__no_place__' ? 'var(--primary)' : 'var(--surface)',
+                  color: filterPlace === '__no_place__' ? '#fff' : 'var(--primary)',
+                  cursor: 'pointer', transition: 'all 0.2s ease',
+                  boxShadow: filterPlace === '__no_place__' ? '0 4px 16px rgba(15,118,110,0.35)' : '0 2px 8px rgba(0,0,0,0.06)',
+                  fontFamily: 'inherit', minWidth: '90px',
+                }}
+              >
+                <span style={{ fontSize: '22px' }}>📌</span>
+                <span style={{ fontSize: '13px', fontWeight: '700' }}>غير محدد</span>
+                <span style={{
+                  fontSize: '12px', fontWeight: '800',
+                  background: filterPlace === '__no_place__' ? 'rgba(255,255,255,0.25)' : 'var(--primary)',
+                  color: '#fff', borderRadius: '20px', padding: '1px 10px',
+                }}>{works.filter(w => !w.place).length}</span>
+              </button>
+            )}
+
+            {/* Per-place Cards */}
+            {places.map((place, idx) => {
+              const count = works.filter(w => w.place === place).length
+              const isActive = filterPlace === place
+              const icons = ['🏛️','⚖️','🏢','📋','🏠','🔖','🗓️','📍']
+              const icon = icons[idx % icons.length]
+              return (
+                <button
+                  key={place}
+                  onClick={() => setFilterPlace(isActive ? '' : place)}
+                  style={{
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                    gap: '6px', padding: '14px 20px', borderRadius: '14px', border: '2px solid',
+                    borderColor: isActive ? 'var(--primary)' : 'rgba(15,118,110,0.15)',
+                    background: isActive ? 'var(--primary)' : 'var(--surface)',
+                    color: isActive ? '#fff' : 'var(--primary)',
+                    cursor: 'pointer', transition: 'all 0.2s ease',
+                    boxShadow: isActive ? '0 4px 16px rgba(15,118,110,0.35)' : '0 2px 8px rgba(0,0,0,0.06)',
+                    fontFamily: 'inherit', minWidth: '90px',
+                    transform: isActive ? 'translateY(-2px)' : 'none',
+                  }}
+                >
+                  <span style={{ fontSize: '22px' }}>{icon}</span>
+                  <span style={{ fontSize: '13px', fontWeight: '700', textAlign: 'center', lineHeight: '1.3' }}>{place}</span>
+                  <span style={{
+                    fontSize: '12px', fontWeight: '800',
+                    background: isActive ? 'rgba(255,255,255,0.25)' : 'var(--primary)',
+                    color: '#fff', borderRadius: '20px', padding: '1px 10px',
+                  }}>{count}</span>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      )}
 
       <div className="card">
         <div style={{ display:'flex', gap:'10px', padding:'16px 20px', borderBottom:'1px solid rgba(15,118,110,0.08)', flexWrap:'wrap', alignItems:'center' }}>
